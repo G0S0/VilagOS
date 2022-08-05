@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\VilagOS\EntryPoint.h" />
     <ClInclude Include="src\VilagOS.h" />
     <ClInclude Include="src\VilagOS\Application.h" />
     <ClInclude Include="src\VilagOS\Core.h" />

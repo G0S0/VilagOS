@@ -24,6 +24,9 @@
     <ClInclude Include="src\VilagOS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\EntryPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp">

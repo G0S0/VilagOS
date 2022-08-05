@@ -1,6 +1,4 @@
-#include <iostream>
 #include <VilagOS.h>
-
 
 class Game : public VilagOS::Application {
 public:
@@ -8,8 +6,8 @@ public:
 	~Game(){}
 };
 
-int main() {
-	Game* App = new Game(); //Radimo ovo dinamièki pošto æe ovo biti cijela aplikacija tako da može biti jako veliko
-	App->run();
-	delete App;
+VilagOS::Application* VilagOS::CreateApplication() {
+	return new Game();
 }
+
+

@@ -1,6 +1,5 @@
-
 #pragma once
-
+#include <iostream>
 #include "Core.h"
 
 namespace VilagOS {
@@ -12,5 +11,8 @@ namespace VilagOS {
 		virtual ~Application();
 		void run();
 	};
+
+	//To be defined in a client
+	Application* CreateApplication();
 }
 
