@@ -8,6 +8,10 @@
 extern VilagOS::Application* VilagOS::CreateApplication(); //defined in "GameApp" returns application
 
 int main(int argc, char** argv) {
+	VilagOS::Log::Init();
+	VOS_CORE_WARN("Initialized Log");
+	VOS_CLIENT_INFO("Hello");
+
 	auto App = VilagOS::CreateApplication();
 	App->run();
 	delete App;

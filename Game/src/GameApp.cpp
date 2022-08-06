@@ -2,12 +2,10 @@
 
 class Game : public VilagOS::Application {
 public:
-	Game(){}
-	~Game(){}
+	Game() {}
+	~Game() {}
 };
 
 VilagOS::Application* VilagOS::CreateApplication() {
 	return new Game();
 }
-
-
