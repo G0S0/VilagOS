@@ -4,6 +4,9 @@
     <Filter Include="VilagOS">
       <UniqueIdentifier>{1AF896DC-86D7-1578-8FEF-A04EFB4D7CD9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="VilagOS\Events">
+      <UniqueIdentifier>{BE4235A8-AA10-29AE-93A4-99D47F110513}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\VilagOS.h" />
@@ -16,13 +19,22 @@
     <ClInclude Include="src\VilagOS\EntryPoint.h">
       <Filter>VilagOS</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\Events\ApplicationEvent.h">
+      <Filter>VilagOS\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Events\Event.h">
+      <Filter>VilagOS\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Events\KeyboardEvent.h">
+      <Filter>VilagOS\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Events\MouseEvent.h">
+      <Filter>VilagOS\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\VilagOS\Log.h">
       <Filter>VilagOS</Filter>
     </ClInclude>
-    <ClInclude Include="src\VilagOS\Events\Event.h" />
-    <ClInclude Include="MouseEvent.h" />
-    <ClInclude Include="src\VilagOS\Events\ApplicationEvent.h" />
-    <ClInclude Include="src\VilagOS\Events\KeyboardEvent.h" />
+    <ClInclude Include="src\vospch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp">
@@ -31,5 +43,6 @@
     <ClCompile Include="src\VilagOS\Log.cpp">
       <Filter>VilagOS</Filter>
     </ClCompile>
+    <ClCompile Include="src\vospch.cpp" />
   </ItemGroup>
 </Project>

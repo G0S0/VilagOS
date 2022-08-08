@@ -23,9 +23,12 @@ project "VilagOS"
 	}
 
 	includedirs{
-		"%{prj.name}/src"
+		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include"
 	}
+
+	pchheader "vospch.h"
+	pchsource "VilagOS/src/vospch.cpp" --Visual studio needs this 2 work
 
 	filter "system:windows"
 		cppdialect "C++17"

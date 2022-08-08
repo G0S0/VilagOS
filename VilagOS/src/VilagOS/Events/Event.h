@@ -2,9 +2,6 @@
 
 #include "Core.h"
 
-#include <string>
-#include <functional>
-
 namespace VilagOS {
 	enum class EventType { 
 		None = 0,
@@ -72,7 +69,7 @@ namespace VilagOS {
 		Event& m_Event;
 	};
 
-	std::ostream& operator<<(std::ostream& os, const Event& e) { //Why isnt this working!? Is there something missing? Must more blood be shed? 
+	std::ostream& operator<<(std::ostream& os, const Event& e) { 
 		return os << e.ToPrint();
 	}
 }

@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Events/Event.h"
-
-#include <sstream>
+#include "Event.h"
 
 namespace VilagOS {
 	class VOS_API MouseMovedEvent : public Event{

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <memory>
 #include "Core.h"
 #include "spdlog/spdlog.h"
+#include "spdlog/fmt/ostr.h" //This fixes the overloaded output operator for events issue 
 
 namespace VilagOS {
 	class VOS_API Log
