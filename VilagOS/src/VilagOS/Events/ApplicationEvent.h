@@ -34,7 +34,8 @@ namespace VilagOS {
 	};
 
 
-	//I was going to implement App events just as all the other events but Ive found a better way so il consider that one for now 
+	//I was going to implement App events just as all the other events but Ive found a better way so i'll consider that one for now 
+	// if that doesnt work this stays as a backup
 	//class VOS_API AppTickEvent : public Event { 
 	//public:
 	//	AppTickEvent() {}
