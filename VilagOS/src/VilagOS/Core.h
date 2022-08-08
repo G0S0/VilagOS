@@ -8,3 +8,4 @@
 	#endif // VOS_BUILD_DLL
 #endif // VOS_PLATFORM_WINDOWS
 
+#define BIT(x) (1 << x) //shift 1 by x places

@@ -19,6 +19,10 @@
     <ClInclude Include="src\VilagOS\Log.h">
       <Filter>VilagOS</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\Events\Event.h" />
+    <ClInclude Include="MouseEvent.h" />
+    <ClInclude Include="src\VilagOS\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\VilagOS\Events\KeyboardEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp">
