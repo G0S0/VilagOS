@@ -9,6 +9,13 @@ workspace "VilagOS"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+--I have no idea what happening here.
+IncludeDir = {}
+IncludeDir["GLFW"] = "VilagOS/vendor"
+
+--include "VilagOS/vendor/GLFW" --includes a premake5 file from GLFW.
+
+
 project "VilagOS"
 	location "VilagOS" --project folder
 	kind "SharedLib" --dll files
@@ -16,15 +23,22 @@ project "VilagOS"
 
 	targetdir("bin/" .. outputdir .. "/%{prj.name}")
 	objdir("obj/" .. outputdir .. "/%{prj.name}")
-
+	
 	files{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/src/**.cpp"
+
 	}
 
 	includedirs{
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links{
+		"dependencies/GLFW/glfw3.lib",
+		"opengl32.lib" 
 	}
 
 	pchheader "vospch.h"
@@ -47,10 +61,12 @@ project "VilagOS"
 	filter "configurations:Debug"
 		defines "VOS_DEBUG"
 		symbols "On"
+		runtime "Debug"
 	
 	filter "configurations:Release"
 		defines "VOS_RELEASE"
 		symbols "On"
+		runtime "Release"
 
 	filter "configurations:Dist"
 		defines "VOS_DIST"

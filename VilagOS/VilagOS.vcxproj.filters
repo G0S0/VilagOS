@@ -34,6 +34,8 @@
     <ClInclude Include="src\VilagOS\Log.h">
       <Filter>VilagOS</Filter>
     </ClInclude>
+    <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\WindowMaster.h" />
     <ClInclude Include="src\vospch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +45,7 @@
     <ClCompile Include="src\VilagOS\Log.cpp">
       <Filter>VilagOS</Filter>
     </ClCompile>
+    <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\vospch.cpp" />
   </ItemGroup>
 </Project>

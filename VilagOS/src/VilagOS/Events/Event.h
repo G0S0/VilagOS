@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Core.h"
+#include "vospch.h"
+#include "VilagOS/Core.h"
 
 namespace VilagOS {
 	enum class EventType { 
@@ -69,7 +70,7 @@ namespace VilagOS {
 		Event& m_Event;
 	};
 
-	std::ostream& operator<<(std::ostream& os, const Event& e) { 
+	inline std::ostream& operator<<(std::ostream& os, const Event& e) { 
 		return os << e.ToPrint();
 	}
 }

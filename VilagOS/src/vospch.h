@@ -6,4 +6,7 @@
 #include <string>
 #include <functional>
 #include <sstream>
+#include <Windows.h>
+
+#include "VilagOS/Log.h"
 
