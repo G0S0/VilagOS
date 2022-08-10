@@ -31,6 +31,12 @@
     <ClInclude Include="src\VilagOS\Events\MouseEvent.h">
       <Filter>VilagOS\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\Layer.h">
+      <Filter>VilagOS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\LayerStack.h">
+      <Filter>VilagOS</Filter>
+    </ClInclude>
     <ClInclude Include="src\VilagOS\Log.h">
       <Filter>VilagOS</Filter>
     </ClInclude>
@@ -40,6 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp">
+      <Filter>VilagOS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Layer.cpp">
+      <Filter>VilagOS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\LayerStack.cpp">
       <Filter>VilagOS</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Log.cpp">

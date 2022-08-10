@@ -84,6 +84,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -105,7 +106,8 @@
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -128,6 +130,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -149,6 +152,8 @@
     <ClInclude Include="src\VilagOS\Events\Event.h" />
     <ClInclude Include="src\VilagOS\Events\KeyboardEvent.h" />
     <ClInclude Include="src\VilagOS\Events\MouseEvent.h" />
+    <ClInclude Include="src\VilagOS\Layer.h" />
+    <ClInclude Include="src\VilagOS\LayerStack.h" />
     <ClInclude Include="src\VilagOS\Log.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\WindowMaster.h" />
@@ -156,6 +161,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp" />
+    <ClCompile Include="src\VilagOS\Layer.cpp" />
+    <ClCompile Include="src\VilagOS\LayerStack.cpp" />
     <ClCompile Include="src\VilagOS\Log.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\vospch.cpp">

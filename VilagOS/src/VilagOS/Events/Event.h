@@ -47,7 +47,7 @@ namespace VilagOS {
 													//however this doesnt tell us anything about other categories. Maybe il make so it returns
 													//all the categories later.
 		}
-	protected: 
+
 		bool m_Handled = false; //need this flag so that Events are handled only once. 
 	};
 
