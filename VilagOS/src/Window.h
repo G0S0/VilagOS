@@ -1,10 +1,8 @@
 #pragma once
 
-#include "vospch.h"
-#include "VilagOS/Events/Event.h"
-#include "VilagOS/Core.h"
-#include "GLFW/glfw3.h"
+#include "glfw3.h"
 #include "WindowMaster.h"
+#include "glad/glad.h"
 
 namespace VilagOS{
 	

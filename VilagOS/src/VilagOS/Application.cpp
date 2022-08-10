@@ -1,6 +1,6 @@
 #include "vospch.h"
 #include "Application.h"
-
+#include "glad/glad.h"
 #include "Log.h"
 
 namespace VilagOS{
@@ -9,6 +9,9 @@ namespace VilagOS{
 	Application::Application() {
 		m_Window = std::unique_ptr<WindowMaster>(WindowMaster::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent)); //In the end calls the OnEvent fn
+
+		unsigned int id;
+		glGenVertexArrays(1, &id);
 	}
 	Application::~Application() {
 

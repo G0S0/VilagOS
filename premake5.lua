@@ -11,9 +11,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 --I have no idea what happening here.
 IncludeDir = {}
-IncludeDir["GLFW"] = "VilagOS/vendor"
+IncludeDir["GLFW"] = "VilagOS/vendor/GLFW"
+IncludeDir["Glad"] = "VilagOS/vendor/Glad/include"
 
---include "VilagOS/vendor/GLFW" --includes a premake5 file from GLFW.
+include "VilagOS/vendor/Glad" --includes a premake5 file from Glad.
 
 
 project "VilagOS"
@@ -30,15 +31,17 @@ project "VilagOS"
 
 	}
 
-	includedirs{
+	includedirs{ --.h includes
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.Glad}",
 		"%{IncludeDir.GLFW}"
 	}
 
-	links{
+	links{ --projects. refferences in solution
 		"dependencies/GLFW/glfw3.lib",
-		"opengl32.lib" 
+		"opengl32.lib",
+		"Glad"
 	}
 
 	pchheader "vospch.h"
@@ -51,7 +54,8 @@ project "VilagOS"
 
 		defines{
 			"VOS_PLATFORM_WINDOWS",
-			"VOS_BUILD_DLL"
+			"VOS_BUILD_DLL",
+			"GLFW_INCLUDE_NONE" --I need this so that glad and glfw dont both include opengl.
 		}
 
 		postbuildcommands{
@@ -110,7 +114,7 @@ project "Game"
 		defines "VOS_DEBUG"
 		symbols "On"
 		runtime "Debug"
-		buildoptions "/MTd"
+		buildoptions "/MDd"
 	
 	filter "configurations:Release"
 		defines "VOS_RELEASE"
