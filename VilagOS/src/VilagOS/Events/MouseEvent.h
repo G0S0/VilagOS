@@ -70,6 +70,7 @@ namespace VilagOS {
 	};
 
 	class VOS_API MouseButtonReleasedEvent : public MouseButtonEvent {
+	public:
 		MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}
 
 		std::string ToPrint() const override{

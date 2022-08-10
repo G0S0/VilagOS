@@ -35,7 +35,7 @@ namespace VilagOS {
 		int m_RepeatCount;
 	};
 
-	class  VOS_API KeyReleasedEvent: KeyboardEvent{
+	class  VOS_API KeyReleasedEvent: public KeyboardEvent{
 	public:
 		KeyReleasedEvent(int keycode) : KeyboardEvent(keycode) {}
 
