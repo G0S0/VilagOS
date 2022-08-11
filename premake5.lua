@@ -13,9 +13,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "VilagOS/vendor/GLFW"
 IncludeDir["Glad"] = "VilagOS/vendor/Glad/include"
+IncludeDir["Imgui"] = "VilagOS/vendor/Imgui"
 
 include "VilagOS/vendor/Glad" --includes a premake5 file from Glad.
-
+include "VilagOS/vendor/Imgui"
 
 project "VilagOS"
 	location "VilagOS" --project folder
@@ -28,20 +29,21 @@ project "VilagOS"
 	files{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp"
-
 	}
 
 	includedirs{ --.h includes
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Imgui}"
 	}
 
 	links{ --projects. refferences in solution
 		"dependencies/GLFW/glfw3.lib",
 		"opengl32.lib",
-		"Glad"
+		"Glad",
+		"Imgui"
 	}
 
 	pchheader "vospch.h"

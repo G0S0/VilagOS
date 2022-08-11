@@ -10,8 +10,8 @@
 *.sln.docstates
 
 # External files
-vendor/
-
+ vendor/
+ VilagOS/vendor
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
