@@ -45,7 +45,7 @@ namespace VilagOS {
 
 	class VOS_API MouseButtonEvent : public Event {
 	public:
-		inline int getButton() const { return m_button; }//will fix this so that it returns a name rather than a number
+		inline int getButton() const { return m_button; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryMouseButton)
 	protected: //dont wanna create this event actually

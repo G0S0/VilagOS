@@ -18,3 +18,4 @@
 
 
 #define BIT(x) (1 << x) //shift 1 by x places
+#define VOS_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)

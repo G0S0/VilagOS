@@ -2,9 +2,9 @@
 #include "Application.h"
 #include "glad/glad.h"
 #include "Log.h"
+#include "Core.h"
 
 namespace VilagOS{
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 	Application* Application::s_Instance = nullptr;
 
@@ -13,7 +13,7 @@ namespace VilagOS{
 		s_Instance = this;
 
 		m_Window = std::unique_ptr<WindowMaster>(WindowMaster::Create());
-		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent)); //In the end calls the OnEvent fn
+		m_Window->SetEventCallback(VOS_BIND_EVENT_FN(Application::OnEvent)); //In the end calls the OnEvent fn
 
 		unsigned int id;
 		glGenVertexArrays(1, &id); //the hell is this?
@@ -32,10 +32,15 @@ namespace VilagOS{
 	}
 
 	void Application::OnEvent(Event& e) {
+		for (Layer* layer : m_LayerStack) {
+			//VOS_CORE_ERROR(layer->GetName());
+		}
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
-		VOS_CORE_TRACE("{0}", e);
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+		dispatcher.Dispatch<WindowCloseEvent>(VOS_BIND_EVENT_FN(Application::OnWindowClose));
+		//VOS_CORE_TRACE("{0}", e);
+		//VOS_CORE_TRACE((*--it)->GetName());
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();){
+			//VOS_CORE_TRACE((*--it)->GetName());
 			(*--it)->OnEvent(e);
 			if (e.m_Handled)
 				break;

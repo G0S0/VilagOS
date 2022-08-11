@@ -49,4 +49,17 @@ namespace VilagOS {
 
 	};
 
+	class VOS_API KeyTypedEvent : public KeyboardEvent {
+	public:
+		KeyTypedEvent(int keycode) : KeyboardEvent(keycode) {}
+
+		std::string ToPrint() const override {
+			std::stringstream ss;
+			ss << "KeyTypedeEvent" << m_KeyCode;
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped) //This looks much nicer now with macros.
+	};
+
 }

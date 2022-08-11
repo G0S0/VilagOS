@@ -5,24 +5,24 @@ public:
 	ExampleLayer() : Layer("Example") {}
 
 	void OnUpdate() override {
-		VOS_CLIENT_INFO("Example layer: update");
+		//VOS_CLIENT_INFO("Example layer: update");
 	}
 
 	void OnEvent(VilagOS::Event& e) override {
-		VOS_CLIENT_INFO("Event: {0}", e);
+		//VOS_CLIENT_INFO("Event: {0}", e);
 	}
 };
 
 class Game : public VilagOS::Application {
 public:
 	Game() {
+		
 		PushLayer(new ExampleLayer());
 		PushOverlay(new VilagOS::ImguiLayer());
+
 	}
 	~Game() {}
 };
-
-
 
 VilagOS::Application* VilagOS::CreateApplication() {
 	return new Game();

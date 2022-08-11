@@ -15,6 +15,8 @@ IncludeDir["GLFW"] = "VilagOS/vendor/GLFW"
 IncludeDir["Glad"] = "VilagOS/vendor/Glad/include"
 IncludeDir["Imgui"] = "VilagOS/vendor/Imgui"
 
+startproject "Game"
+
 include "VilagOS/vendor/Glad" --includes a premake5 file from Glad.
 include "VilagOS/vendor/Imgui"
 

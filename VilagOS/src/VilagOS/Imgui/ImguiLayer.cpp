@@ -1,11 +1,13 @@
 #include "vospch.h"
 #include "ImguiLayer.h"
 #include "OpenGl/imgui_impl_opengl3.h"
+#include "backends/imgui_impl_glfw.h"
 #include "imgui.h"
 #include "glfw3.h"
 #include "VilagOS/Application.h"
-#include "VilagOS/Events/KeyboardEvent.h"
-#include "VilagOS/Events/MouseEvent.h"
+#include "VilagOS/Core.h"
+#include "glad/glad.h"
+
 
 
 namespace VilagOS {
@@ -50,40 +52,81 @@ namespace VilagOS {
 		ImGui::ShowDemoWindow(&show);
 
 		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); //Why is there no namespace here? 
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());  
 	}
 
 	void ImguiLayer::OnEvent(Event& e) {
 		EventDispatcher dispatcher(e);
-		//dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN())
+		dispatcher.Dispatch<KeyPressedEvent>(VOS_BIND_EVENT_FN(ImguiLayer::OnKeyPressed));
+		dispatcher.Dispatch<KeyReleasedEvent>(VOS_BIND_EVENT_FN(ImguiLayer::OnKeyReleased));
+		dispatcher.Dispatch<KeyTypedEvent>(VOS_BIND_EVENT_FN(ImguiLayer::OnKeyTyped));
+		dispatcher.Dispatch<MouseButtonPressedEvent>(VOS_BIND_EVENT_FN(ImguiLayer::OnMouseButtonPressed));
+		dispatcher.Dispatch<MouseButtonReleasedEvent>(VOS_BIND_EVENT_FN(ImguiLayer::OnMouseButtonReleased));
+		dispatcher.Dispatch<MouseScrolledEvent>(VOS_BIND_EVENT_FN(ImguiLayer::OnMouseScrolled));
+		dispatcher.Dispatch<MouseMovedEvent>(VOS_BIND_EVENT_FN(ImguiLayer::OnMouseMoved));
+		dispatcher.Dispatch<WindowResizeEvent>(VOS_BIND_EVENT_FN(ImguiLayer::OnWindowResized));
 	}
 
-	void ImguiLayer::OnKeyPressed() {
+	bool ImguiLayer::OnKeyPressed(KeyPressedEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		int key = e.GetKeyCode();
+		io.KeysDown[key] = true;
+		return false;
+	}
+	
+	bool ImguiLayer::OnKeyReleased(KeyReleasedEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		int key = e.GetKeyCode();
+		io.KeysDown[key] = false;
 
+		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+		return false;
 	}
 
-	static ImGuiKey getImGuiKey(int key) {
-		switch(key)
-		{
-		case GLFW_KEY_TAB: return ImGuiKey_Tab;
-		case GLFW_KEY_LEFT: return ImGuiKey_LeftArrow;
-		case GLFW_KEY_RIGHT: return ImGuiKey_RightArrow;
-		case GLFW_KEY_UP: return ImGuiKey_UpArrow;
-		case GLFW_KEY_DOWN: return ImGuiKey_DownArrow;
-		case GLFW_KEY_PAGE_UP: return ImGuiKey_PageUp;
-		case GLFW_KEY_PAGE_DOWN: return ImGuiKey_PageDown;
-		case GLFW_KEY_HOME: return ImGuiKey_Home;
-		case GLFW_KEY_END: return ImGuiKey_End;
-		case GLFW_KEY_INSERT: return ImGuiKey_Insert;
-		case GLFW_KEY_DELETE: return ImGuiKey_Delete;
-		case GLFW_KEY_BACKSPACE: return ImGuiKey_Backspace;
-		case GLFW_KEY_SPACE: return ImGuiKey_Space;
-		case GLFW_KEY_ENTER: return ImGuiKey_Enter;
-		case GLFW_KEY_ESCAPE: return ImGuiKey_Escape;
-		default: return ImGuiKey_None;
+	bool ImguiLayer::OnKeyTyped(KeyTypedEvent& e) { //tf is this?
+		ImGuiIO& io = ImGui::GetIO();
+		int c = e.GetKeyCode();
+		if (c > 0 && c < 0x10000) {
+			io.AddInputCharacter((unsigned short)c);
 		}
-		
+
+		return false;
 	}
 
+	bool ImguiLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		int key = e.getButton();
+		io.MouseDown[key] = true;
+		VOS_CORE_ERROR(key);
+		return false;
+	}
+	bool ImguiLayer::OnMouseButtonReleased(MouseButtonReleasedEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		int key = e.getButton();
+		io.MouseDown[key] = false;
+		VOS_CORE_ERROR(key);
+		return false;
+	}
+	bool ImguiLayer::OnMouseScrolled(MouseScrolledEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseWheelH += e.GetX();
+		io.MouseWheel += e.GetY();
+		return false;
+	}
+	bool ImguiLayer::OnMouseMoved(MouseMovedEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		io.MousePos = ImVec2(e.GetX(), e.GetY());
+		return false;
+	}
+	bool ImguiLayer::OnWindowResized(WindowResizeEvent& e) {
+		ImGuiIO& io = ImGui::GetIO();
+		io.DisplaySize = ImVec2(e.getSizes().first, e.getSizes().second);
+		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f); //what the hell is this?
+		glViewport(0, 0, e.getSizes().first, e.getSizes().second); //needs glad
+		return false;
+	}
 
 }

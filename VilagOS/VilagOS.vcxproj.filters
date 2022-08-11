@@ -10,7 +10,7 @@
     <Filter Include="VilagOS\Events">
       <UniqueIdentifier>{BE4235A8-AA10-29AE-93A4-99D47F110513}</UniqueIdentifier>
     </Filter>
-    <Filter Include="VilagOS\ImguiLayer">
+    <Filter Include="VilagOS\Imgui">
       <UniqueIdentifier>{E4206424-50E1-DF5A-191C-29D8859B2437}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -44,7 +44,7 @@
       <Filter>VilagOS\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Imgui\ImguiLayer.h">
-      <Filter>VilagOS\ImguiLayer</Filter>
+      <Filter>VilagOS\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Layer.h">
       <Filter>VilagOS</Filter>
@@ -67,7 +67,7 @@
       <Filter>VilagOS</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Imgui\ImguiLayer.cpp">
-      <Filter>VilagOS\ImguiLayer</Filter>
+      <Filter>VilagOS\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Layer.cpp">
       <Filter>VilagOS</Filter>
