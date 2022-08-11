@@ -144,6 +144,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\OpenGl\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\OpenGl\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="src\VilagOS.h" />
     <ClInclude Include="src\VilagOS\Application.h" />
     <ClInclude Include="src\VilagOS\Core.h" />
@@ -152,6 +154,7 @@
     <ClInclude Include="src\VilagOS\Events\Event.h" />
     <ClInclude Include="src\VilagOS\Events\KeyboardEvent.h" />
     <ClInclude Include="src\VilagOS\Events\MouseEvent.h" />
+    <ClInclude Include="src\VilagOS\Imgui\ImguiLayer.h" />
     <ClInclude Include="src\VilagOS\Layer.h" />
     <ClInclude Include="src\VilagOS\LayerStack.h" />
     <ClInclude Include="src\VilagOS\Log.h" />
@@ -160,7 +163,9 @@
     <ClInclude Include="src\vospch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\OpenGl\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\VilagOS\Application.cpp" />
+    <ClCompile Include="src\VilagOS\Imgui\ImguiLayer.cpp" />
     <ClCompile Include="src\VilagOS\Layer.cpp" />
     <ClCompile Include="src\VilagOS\LayerStack.cpp" />
     <ClCompile Include="src\VilagOS\Log.cpp" />

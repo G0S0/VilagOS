@@ -28,7 +28,9 @@ project "VilagOS"
 	
 	files{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/src/OpenGl/**.cpp",
+		"%{prj.name}/src/OpenGl/**.h"
 	}
 
 	includedirs{ --.h includes

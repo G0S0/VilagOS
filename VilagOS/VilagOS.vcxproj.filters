@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="OpenGl">
+      <UniqueIdentifier>{AA864AC8-9628-759E-7FE3-88F26B24FCEE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="VilagOS">
       <UniqueIdentifier>{1AF896DC-86D7-1578-8FEF-A04EFB4D7CD9}</UniqueIdentifier>
     </Filter>
     <Filter Include="VilagOS\Events">
       <UniqueIdentifier>{BE4235A8-AA10-29AE-93A4-99D47F110513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="VilagOS\ImguiLayer">
+      <UniqueIdentifier>{E4206424-50E1-DF5A-191C-29D8859B2437}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\OpenGl\imgui_impl_opengl3.h">
+      <Filter>OpenGl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGl\imgui_impl_opengl3_loader.h">
+      <Filter>OpenGl</Filter>
+    </ClInclude>
     <ClInclude Include="src\VilagOS.h" />
     <ClInclude Include="src\VilagOS\Application.h">
       <Filter>VilagOS</Filter>
@@ -31,6 +43,9 @@
     <ClInclude Include="src\VilagOS\Events\MouseEvent.h">
       <Filter>VilagOS\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\Imgui\ImguiLayer.h">
+      <Filter>VilagOS\ImguiLayer</Filter>
+    </ClInclude>
     <ClInclude Include="src\VilagOS\Layer.h">
       <Filter>VilagOS</Filter>
     </ClInclude>
@@ -45,8 +60,14 @@
     <ClInclude Include="src\vospch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\OpenGl\imgui_impl_opengl3.cpp">
+      <Filter>OpenGl</Filter>
+    </ClCompile>
     <ClCompile Include="src\VilagOS\Application.cpp">
       <Filter>VilagOS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Imgui\ImguiLayer.cpp">
+      <Filter>VilagOS\ImguiLayer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Layer.cpp">
       <Filter>VilagOS</Filter>

@@ -17,6 +17,7 @@ class Game : public VilagOS::Application {
 public:
 	Game() {
 		PushLayer(new ExampleLayer());
+		PushOverlay(new VilagOS::ImguiLayer());
 	}
 	~Game() {}
 };
