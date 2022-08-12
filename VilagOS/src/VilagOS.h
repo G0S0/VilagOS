@@ -4,6 +4,10 @@
 #include "VilagOS/Application.h"
 #include "VilagOS/Log.h"
 #include "VilagOS/EntryPoint.h"
+
 #include "VilagOS/Imgui/ImguiLayer.h"
 
+#include "VilagOS/MouseButtonCodes.h"
+#include "VilagOS/KeyCodes.h"
 
+#include "VilagOS/Input.h"

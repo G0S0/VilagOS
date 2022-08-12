@@ -52,6 +52,9 @@
     <ClInclude Include="src\VilagOS\Input.h">
       <Filter>VilagOS</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\KeyCodes.h">
+      <Filter>VilagOS</Filter>
+    </ClInclude>
     <ClInclude Include="src\VilagOS\Layer.h">
       <Filter>VilagOS</Filter>
     </ClInclude>
@@ -61,16 +64,19 @@
     <ClInclude Include="src\VilagOS\Log.h">
       <Filter>VilagOS</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\MouseButtonCodes.h">
+      <Filter>VilagOS</Filter>
+    </ClInclude>
     <ClInclude Include="src\VilagOS\Window\Window.h">
       <Filter>VilagOS\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Window\WindowMaster.h">
       <Filter>VilagOS\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\vospch.h" />
-    <ClInclude Include="WindowMasterInput.h">
+    <ClInclude Include="src\VilagOS\Window\WindowMasterInput.h">
       <Filter>VilagOS\Window</Filter>
     </ClInclude>
+    <ClInclude Include="src\vospch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OpenGl\imgui_impl_opengl3.cpp">
@@ -94,9 +100,9 @@
     <ClCompile Include="src\VilagOS\Window\Window.cpp">
       <Filter>VilagOS\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\vospch.cpp" />
-    <ClCompile Include="WindowMasterInput.cpp">
+    <ClCompile Include="src\VilagOS\Window\WindowMasterInput.cpp">
       <Filter>VilagOS\Window</Filter>
     </ClCompile>
+    <ClCompile Include="src\vospch.cpp" />
   </ItemGroup>
 </Project>

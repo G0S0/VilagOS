@@ -6,6 +6,8 @@ public:
 
 	void OnUpdate() override {
 		//VOS_CLIENT_INFO("Example layer: update");
+		if(VilagOS::Input::IsKeyPressedStatic(VOS_KEY_TAB))
+			VOS_CLIENT_TRACE("Tab key is pressed");
 	}
 
 	void OnEvent(VilagOS::Event& e) override {
@@ -19,7 +21,6 @@ public:
 		
 		PushLayer(new ExampleLayer());
 		PushOverlay(new VilagOS::ImguiLayer());
-
 	}
 	~Game() {}
 };

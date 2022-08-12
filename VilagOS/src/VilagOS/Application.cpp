@@ -4,6 +4,9 @@
 #include "Log.h"
 #include "Core.h"
 #include "VilagOS/Input.h"
+#include "glfw3.h"
+#include "VilagOS/MouseButtonCodes.h"
+#include "VilagOS/KeyCodes.h"
 
 namespace VilagOS{
 
@@ -30,7 +33,9 @@ namespace VilagOS{
 				layer->OnUpdate();
 
 			auto [x, y] = Input::GetMousePositionStatic();
-			VOS_CORE_TRACE("{0}, {1}", x, y);
+			//VOS_CORE_TRACE("{0}, {1}", x, y);
+
+			
 			m_Window->OnUpdate();
 		}
 	}

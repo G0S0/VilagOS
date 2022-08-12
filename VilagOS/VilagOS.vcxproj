@@ -156,13 +156,15 @@
     <ClInclude Include="src\VilagOS\Events\MouseEvent.h" />
     <ClInclude Include="src\VilagOS\Imgui\ImguiLayer.h" />
     <ClInclude Include="src\VilagOS\Input.h" />
+    <ClInclude Include="src\VilagOS\KeyCodes.h" />
     <ClInclude Include="src\VilagOS\Layer.h" />
     <ClInclude Include="src\VilagOS\LayerStack.h" />
     <ClInclude Include="src\VilagOS\Log.h" />
+    <ClInclude Include="src\VilagOS\MouseButtonCodes.h" />
     <ClInclude Include="src\VilagOS\Window\Window.h" />
     <ClInclude Include="src\VilagOS\Window\WindowMaster.h" />
+    <ClInclude Include="src\VilagOS\Window\WindowMasterInput.h" />
     <ClInclude Include="src\vospch.h" />
-    <ClInclude Include="WindowMasterInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OpenGl\imgui_impl_opengl3.cpp" />
@@ -172,10 +174,10 @@
     <ClCompile Include="src\VilagOS\LayerStack.cpp" />
     <ClCompile Include="src\VilagOS\Log.cpp" />
     <ClCompile Include="src\VilagOS\Window\Window.cpp" />
+    <ClCompile Include="src\VilagOS\Window\WindowMasterInput.cpp" />
     <ClCompile Include="src\vospch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="WindowMasterInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\Glad\Glad.vcxproj">
