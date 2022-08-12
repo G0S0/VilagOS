@@ -94,7 +94,7 @@
       <ImportLibrary>..\bin\Debug-windows-x86_64\VilagOS\VilagOS.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\VilagOS\VilagOS.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\VilagOS\VilagOS.dll ..\bin\Debug-windows-x86_64\Game &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\VilagOS\VilagOS.dll ..\bin\Debug-windows-x86_64\Game &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Debug-windows-x86_64\VilagOS\VilagOS.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Debug-windows-x86_64\Game\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Debug-windows-x86_64\Game\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -117,7 +117,7 @@
       <ImportLibrary>..\bin\Release-windows-x86_64\VilagOS\VilagOS.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\VilagOS\VilagOS.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\VilagOS\VilagOS.dll ..\bin\Release-windows-x86_64\Game &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\VilagOS\VilagOS.dll ..\bin\Release-windows-x86_64\Game &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Release-windows-x86_64\VilagOS\VilagOS.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Release-windows-x86_64\Game\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Release-windows-x86_64\Game\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -140,7 +140,7 @@
       <ImportLibrary>..\bin\Dist-windows-x86_64\VilagOS\VilagOS.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\VilagOS\VilagOS.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\VilagOS\VilagOS.dll ..\bin\Dist-windows-x86_64\Game &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\VilagOS\VilagOS.dll ..\bin\Dist-windows-x86_64\Game &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Dist-windows-x86_64\VilagOS\VilagOS.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Dist-windows-x86_64\Game\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Dist-windows-x86_64\Game\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -155,12 +155,14 @@
     <ClInclude Include="src\VilagOS\Events\KeyboardEvent.h" />
     <ClInclude Include="src\VilagOS\Events\MouseEvent.h" />
     <ClInclude Include="src\VilagOS\Imgui\ImguiLayer.h" />
+    <ClInclude Include="src\VilagOS\Input.h" />
     <ClInclude Include="src\VilagOS\Layer.h" />
     <ClInclude Include="src\VilagOS\LayerStack.h" />
     <ClInclude Include="src\VilagOS\Log.h" />
-    <ClInclude Include="src\Window.h" />
-    <ClInclude Include="src\WindowMaster.h" />
+    <ClInclude Include="src\VilagOS\Window\Window.h" />
+    <ClInclude Include="src\VilagOS\Window\WindowMaster.h" />
     <ClInclude Include="src\vospch.h" />
+    <ClInclude Include="WindowMasterInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OpenGl\imgui_impl_opengl3.cpp" />
@@ -169,10 +171,11 @@
     <ClCompile Include="src\VilagOS\Layer.cpp" />
     <ClCompile Include="src\VilagOS\LayerStack.cpp" />
     <ClCompile Include="src\VilagOS\Log.cpp" />
-    <ClCompile Include="src\Window.cpp" />
+    <ClCompile Include="src\VilagOS\Window\Window.cpp" />
     <ClCompile Include="src\vospch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="WindowMasterInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\Glad\Glad.vcxproj">

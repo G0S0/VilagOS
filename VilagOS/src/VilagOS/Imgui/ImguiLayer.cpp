@@ -92,7 +92,6 @@ namespace VilagOS {
 		if (c > 0 && c < 0x10000) {
 			io.AddInputCharacter((unsigned short)c);
 		}
-
 		return false;
 	}
 
@@ -100,14 +99,14 @@ namespace VilagOS {
 		ImGuiIO& io = ImGui::GetIO();
 		int key = e.getButton();
 		io.MouseDown[key] = true;
-		VOS_CORE_ERROR(key);
+		//VOS_CORE_ERROR(key);
 		return false;
 	}
 	bool ImguiLayer::OnMouseButtonReleased(MouseButtonReleasedEvent& e) {
 		ImGuiIO& io = ImGui::GetIO();
 		int key = e.getButton();
 		io.MouseDown[key] = false;
-		VOS_CORE_ERROR(key);
+		//VOS_CORE_ERROR(key);
 		return false;
 	}
 	bool ImguiLayer::OnMouseScrolled(MouseScrolledEvent& e) {

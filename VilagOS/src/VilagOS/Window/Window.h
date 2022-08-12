@@ -24,6 +24,8 @@ namespace VilagOS{
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
+		inline virtual void* GetNativeWindow() const { return m_Window; }; //I put virtual here just so that I know it is inherited since there is no override
+
 	private:
 		void Init(const WindowProps& props);
 		void Shutdown();

@@ -3,6 +3,7 @@
 #include "glad/glad.h"
 #include "Log.h"
 #include "Core.h"
+#include "VilagOS/Input.h"
 
 namespace VilagOS{
 
@@ -27,6 +28,9 @@ namespace VilagOS{
 		while (m_Running) {
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
+
+			auto [x, y] = Input::GetMousePositionStatic();
+			VOS_CORE_TRACE("{0}, {1}", x, y);
 			m_Window->OnUpdate();
 		}
 	}
