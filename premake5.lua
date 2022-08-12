@@ -14,6 +14,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "VilagOS/vendor/GLFW"
 IncludeDir["Glad"] = "VilagOS/vendor/Glad/include"
 IncludeDir["Imgui"] = "VilagOS/vendor/Imgui"
+IncludeDir["glm"] = "VilagOS/vendor/glm"
 
 startproject "Game"
 
@@ -40,7 +41,8 @@ project "VilagOS"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Imgui}"
+		"%{IncludeDir.Imgui}",
+		"%{IncludeDir.glm}"
 	}
 
 	links{ --projects. refferences in solution
@@ -71,7 +73,7 @@ project "VilagOS"
 	filter "configurations:Debug"
 		defines "VOS_DEBUG"
 		symbols "On"
-		runtime "Debug"
+		--runtime "Debug"
 		buildoptions "/MDd"
 	
 	filter "configurations:Release"
@@ -100,7 +102,8 @@ project "Game"
 
 	includedirs{
 		"VilagOS/vendor/spdlog/include",
-		"VilagOS/src"
+		"VilagOS/src",
+		"%{IncludeDir.glm}"
 	}
 
 	links{
@@ -119,7 +122,6 @@ project "Game"
 	filter "configurations:Debug"
 		defines "VOS_DEBUG"
 		symbols "On"
-		runtime "Debug"
 		buildoptions "/MDd"
 	
 	filter "configurations:Release"

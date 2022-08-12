@@ -4,7 +4,7 @@ class ExampleLayer : public VilagOS::Layer {
 public:
 	ExampleLayer() : Layer("Example") {}
 
-	void OnUpdate() override {
+	void OnImGuiRender() override {
 		//VOS_CLIENT_INFO("Example layer: update");
 		if(VilagOS::Input::IsKeyPressedStatic(VOS_KEY_TAB))
 			VOS_CLIENT_TRACE("Tab key is pressed");
@@ -20,7 +20,6 @@ public:
 	Game() {
 		
 		PushLayer(new ExampleLayer());
-		PushOverlay(new VilagOS::ImguiLayer());
 	}
 	~Game() {}
 };

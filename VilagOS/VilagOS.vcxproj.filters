@@ -85,6 +85,9 @@
     <ClCompile Include="src\VilagOS\Application.cpp">
       <Filter>VilagOS</Filter>
     </ClCompile>
+    <ClCompile Include="src\VilagOS\Imgui\ImGuiBuild.cpp">
+      <Filter>VilagOS\Imgui</Filter>
+    </ClCompile>
     <ClCompile Include="src\VilagOS\Imgui\ImguiLayer.cpp">
       <Filter>VilagOS\Imgui</Filter>
     </ClCompile>

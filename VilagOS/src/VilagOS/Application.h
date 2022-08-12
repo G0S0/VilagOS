@@ -3,6 +3,7 @@
 #include "Window/WindowMaster.h"
 #include "Events/ApplicationEvent.h"
 #include "LayerStack.h"
+#include "VilagOS/Imgui/ImguiLayer.h"
 
 namespace VilagOS {
 
@@ -21,6 +22,7 @@ namespace VilagOS {
 	private:
 		bool OnWindowClose(WindowCloseEvent& event);
 		std::unique_ptr<WindowMaster> m_Window;
+		ImguiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;

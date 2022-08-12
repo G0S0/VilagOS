@@ -4,9 +4,10 @@
 #include "Log.h"
 #include "Core.h"
 #include "VilagOS/Input.h"
-#include "glfw3.h"
 #include "VilagOS/MouseButtonCodes.h"
 #include "VilagOS/KeyCodes.h"
+#include "glfw3.h"
+
 
 namespace VilagOS{
 
@@ -19,8 +20,10 @@ namespace VilagOS{
 		m_Window = std::unique_ptr<WindowMaster>(WindowMaster::Create());
 		m_Window->SetEventCallback(VOS_BIND_EVENT_FN(Application::OnEvent)); //In the end calls the OnEvent fn
 
-		unsigned int id;
-		glGenVertexArrays(1, &id); //the hell is this?
+		m_ImGuiLayer = new ImguiLayer();
+		PushOverlay(m_ImGuiLayer);
+		//unsigned int id;
+		//glGenVertexArrays(1, &id); //the hell is this?
 	}
 	Application::~Application() {
 
@@ -29,14 +32,17 @@ namespace VilagOS{
 	void Application::run() {
 		WindowResizeEvent e(1280, 720);
 		while (m_Running) {
+			glClear(GL_COLOR_BUFFER_BIT);
+			//for (Layer* layer : m_LayerStack)
+			//	layer->OnUpdate();
+
+			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
-
-			auto [x, y] = Input::GetMousePositionStatic();
-			//VOS_CORE_TRACE("{0}, {1}", x, y);
-
-			
+				layer->OnImGuiRender();
+			m_ImGuiLayer->End();
 			m_Window->OnUpdate();
+			//glfwSwapBuffers(static_cast<GLFWwindow*>(m_Window->GetNativeWindow()));
+			
 		}
 	}
 
