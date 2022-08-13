@@ -11,7 +11,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 --I have no idea what happening here.
 IncludeDir = {}
-IncludeDir["GLFW"] = "VilagOS/vendor/GLFW"
+IncludeDir["GLFW"] = "VilagOS/vendor/Glfw"
 IncludeDir["Glad"] = "VilagOS/vendor/Glad/include"
 IncludeDir["Imgui"] = "VilagOS/vendor/Imgui"
 IncludeDir["glm"] = "VilagOS/vendor/glm"
@@ -31,9 +31,7 @@ project "VilagOS"
 	
 	files{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/src/OpenGl/**.cpp",
-		"%{prj.name}/src/OpenGl/**.h"
+		"%{prj.name}/src/**.cpp"
 	}
 
 	includedirs{ --.h includes
@@ -42,7 +40,8 @@ project "VilagOS"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Imgui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{prj.name}/vendor"
 	}
 
 	links{ --projects. refferences in solution
@@ -63,7 +62,10 @@ project "VilagOS"
 		defines{
 			"VOS_PLATFORM_WINDOWS",
 			"VOS_BUILD_DLL",
-			"GLFW_INCLUDE_NONE" --I need this so that glad and glfw dont both include opengl.
+			"GLFW_INCLUDE_NONE", --I need this so that glad and glfw dont both include opengl.
+			"IMGUI_IMPL_LOADER_CUSTOM",
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD",
+			"IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY"
 		}
 
 		postbuildcommands{
@@ -103,7 +105,8 @@ project "Game"
 	includedirs{
 		"VilagOS/vendor/spdlog/include",
 		"VilagOS/src",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.Imgui}"
 	}
 
 	links{

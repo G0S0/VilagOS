@@ -79,8 +79,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>vospch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;VOS_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\GLFW;vendor\Imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -102,8 +102,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>vospch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;VOS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\GLFW;vendor\Imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -125,8 +125,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>vospch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;VOS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\GLFW;vendor\Imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -144,8 +144,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\OpenGl\imgui_impl_opengl3.h" />
-    <ClInclude Include="src\OpenGl\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="src\VilagOS.h" />
     <ClInclude Include="src\VilagOS\Application.h" />
     <ClInclude Include="src\VilagOS\Core.h" />
@@ -167,7 +165,6 @@
     <ClInclude Include="src\vospch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\OpenGl\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\VilagOS\Application.cpp" />
     <ClCompile Include="src\VilagOS\Imgui\ImGuiBuild.cpp" />
     <ClCompile Include="src\VilagOS\Imgui\ImguiLayer.cpp" />
