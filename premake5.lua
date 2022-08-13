@@ -12,13 +12,13 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 --I have no idea what happening here.
 IncludeDir = {}
 IncludeDir["GLFW"] = "VilagOS/vendor/Glfw"
-IncludeDir["Glad"] = "VilagOS/vendor/Glad/include"
+IncludeDir["Glad"] = "VilagOS/vendor/Glad"
 IncludeDir["Imgui"] = "VilagOS/vendor/Imgui"
 IncludeDir["glm"] = "VilagOS/vendor/glm"
 
 startproject "Game"
 
-include "VilagOS/vendor/Glad" --includes a premake5 file from Glad.
+--include "VilagOS/vendor/Glad" --includes a premake5 file from Glad.
 include "VilagOS/vendor/Imgui"
 
 project "VilagOS"
@@ -47,7 +47,8 @@ project "VilagOS"
 	links{ --projects. refferences in solution
 		"dependencies/GLFW/glfw3.lib",
 		"opengl32.lib",
-		"Glad",
+		--"Glad",
+		"dependencies/Glad/Glad.lib",
 		"Imgui"
 	}
 
@@ -65,7 +66,8 @@ project "VilagOS"
 			"GLFW_INCLUDE_NONE", --I need this so that glad and glfw dont both include opengl.
 			"IMGUI_IMPL_LOADER_CUSTOM",
 			"IMGUI_IMPL_OPENGL_LOADER_GLAD",
-			"IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY"
+			"IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY",
+			"VOS_IMGUI_EXPORT"
 		}
 
 		postbuildcommands{
@@ -111,6 +113,10 @@ project "Game"
 
 	links{
 		"VilagOS"
+	}
+
+	defines{
+		"GAME_IMGUI_IMPORT"
 	}
 
 	filter "system:windows"

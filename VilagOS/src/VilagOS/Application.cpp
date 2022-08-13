@@ -1,6 +1,6 @@
 #include "vospch.h"
 #include "Application.h"
-#include "glad/glad.h"
+#include "Glad/glad.h"
 #include "Log.h"
 #include "Core.h"
 #include "VilagOS/Input.h"

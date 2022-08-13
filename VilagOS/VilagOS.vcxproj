@@ -79,8 +79,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>vospch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_IMGUI_EXPORT;VOS_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -90,7 +90,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;..\dependencies\Glad\Glad.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Debug-windows-x86_64\VilagOS\VilagOS.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -102,8 +102,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>vospch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_IMGUI_EXPORT;VOS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -113,7 +113,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;..\dependencies\Glad\Glad.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Release-windows-x86_64\VilagOS\VilagOS.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -125,8 +125,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>vospch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad\include;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_IMGUI_EXPORT;VOS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -136,7 +136,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;..\dependencies\Glad\Glad.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Dist-windows-x86_64\VilagOS\VilagOS.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -178,9 +178,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="vendor\Glad\Glad.vcxproj">
-      <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
-    </ProjectReference>
     <ProjectReference Include="vendor\Imgui\Imgui.vcxproj">
       <Project>{E087650D-4C9C-8DBE-151E-311E81F189EF}</Project>
     </ProjectReference>

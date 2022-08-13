@@ -18,4 +18,14 @@
 
 
 #define BIT(x) (1 << x) //shift 1 by x places
+
 #define VOS_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+//#ifdef GAME_IMGUI_IMPORT
+//	#define IMGUI_API =__declspec(dllimport)
+//#endif
+//
+//#ifdef VOS_IMGUI_EXPORT
+//	#define IMGUI_API =__declspec(dllexport)
+//#endif 
+
