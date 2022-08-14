@@ -26,6 +26,7 @@ namespace VilagOS {
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;
+		unsigned int m_VertexBuffer, m_VertexArray, m_IndexBuffer;
 	};
 
 	//To be defined in a client
