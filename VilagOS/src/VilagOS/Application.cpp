@@ -7,6 +7,7 @@
 #include "VilagOS/MouseButtonCodes.h"
 #include "VilagOS/KeyCodes.h"
 #include "glfw3.h"
+#include "Renderer/Buffer.h"
 
 
 
@@ -27,15 +28,15 @@ namespace VilagOS{
 		//VertexArray
 		glGenVertexArrays(1, &m_VertexArray);
 		glBindVertexArray(m_VertexArray);
-		//VertexBuffer
-		glGenBuffers(1, &m_VertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
 
 		float verticies[3 * 3]{
 			-0.5f, -0.5f, 0.0f,
 			0.5f, -0.5f, 0.0f,
 			0.0f, 0.5f, 0.0f,
 		};
+		//VertexBuffer* vertex = ;
+		m_VertexBuffer.reset(new VertexBuffer(verticies, sizeof(verticies)));
+
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
 
 		glEnableVertexAttribArray(0); //eh?

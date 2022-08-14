@@ -150,6 +150,7 @@
     <ClInclude Include="src\VilagOS\LayerStack.h" />
     <ClInclude Include="src\VilagOS\Log.h" />
     <ClInclude Include="src\VilagOS\MouseButtonCodes.h" />
+    <ClInclude Include="src\VilagOS\Renderer\Buffer.h" />
     <ClInclude Include="src\VilagOS\Renderer\Shader.h" />
     <ClInclude Include="src\VilagOS\Window\Window.h" />
     <ClInclude Include="src\VilagOS\Window\WindowMaster.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="src\VilagOS\Layer.cpp" />
     <ClCompile Include="src\VilagOS\LayerStack.cpp" />
     <ClCompile Include="src\VilagOS\Log.cpp" />
+    <ClCompile Include="src\VilagOS\Renderer\Buffer.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Shader.cpp" />
     <ClCompile Include="src\VilagOS\Window\Window.cpp" />
     <ClCompile Include="src\VilagOS\Window\WindowMasterInput.cpp" />

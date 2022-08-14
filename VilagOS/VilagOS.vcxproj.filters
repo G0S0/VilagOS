@@ -74,6 +74,9 @@
     <ClInclude Include="src\VilagOS\Renderer\Shader.h">
       <Filter>VilagOS\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\Buffer.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp">
@@ -102,6 +105,9 @@
     </ClCompile>
     <ClCompile Include="src\vospch.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Shader.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\Buffer.cpp">
       <Filter>VilagOS\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
