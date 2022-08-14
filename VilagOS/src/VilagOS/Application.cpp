@@ -9,6 +9,7 @@
 #include "glfw3.h"
 
 
+
 namespace VilagOS{
 
 	Application* Application::s_Instance = nullptr;
@@ -47,6 +48,30 @@ namespace VilagOS{
 		unsigned int indicies[3] = { 0, 1, 2 };
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);
 
+		//multiple lines string
+		//takes a position of out attribute inside of a vertex buffer.	
+		std::string vertexSource = R"( 
+			#version 330 core
+			layout(location = 0) in vec3 a_Position; 		
+			out vec3 position;
+			void main(){
+			position = a_Position;
+			gl_Position = vec4(a_Position, 1.0f);
+			}
+		)";
+	
+		std::string fragmentSource = R"( 
+			#version 330 core
+			layout(location = 0) out vec4 color; 	
+			in vec3 position;			
+
+			void main(){
+			color = vec4(position * 0.5f + 0.5f, 1.0f);
+			}
+		)";
+
+		m_Shader.reset(new Shader(vertexSource, fragmentSource)); //unique ptr.
+
 		//unsigned int id;
 		//glGenVertexArrays(1, &id); //the hell is this?
 	}
@@ -60,7 +85,9 @@ namespace VilagOS{
 			glClearColor(0.1f, 0.1f, 0.1f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			//glBindVertexArray(m_VertexArray);
+			m_Shader->Bind();
+
+			glBindVertexArray(m_VertexArray);
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : m_LayerStack)

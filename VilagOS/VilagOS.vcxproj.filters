@@ -13,6 +13,9 @@
     <Filter Include="VilagOS\Window">
       <UniqueIdentifier>{C1A34BD1-AD71-3FD7-9605-B0FD82721B3C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="VilagOS\Renderer">
+      <UniqueIdentifier>{537526be-cab6-4bbe-8aae-bfef27fa616d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\VilagOS.h" />
@@ -68,6 +71,9 @@
       <Filter>VilagOS\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\vospch.h" />
+    <ClInclude Include="src\VilagOS\Renderer\Shader.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp">
@@ -95,5 +101,8 @@
       <Filter>VilagOS\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\vospch.cpp" />
+    <ClCompile Include="src\VilagOS\Renderer\Shader.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
