@@ -20,7 +20,7 @@ namespace VilagOS {
 		EVENT_CLASS_CATEGORY(EventCategoryMouse)
 
 	private: 
-		int m_MouseX, m_MouseY;
+		float m_MouseX, m_MouseY;
 	};
 
 	class VOS_API MouseScrolledEvent : public Event {
@@ -40,7 +40,7 @@ namespace VilagOS {
 		EVENT_CLASS_CATEGORY(EventCategoryMouse)
 
 	private:
-		int m_offsetX, m_offsetY;
+		float m_offsetX, m_offsetY;
 	};
 
 	class VOS_API MouseButtonEvent : public Event {

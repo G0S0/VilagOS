@@ -23,19 +23,19 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
@@ -54,32 +54,29 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>..\bin\Debug-windows-x86_64\VilagOS\</OutDir>
     <IntDir>..\obj\Debug-windows-x86_64\VilagOS\</IntDir>
     <TargetName>VilagOS</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>..\bin\Release-windows-x86_64\VilagOS\</OutDir>
     <IntDir>..\obj\Release-windows-x86_64\VilagOS\</IntDir>
     <TargetName>VilagOS</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <OutDir>..\bin\Dist-windows-x86_64\VilagOS\</OutDir>
     <IntDir>..\obj\Dist-windows-x86_64\VilagOS\</IntDir>
     <TargetName>VilagOS</TargetName>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>vospch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_IMGUI_EXPORT;VOS_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;_CRT_SECURE_NO_WARNINGS;VOS_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -90,19 +87,17 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;..\dependencies\Glad\Glad.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\bin\Debug-windows-x86_64\VilagOS\VilagOS.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\VilagOS\VilagOS.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Debug-windows-x86_64\Game\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Debug-windows-x86_64\Game\" &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;..\dependencies\Glad\Glad.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>vospch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_IMGUI_EXPORT;VOS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;_CRT_SECURE_NO_WARNINGS;VOS_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -113,19 +108,17 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;..\dependencies\Glad\Glad.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\bin\Release-windows-x86_64\VilagOS\VilagOS.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\VilagOS\VilagOS.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Release-windows-x86_64\Game\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Release-windows-x86_64\Game\" &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;..\dependencies\Glad\Glad.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>vospch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;VOS_BUILD_DLL;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;VOS_IMGUI_EXPORT;VOS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>VOS_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_LOADER_CUSTOM;IMGUI_IMPL_OPENGL_LOADER_GLAD;IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY;_CRT_SECURE_NO_WARNINGS;VOS_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\Glad;vendor\Glfw;vendor\Imgui;vendor\glm;vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -136,12 +129,10 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;..\dependencies\Glad\Glad.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>..\bin\Dist-windows-x86_64\VilagOS\VilagOS.lib</ImportLibrary>
     </Link>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\VilagOS\VilagOS.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Dist-windows-x86_64\Game\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\VilagOS\VilagOS.dll "..\bin\Dist-windows-x86_64\Game\" &gt; nul)</Command>
-    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>..\dependencies\GLFW\glfw3.lib;opengl32.lib;..\dependencies\Glad\Glad.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\VilagOS.h" />

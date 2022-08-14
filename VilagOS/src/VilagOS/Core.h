@@ -1,11 +1,17 @@
 #pragma once
 
 #ifdef VOS_PLATFORM_WINDOWS
+#if VOS_DYNAMIC_LINK
 	#ifdef VOS_BUILD_DLL
 		#define VOS_API __declspec(dllexport)
+		#define IMGUI_API __declspec(dllexport)
 	#else 
 		#define VOS_API __declspec(dllimport)
+		#define IMGUI_API __declspec(dllimport)
 	#endif // VOS_BUILD_DLL
+#else
+	#define VOS_API
+#endif
 #endif // VOS_PLATFORM_WINDOWS
 
 #ifdef VOS_ENABLE_ASSERTS
@@ -20,12 +26,3 @@
 #define BIT(x) (1 << x) //shift 1 by x places
 
 #define VOS_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
-
-//#ifdef GAME_IMGUI_IMPORT
-//	#define IMGUI_API =__declspec(dllimport)
-//#endif
-//
-//#ifdef VOS_IMGUI_EXPORT
-//	#define IMGUI_API =__declspec(dllexport)
-//#endif 
-

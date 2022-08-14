@@ -23,8 +23,10 @@ include "VilagOS/vendor/Imgui"
 
 project "VilagOS"
 	location "VilagOS" --project folder
-	kind "SharedLib" --dll files
+	kind "StaticLib" 
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "On" --exe links its own runtime library.
 
 	targetdir("bin/" .. outputdir .. "/%{prj.name}")
 	objdir("obj/" .. outputdir .. "/%{prj.name}")
@@ -56,23 +58,22 @@ project "VilagOS"
 	pchsource "VilagOS/src/vospch.cpp" --Visual studio needs this 2 work
 
 	filter "system:windows"
-		cppdialect "C++17"
 		staticruntime "On"
 		systemversion "latest"
 
 		defines{
 			"VOS_PLATFORM_WINDOWS",
-			"VOS_BUILD_DLL",
+			--"VOS_BUILD_DLL",
 			"GLFW_INCLUDE_NONE", --I need this so that glad and glfw dont both include opengl.
 			"IMGUI_IMPL_LOADER_CUSTOM",
 			"IMGUI_IMPL_OPENGL_LOADER_GLAD",
 			"IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY",
-			"VOS_IMGUI_EXPORT"
+			"_CRT_SECURE_NO_WARNINGS"
 		}
 
-		postbuildcommands{
-			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Game/\"")
-		}
+		--postbuildcommands{
+		--	("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Game/\"")
+		--}
 
 	filter "configurations:Debug"
 		defines "VOS_DEBUG"
@@ -94,8 +95,10 @@ project "VilagOS"
 project "Game"
 	location "Game" --project folder
 	kind "ConsoleApp" --console app
+	cppdialect "C++17"
 	language "C++"
-
+	staticruntime "On"
+	
 	targetdir("bin/" .. outputdir .. "/%{prj.name}")
 	objdir("obj/" .. outputdir .. "/%{prj.name}")
 
@@ -115,12 +118,9 @@ project "Game"
 		"VilagOS"
 	}
 
-	defines{
-		"GAME_IMGUI_IMPORT"
-	}
 
 	filter "system:windows"
-		cppdialect "C++17"
+		
 		staticruntime "On"
 		systemversion "latest"
 
