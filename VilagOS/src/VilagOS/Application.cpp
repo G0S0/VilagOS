@@ -29,26 +29,23 @@ namespace VilagOS{
 		glGenVertexArrays(1, &m_VertexArray);
 		glBindVertexArray(m_VertexArray);
 
+		//VertexBuffer:
 		float verticies[3 * 3]{
 			-0.5f, -0.5f, 0.0f,
 			0.5f, -0.5f, 0.0f,
 			0.0f, 0.5f, 0.0f,
 		};
-		//VertexBuffer* vertex = ;
 		m_VertexBuffer.reset(new VertexBuffer(verticies, sizeof(verticies)));
 
-		glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
-
-		glEnableVertexAttribArray(0); //eh?
+		//VertexArray
+		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), nullptr);
 
-		//IndexBuffer
-		glGenBuffers(1, &m_IndexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
+		//IndexBuffer:
+		uint32_t indicies[3] = { 0, 1, 2 };
+		m_IndexBuffer.reset(new IndexBuffer(indicies, sizeof(indicies) / sizeof(uint32_t)));
 
-		unsigned int indicies[3] = { 0, 1, 2 };
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);
-
+		//Shader:
 		//multiple lines string
 		//takes a position of out attribute inside of a vertex buffer.	
 		std::string vertexSource = R"( 
@@ -70,12 +67,9 @@ namespace VilagOS{
 			color = vec4(position * 0.5f + 0.5f, 1.0f);
 			}
 		)";
-
 		m_Shader.reset(new Shader(vertexSource, fragmentSource)); //unique ptr.
-
-		//unsigned int id;
-		//glGenVertexArrays(1, &id); //the hell is this?
 	}
+
 	Application::~Application() {
 
 	}
@@ -89,7 +83,7 @@ namespace VilagOS{
 			m_Shader->Bind();
 
 			glBindVertexArray(m_VertexArray);
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();

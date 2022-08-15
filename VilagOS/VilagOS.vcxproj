@@ -135,6 +135,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="src\VilagOS.h" />
     <ClInclude Include="src\VilagOS\Application.h" />
     <ClInclude Include="src\VilagOS\Core.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="src\VilagOS\LayerStack.cpp" />
     <ClCompile Include="src\VilagOS\Log.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\VilagOS\Renderer\Renderer.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Shader.cpp" />
     <ClCompile Include="src\VilagOS\Window\Window.cpp" />
     <ClCompile Include="src\VilagOS\Window\WindowMasterInput.cpp" />
