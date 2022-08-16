@@ -86,6 +86,9 @@
     <ClInclude Include="src\VilagOS\Renderer\RenderCommand.h">
       <Filter>VilagOS\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\OrthographicCamera.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp">
@@ -126,6 +129,9 @@
       <Filter>VilagOS\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\RenderCommand.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\OrthographicCamera.cpp">
       <Filter>VilagOS\Renderer</Filter>
     </ClCompile>
   </ItemGroup>

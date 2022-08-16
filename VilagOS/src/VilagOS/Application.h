@@ -7,6 +7,7 @@
 #include "VilagOS/Renderer/Shader.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
+#include "VilagOS/Renderer/OrthographicCamera.h"
 
 namespace VilagOS {
 
@@ -34,14 +35,14 @@ namespace VilagOS {
 		LayerStack m_LayerStack;
 		
 		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexBuffer> m_VertexBuffer;
-		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		
 		std::shared_ptr<VertexArray> m_VertexArray;
 
 		std::shared_ptr<Shader> m_OtherShader;
-		std::shared_ptr<VertexBuffer> m_OtherVertexBuffer;
-		std::shared_ptr<IndexBuffer> m_OtherIndexBuffer;
+		
 		std::shared_ptr<VertexArray> m_OtherVertexArray;
+
+		OrthographicCamera m_Camera;
 	};
 
 	//To be defined in a client

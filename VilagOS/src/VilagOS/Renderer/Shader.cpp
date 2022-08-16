@@ -1,6 +1,8 @@
 #include "vospch.h"
 #include "Shader.h"
 #include "Glad/glad.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace VilagOS {
 	Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource) {
@@ -122,5 +124,10 @@ namespace VilagOS {
 
 	void Shader::Unbind() const {
 		glUseProgram(0); //before starting rendering
+	}
+
+	void Shader::UploadUniformMat4(const glm::mat4& matrix, const std::string& name) {
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 }

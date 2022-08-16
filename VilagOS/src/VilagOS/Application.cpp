@@ -1,6 +1,5 @@
 #include "vospch.h"
 #include "Application.h"
-#include "Glad/glad.h"
 #include "Log.h"
 #include "Core.h"
 #include "VilagOS/Input.h"
@@ -20,6 +19,8 @@ namespace VilagOS{
 		VOS_CORE_ASSERT(!s_Instance, "Application already exists");
 		s_Instance = this;
 
+		m_Camera = OrthographicCamera(-1.0f, 1.0f, -1.0f, 1.0f);
+
 		m_Window = std::unique_ptr<WindowMaster>(WindowMaster::Create());
 		m_Window->SetEventCallback(VOS_BIND_EVENT_FN(Application::OnEvent)); //In the end calls the OnEvent fn
 
@@ -35,6 +36,8 @@ namespace VilagOS{
 			0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
 			0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 0.3f,
 		};
+
+		std::shared_ptr<VertexBuffer> m_VertexBuffer;
 		m_VertexBuffer.reset(new VertexBuffer(verticies, sizeof(verticies))); //instancing a vertex buffer
 
 		BufferLayout layout = { // layout setup
@@ -51,6 +54,7 @@ namespace VilagOS{
 
 		//IndexBuffer:
 		uint32_t indicies[6] = { 0, 1, 2}; 
+		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		m_IndexBuffer.reset(new IndexBuffer(indicies, sizeof(indicies) / sizeof(uint32_t)));
 		m_VertexArray->AddIndexBuffer(m_IndexBuffer);
 
@@ -61,7 +65,9 @@ namespace VilagOS{
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position; 	
-			layout(location = 1) in vec4 a_Color; 	
+			layout(location = 1) in vec4 a_Color; 
+	
+			uniform mat4 u_ViewProjection;			
 
 			out vec3 o_Position;
 			out vec4 o_Color;
@@ -69,7 +75,7 @@ namespace VilagOS{
 			void main(){
 			o_Position = a_Position;
 			o_Color = a_Color;
-			gl_Position = vec4(a_Position, 1.0f);
+			gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
 			}
 		)";
 	
@@ -96,12 +102,14 @@ namespace VilagOS{
 			1.0f, 1.0f, 0.0f, 0.9f, 0.4f, 0.8f, 1.0f
 		};
 
+		std::shared_ptr<VertexBuffer> m_OtherVertexBuffer;
 		m_OtherVertexBuffer.reset(new VertexBuffer(OtherVerticies, sizeof(OtherVerticies)));
 		m_OtherVertexBuffer->SetLayout(layout);
 
 		m_OtherVertexArray->AddVertexBuffer(m_OtherVertexBuffer);
 
 		uint32_t otherIndicies[6] = {0, 1, 2, 2, 3, 0};
+		std::shared_ptr<IndexBuffer> m_OtherIndexBuffer;
 		m_OtherIndexBuffer.reset(new IndexBuffer(otherIndicies, sizeof(otherIndicies)));
 
 		m_OtherVertexArray->AddIndexBuffer(m_OtherIndexBuffer);
@@ -111,6 +119,8 @@ namespace VilagOS{
 
 			layout(location = 0) in vec3 a_Position; 	
 			layout(location = 1) in vec4 a_Color; 	
+
+			uniform mat4 u_ViewProjection;	
 
 			out vec3 o_Position;
 			out vec4 o_Color;
@@ -130,7 +140,7 @@ namespace VilagOS{
 			in vec4 o_Color;
 
 			void main(){
-			color = vec4(o_Position * 0.5f + 0.5f, 1.0f);
+			color = u_ViewProjection * vec4(o_Position * 0.5f + 0.5f, 1.0f);
 			color = o_Color;			
 			}
 		)";
@@ -145,17 +155,19 @@ namespace VilagOS{
 	void Application::run() {
 		WindowResizeEvent e(1280, 720);
 		while (m_Running) {
-			glClearColor(0.1f, 0.1f, 0.1f, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			//glClearColor(0.1f, 0.1f, 0.1f, 1);
+			//glClear(GL_COLOR_BUFFER_BIT);
 
 			RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1));
 
 			//Renderer::BeginScene(camera, lights, enviroment);
 
 			m_Shader->Bind();
+			m_Shader->UploadUniformMat4(m_Camera.GetViewProjectionMatrix(), "u_ViewProjection");
 			Renderer::SubmitData(m_OtherVertexArray);
 
 			m_OtherShader->Bind();
+			m_OtherShader->UploadUniformMat4(m_Camera.GetViewProjectionMatrix(), "u_ViewProjection");
 			Renderer::SubmitData(m_VertexArray);
 
 			//Renderer::EndScene();
@@ -167,8 +179,6 @@ namespace VilagOS{
 			//m_Shader->Bind();
 			//m_VertexArray->Bind();
 			//glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
-
-			
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();

@@ -151,6 +151,7 @@
     <ClInclude Include="src\VilagOS\Log.h" />
     <ClInclude Include="src\VilagOS\MouseButtonCodes.h" />
     <ClInclude Include="src\VilagOS\Renderer\Buffer.h" />
+    <ClInclude Include="src\VilagOS\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\VilagOS\Renderer\RenderCommand.h" />
     <ClInclude Include="src\VilagOS\Renderer\Renderer.h" />
     <ClInclude Include="src\VilagOS\Renderer\Shader.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="src\VilagOS\LayerStack.cpp" />
     <ClCompile Include="src\VilagOS\Log.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\VilagOS\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Renderer.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Shader.cpp" />
