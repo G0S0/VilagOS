@@ -80,6 +80,9 @@
     <ClInclude Include="Renderer.h">
       <Filter>VilagOS\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\VertexArray.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp">
@@ -114,6 +117,9 @@
       <Filter>VilagOS\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\Renderer.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\VertexArray.cpp">
       <Filter>VilagOS\Renderer</Filter>
     </ClCompile>
   </ItemGroup>

@@ -153,6 +153,7 @@
     <ClInclude Include="src\VilagOS\MouseButtonCodes.h" />
     <ClInclude Include="src\VilagOS\Renderer\Buffer.h" />
     <ClInclude Include="src\VilagOS\Renderer\Shader.h" />
+    <ClInclude Include="src\VilagOS\Renderer\VertexArray.h" />
     <ClInclude Include="src\VilagOS\Window\Window.h" />
     <ClInclude Include="src\VilagOS\Window\WindowMaster.h" />
     <ClInclude Include="src\VilagOS\Window\WindowMasterInput.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="src\VilagOS\Renderer\Buffer.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Renderer.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Shader.cpp" />
+    <ClCompile Include="src\VilagOS\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\VilagOS\Window\Window.cpp" />
     <ClCompile Include="src\VilagOS\Window\WindowMasterInput.cpp" />
     <ClCompile Include="src\vospch.cpp">

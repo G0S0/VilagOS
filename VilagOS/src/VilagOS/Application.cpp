@@ -26,34 +26,49 @@ namespace VilagOS{
 		PushOverlay(m_ImGuiLayer);
 
 		//VertexArray
-		glGenVertexArrays(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
+		m_VertexArray.reset(new VertexArray());
 
 		//VertexBuffer:
-		float verticies[3 * 3]{
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.5f, 0.0f,
+		float verticies[4 * 7]{ //verticies with colors
+			-0.5f, -0.5f, 0.0f, 0.8f, 0.0f, 0.8f, 1.0f,
+			0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+			0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
+			-1.0f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
 		};
-		m_VertexBuffer.reset(new VertexBuffer(verticies, sizeof(verticies)));
+		m_VertexBuffer.reset(new VertexBuffer(verticies, sizeof(verticies))); //instancing a vertex buffer
 
-		//VertexArray
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), nullptr);
+		BufferLayout layout = { // layout setup
+			{"a_Position", DataType::Float3},
+			{"a_Color", DataType::Float4}
+			//{"a_Normal", DataType::Float3}
+		};
+		m_VertexBuffer->SetLayout(layout);
+
+		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+
+		//glEnableVertexAttribArray(0);
+		//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, nullptr);
 
 		//IndexBuffer:
-		uint32_t indicies[3] = { 0, 1, 2 };
+		uint32_t indicies[6] = { 0, 1, 2, 3, 2, 0}; 
 		m_IndexBuffer.reset(new IndexBuffer(indicies, sizeof(indicies) / sizeof(uint32_t)));
+		m_VertexArray->AddIndexBuffer(m_IndexBuffer);
 
 		//Shader:
 		//multiple lines string
 		//takes a position of out attribute inside of a vertex buffer.	
 		std::string vertexSource = R"( 
 			#version 330 core
-			layout(location = 0) in vec3 a_Position; 		
-			out vec3 position;
+
+			layout(location = 0) in vec3 a_Position; 	
+			layout(location = 1) in vec4 a_Color; 	
+
+			out vec3 o_Position;
+			out vec4 o_Color;
+
 			void main(){
-			position = a_Position;
+			o_Position = a_Position;
+			o_Color = a_Color;
 			gl_Position = vec4(a_Position, 1.0f);
 			}
 		)";
@@ -61,13 +76,66 @@ namespace VilagOS{
 		std::string fragmentSource = R"( 
 			#version 330 core
 			layout(location = 0) out vec4 color; 	
-			in vec3 position;			
+
+			in vec3 o_Position;			
+			in vec4 o_Color;
 
 			void main(){
-			color = vec4(position * 0.5f + 0.5f, 1.0f);
+			color = vec4(o_Position * 0.5f + 0.5f, 1.0f);
+			color = o_Color;			
 			}
 		)";
 		m_Shader.reset(new Shader(vertexSource, fragmentSource)); //unique ptr.
+		//////////////////////////////////////
+
+		m_OtherVertexArray.reset(new VertexArray());
+		float OtherVerticies[4 * 7] = {
+			-1.0f, 1.0f, 0.0f, 09.f, 0.0f, 0.0f, 0.0f,
+			-1.0f, -1.0f, 0.0f, 00.f, 0.9f, 0.0f, 0.0f,
+			1.0f, -1.0f, 0.0f, 09.f, 0.0f, 0.9f, 0.0f,
+			1.0f, 1.0f, 0.0f, 09.f, 0.0f, 0.8f, 0.0f
+		};
+
+		m_OtherVertexBuffer.reset(new VertexBuffer(OtherVerticies, sizeof(OtherVerticies)));
+		m_OtherVertexBuffer->SetLayout(layout);
+
+		m_OtherVertexArray->AddVertexBuffer(m_OtherVertexBuffer);
+
+		uint32_t otherIndicies[6] = {0, 1, 2, 2, 3, 0};
+		m_OtherIndexBuffer.reset(new IndexBuffer(otherIndicies, sizeof(otherIndicies)));
+
+		m_OtherVertexArray->AddIndexBuffer(m_OtherIndexBuffer);
+
+		std::string OthervertexSource = R"( 
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Position; 	
+			layout(location = 1) in vec4 a_Color; 	
+
+			out vec3 o_Position;
+			out vec4 o_Color;
+
+			void main(){
+			o_Position = a_Position;
+			o_Color = a_Color;
+			gl_Position = vec4(a_Position, 1.0f);
+			}
+		)";
+
+		std::string OtherfragmentSource = R"( 
+			#version 330 core
+			layout(location = 0) out vec4 color; 	
+
+			in vec3 o_Position;			
+			in vec4 o_Color;
+
+			void main(){
+			color = vec4(o_Position * 0.5f + 0.5f, 1.0f);
+			color = o_Color;			
+			}
+		)";
+		m_OtherShader.reset(new Shader( OthervertexSource, OtherfragmentSource));
+		
 	}
 
 	Application::~Application() {
@@ -80,10 +148,15 @@ namespace VilagOS{
 			glClearColor(0.1f, 0.1f, 0.1f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			m_Shader->Bind();
+			m_OtherShader->Bind();
+			m_OtherVertexArray->Bind();
+			glDrawElements(GL_TRIANGLES, m_OtherIndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 
-			glBindVertexArray(m_VertexArray);
+			m_Shader->Bind();
+			m_VertexArray->Bind();
 			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+
+			
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();

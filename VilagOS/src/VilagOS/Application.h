@@ -6,6 +6,7 @@
 #include "VilagOS/Imgui/ImguiLayer.h"
 #include "VilagOS/Renderer/Shader.h"
 #include "Renderer/Buffer.h"
+#include "Renderer/VertexArray.h"
 
 namespace VilagOS {
 
@@ -32,10 +33,15 @@ namespace VilagOS {
 		
 		LayerStack m_LayerStack;
 		
-		unsigned int m_VertexArray;
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<VertexBuffer> m_VertexBuffer;
+		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<VertexArray> m_VertexArray;
+
+		std::shared_ptr<Shader> m_OtherShader;
+		std::shared_ptr<VertexBuffer> m_OtherVertexBuffer;
+		std::shared_ptr<IndexBuffer> m_OtherIndexBuffer;
+		std::shared_ptr<VertexArray> m_OtherVertexArray;
 	};
 
 	//To be defined in a client
