@@ -77,10 +77,13 @@
     <ClInclude Include="src\VilagOS\Renderer\Buffer.h">
       <Filter>VilagOS\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
+    <ClInclude Include="src\VilagOS\Renderer\VertexArray.h">
       <Filter>VilagOS\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\VilagOS\Renderer\VertexArray.h">
+    <ClInclude Include="src\VilagOS\Renderer\Renderer.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\RenderCommand.h">
       <Filter>VilagOS\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
@@ -120,6 +123,9 @@
       <Filter>VilagOS\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\VertexArray.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\RenderCommand.cpp">
       <Filter>VilagOS\Renderer</Filter>
     </ClCompile>
   </ItemGroup>

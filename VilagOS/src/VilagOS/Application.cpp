@@ -8,6 +8,7 @@
 #include "VilagOS/KeyCodes.h"
 #include "glfw3.h"
 #include "Renderer/Buffer.h"
+#include "Renderer/Renderer.h"
 
 
 
@@ -29,11 +30,10 @@ namespace VilagOS{
 		m_VertexArray.reset(new VertexArray());
 
 		//VertexBuffer:
-		float verticies[4 * 7]{ //verticies with colors
+		float verticies[3 * 7]{ //verticies with colors
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.0f, 0.8f, 1.0f,
 			0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-			0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
-			-1.0f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+			0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 0.3f,
 		};
 		m_VertexBuffer.reset(new VertexBuffer(verticies, sizeof(verticies))); //instancing a vertex buffer
 
@@ -50,7 +50,7 @@ namespace VilagOS{
 		//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, nullptr);
 
 		//IndexBuffer:
-		uint32_t indicies[6] = { 0, 1, 2, 3, 2, 0}; 
+		uint32_t indicies[6] = { 0, 1, 2}; 
 		m_IndexBuffer.reset(new IndexBuffer(indicies, sizeof(indicies) / sizeof(uint32_t)));
 		m_VertexArray->AddIndexBuffer(m_IndexBuffer);
 
@@ -90,10 +90,10 @@ namespace VilagOS{
 
 		m_OtherVertexArray.reset(new VertexArray());
 		float OtherVerticies[4 * 7] = {
-			-1.0f, 1.0f, 0.0f, 09.f, 0.0f, 0.0f, 0.0f,
-			-1.0f, -1.0f, 0.0f, 00.f, 0.9f, 0.0f, 0.0f,
-			1.0f, -1.0f, 0.0f, 09.f, 0.0f, 0.9f, 0.0f,
-			1.0f, 1.0f, 0.0f, 09.f, 0.0f, 0.8f, 0.0f
+			-1.0f, 1.0f, 0.0f, 0.8f, 1.0f, 0.5f, 1.0f,
+			-1.0f, -1.0f, 0.0f, 0.6f, 0.9f, 0.9f, 1.0f,
+			1.0f, -1.0f, 0.0f, 0.0f, 0.8f, 0.9f, 1.0f,
+			1.0f, 1.0f, 0.0f, 0.9f, 0.4f, 0.8f, 1.0f
 		};
 
 		m_OtherVertexBuffer.reset(new VertexBuffer(OtherVerticies, sizeof(OtherVerticies)));
@@ -148,13 +148,25 @@ namespace VilagOS{
 			glClearColor(0.1f, 0.1f, 0.1f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			m_OtherShader->Bind();
-			m_OtherVertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_OtherIndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1));
+
+			//Renderer::BeginScene(camera, lights, enviroment);
 
 			m_Shader->Bind();
-			m_VertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::SubmitData(m_OtherVertexArray);
+
+			m_OtherShader->Bind();
+			Renderer::SubmitData(m_VertexArray);
+
+			//Renderer::EndScene();
+
+			//m_OtherShader->Bind();
+			//m_OtherVertexArray->Bind();
+			//glDrawElements(GL_TRIANGLES, m_OtherIndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			//
+			//m_Shader->Bind();
+			//m_VertexArray->Bind();
+			//glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			
 

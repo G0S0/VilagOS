@@ -1,11 +1,17 @@
 #pragma once
+#include "VilagOS/Renderer/Buffer.h"
+#include "VertexArray.h"
+#include "RenderCommand.h"
 
 namespace VilagOS{
-	enum class RendererAPI {
-		None = 0, OpenGL = 1
-	};
-
 	class Renderer {
-		static RendererAPI s_RendererAPI;
+	public:
+		Renderer();
+		~Renderer();
+
+		void BeginScene();
+		void EndScene();
+
+		void static SubmitData(const std::shared_ptr<VertexArray>& vertexArray);
 	};
 }
