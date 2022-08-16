@@ -128,7 +128,7 @@ namespace VilagOS{
 			void main(){
 			o_Position = a_Position;
 			o_Color = a_Color;
-			gl_Position = vec4(a_Position, 1.0f);
+			gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
 			}
 		)";
 
@@ -140,7 +140,7 @@ namespace VilagOS{
 			in vec4 o_Color;
 
 			void main(){
-			color = u_ViewProjection * vec4(o_Position * 0.5f + 0.5f, 1.0f);
+			color = vec4(o_Position * 0.5f + 0.5f, 1.0f);
 			color = o_Color;			
 			}
 		)";
@@ -161,14 +161,19 @@ namespace VilagOS{
 			RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1));
 
 			//Renderer::BeginScene(camera, lights, enviroment);
+			Renderer::BeginScene(m_Camera);
+			//m_Camera.SetPosition(glm::vec3(0.5f, 0.5f, 0.0f));
+			m_Camera.SetRotation(45.0f);
+			 
+			//m_OtherShader->Bind();
+			//m_OtherShader->UploadUniformMat4(m_Camera.GetViewProjectionMatrix(), "u_ViewProjection");
+			Renderer::SubmitData(m_OtherShader, m_OtherVertexArray);
 
-			m_Shader->Bind();
-			m_Shader->UploadUniformMat4(m_Camera.GetViewProjectionMatrix(), "u_ViewProjection");
-			Renderer::SubmitData(m_OtherVertexArray);
+			//m_Shader->Bind();
+			//m_Shader->UploadUniformMat4(m_Camera.GetViewProjectionMatrix(), "u_ViewProjection");
+			Renderer::SubmitData(m_Shader, m_VertexArray);
 
-			m_OtherShader->Bind();
-			m_OtherShader->UploadUniformMat4(m_Camera.GetViewProjectionMatrix(), "u_ViewProjection");
-			Renderer::SubmitData(m_VertexArray);
+			
 
 			//Renderer::EndScene();
 

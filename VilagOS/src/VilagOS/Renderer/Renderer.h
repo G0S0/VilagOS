@@ -2,6 +2,8 @@
 #include "VilagOS/Renderer/Buffer.h"
 #include "VertexArray.h"
 #include "RenderCommand.h"
+#include "OrthographicCamera.h"
+#include "Shader.h"
 
 namespace VilagOS{
 	class Renderer {
@@ -9,9 +11,15 @@ namespace VilagOS{
 		Renderer();
 		~Renderer();
 
-		void BeginScene();
-		void EndScene();
+		void static BeginScene(OrthographicCamera& Camera);
+		void static EndScene();
 
-		void static SubmitData(const std::shared_ptr<VertexArray>& vertexArray);
+		void static SubmitData(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
+
+	private:
+		struct SceneData {
+			glm::mat4 m_ViewProjectionMatrix;// need this so that I can propagate it in submit data 
+		};
+		static SceneData* m_SceneData;
 	};
 }
