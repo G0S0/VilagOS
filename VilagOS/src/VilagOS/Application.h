@@ -34,15 +34,7 @@ namespace VilagOS {
 		
 		LayerStack m_LayerStack;
 		
-		std::shared_ptr<Shader> m_Shader;
 		
-		std::shared_ptr<VertexArray> m_VertexArray;
-
-		std::shared_ptr<Shader> m_OtherShader;
-		
-		std::shared_ptr<VertexArray> m_OtherVertexArray;
-
-		OrthographicCamera m_Camera;
 	};
 
 	//To be defined in a client

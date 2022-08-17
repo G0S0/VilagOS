@@ -25,7 +25,7 @@ namespace VilagOS {
 
 	void Window::OnUpdate() {
 		glfwPollEvents(); //what does this do?
-		glfwSwapBuffers(m_Window);
+		glfwSwapBuffers(m_Window); //what does this do? 
 	}
 
 	void Window::SetVSync(bool enabled) {

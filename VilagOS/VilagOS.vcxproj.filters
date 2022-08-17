@@ -10,11 +10,11 @@
     <Filter Include="VilagOS\Imgui">
       <UniqueIdentifier>{E4206424-50E1-DF5A-191C-29D8859B2437}</UniqueIdentifier>
     </Filter>
+    <Filter Include="VilagOS\Renderer">
+      <UniqueIdentifier>{00F98B81-ECF1-AAD3-1524-9058017C8ADF}</UniqueIdentifier>
+    </Filter>
     <Filter Include="VilagOS\Window">
       <UniqueIdentifier>{C1A34BD1-AD71-3FD7-9605-B0FD82721B3C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="VilagOS\Renderer">
-      <UniqueIdentifier>{537526be-cab6-4bbe-8aae-bfef27fa616d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +61,24 @@
     <ClInclude Include="src\VilagOS\MouseButtonCodes.h">
       <Filter>VilagOS</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\Buffer.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\OrthographicCamera.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\RenderCommand.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\Renderer.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\Shader.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\VertexArray.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\VilagOS\Window\Window.h">
       <Filter>VilagOS\Window</Filter>
     </ClInclude>
@@ -71,24 +89,6 @@
       <Filter>VilagOS\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\vospch.h" />
-    <ClInclude Include="src\VilagOS\Renderer\Shader.h">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VilagOS\Renderer\Buffer.h">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VilagOS\Renderer\VertexArray.h">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VilagOS\Renderer\Renderer.h">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VilagOS\Renderer\RenderCommand.h">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VilagOS\Renderer\OrthographicCamera.h">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp">
@@ -109,6 +109,24 @@
     <ClCompile Include="src\VilagOS\Log.cpp">
       <Filter>VilagOS</Filter>
     </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\Buffer.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\OrthographicCamera.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\RenderCommand.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\Renderer.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\Shader.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\VertexArray.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\VilagOS\Window\Window.cpp">
       <Filter>VilagOS\Window</Filter>
     </ClCompile>
@@ -116,23 +134,5 @@
       <Filter>VilagOS\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\vospch.cpp" />
-    <ClCompile Include="src\VilagOS\Renderer\Shader.cpp">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VilagOS\Renderer\Buffer.cpp">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VilagOS\Renderer\Renderer.cpp">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VilagOS\Renderer\VertexArray.cpp">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VilagOS\Renderer\RenderCommand.cpp">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VilagOS\Renderer\OrthographicCamera.cpp">
-      <Filter>VilagOS\Renderer</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

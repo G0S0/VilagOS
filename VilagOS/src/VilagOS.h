@@ -10,5 +10,12 @@
 #include "VilagOS/MouseButtonCodes.h"
 #include "VilagOS/KeyCodes.h"
 
+#include "VilagOS/Renderer/OrthographicCamera.h"
+#include "VilagOS/Renderer/Renderer.h"
+#include "VilagOS/Renderer/Shader.h"
+#include "VilagOS/Renderer/RenderCommand.h"
+#include "VilagOS/Renderer/VertexArray.h"
+#include "VilagOS/Renderer/Buffer.h"
+
 #include "VilagOS/Input.h"
 #include "glm/glm.hpp"

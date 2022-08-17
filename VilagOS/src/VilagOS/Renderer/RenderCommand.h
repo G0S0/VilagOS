@@ -1,7 +1,7 @@
 #pragma once
 #include "VertexArray.h"
-#include "Glad/glad.h"
 #include "glm/glm.hpp"
+#include "Glad/glad.h"
 
 namespace VilagOS {
 	class RenderCommand {

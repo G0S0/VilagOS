@@ -111,7 +111,8 @@ project "Game"
 		"VilagOS/vendor/spdlog/include",
 		"VilagOS/src",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.Imgui}"
+		"%{IncludeDir.Imgui}",
+		"VilagOS/vendor"
 	}
 
 	links{
