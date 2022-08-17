@@ -112,7 +112,8 @@ project "Game"
 		"VilagOS/src",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.Imgui}",
-		"VilagOS/vendor"
+		"VilagOS/vendor",
+		"VilagOS/src/VilagOS/Core"
 	}
 
 	links{

@@ -4,6 +4,9 @@
     <Filter Include="VilagOS">
       <UniqueIdentifier>{1AF896DC-86D7-1578-8FEF-A04EFB4D7CD9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="VilagOS\Core">
+      <UniqueIdentifier>{B23CD1E9-9E9F-608E-4725-994433672C11}</UniqueIdentifier>
+    </Filter>
     <Filter Include="VilagOS\Events">
       <UniqueIdentifier>{BE4235A8-AA10-29AE-93A4-99D47F110513}</UniqueIdentifier>
     </Filter>
@@ -24,6 +27,9 @@
     </ClInclude>
     <ClInclude Include="src\VilagOS\Core.h">
       <Filter>VilagOS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Core\Timestep.h">
+      <Filter>VilagOS\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\EntryPoint.h">
       <Filter>VilagOS</Filter>

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "VilagOS/Events/Event.h"
+#include "Core/Timestep.h"
 
 namespace VilagOS {
 	//Interface
@@ -11,7 +12,7 @@ namespace VilagOS {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(float DeltaTime) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& e) {}
 

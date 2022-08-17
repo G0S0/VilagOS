@@ -8,6 +8,7 @@
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
 #include "VilagOS/Renderer/OrthographicCamera.h"
+#include "VilagOS/Core/Timestep.h"
 
 namespace VilagOS {
 
@@ -33,6 +34,7 @@ namespace VilagOS {
 		ImguiLayer* m_ImGuiLayer;
 		
 		LayerStack m_LayerStack;
+		Timestep m_TimeOfLastFrime = 0.0f;
 		
 		
 	};

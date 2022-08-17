@@ -1,5 +1,6 @@
 #include <VilagOS.h>
 #include "imgui.h"
+#include "Timestep.h"
 
 class ExampleLayer : public VilagOS::Layer {
 public:
@@ -127,20 +128,23 @@ public:
 
 	}
 
-	void OnUpdate() override {
+	void OnUpdate(float DeltaTime) override {
+
+		DeltaTime /= 1000.0f; //
+		//VOS_CLIENT_TRACE("Delta time: {0}", DeltaTime);
 
 		if(VilagOS::Input::IsKeyPressedStatic(VOS_KEY_LEFT))
-			m_CameraPosition.x -= m_CameraMovementSpeed;
+			m_CameraPosition.x -= m_CameraMovementSpeed * DeltaTime;
 		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_RIGHT))
-			m_CameraPosition.x += m_CameraMovementSpeed;
+			m_CameraPosition.x += m_CameraMovementSpeed * DeltaTime;
 		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_UP))
-			m_CameraPosition.y += m_CameraMovementSpeed;
+			m_CameraPosition.y += m_CameraMovementSpeed * DeltaTime;
 		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_DOWN))
-			m_CameraPosition.y -= m_CameraMovementSpeed;
+			m_CameraPosition.y -= m_CameraMovementSpeed * DeltaTime;
 		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_A))
-			m_CameraRotation -= m_CameraRotationSpeed;
+			m_CameraRotation -= m_CameraRotationSpeed * DeltaTime;
 		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_D))
-			m_CameraRotation += m_CameraRotationSpeed;
+			m_CameraRotation += m_CameraRotationSpeed * DeltaTime;
 
 
 		VilagOS::RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1));

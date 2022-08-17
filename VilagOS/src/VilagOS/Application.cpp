@@ -8,6 +8,7 @@
 #include "glfw3.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/Renderer.h"
+#include <chrono>
 
 
 
@@ -23,7 +24,7 @@ namespace VilagOS{
 
 		m_Window = std::unique_ptr<WindowMaster>(WindowMaster::Create());
 		m_Window->SetEventCallback(VOS_BIND_EVENT_FN(Application::OnEvent)); //In the end calls the OnEvent fn
-
+		//m_Window->SetVSync(false); --for testing deltatime - it works
 		m_ImGuiLayer = new ImguiLayer();
 		PushOverlay(m_ImGuiLayer);
 
@@ -36,18 +37,23 @@ namespace VilagOS{
 
 	void Application::run() {
 		WindowResizeEvent e(1280, 720);
+		int i = 0;
+		float DeltaTime = 0.0f;
 		while (m_Running) {
+			std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 			
-
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
+				layer->OnUpdate(DeltaTime);
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
 				layer->OnImGuiRender();
 			m_ImGuiLayer->End();
 			m_Window->OnUpdate();
-			
+
+			std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+			DeltaTime = std::chrono::duration_cast<std::chrono::milliseconds> (end - begin).count();
+				
 		}
 	}
 

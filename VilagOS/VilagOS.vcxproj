@@ -138,6 +138,7 @@
     <ClInclude Include="src\VilagOS.h" />
     <ClInclude Include="src\VilagOS\Application.h" />
     <ClInclude Include="src\VilagOS\Core.h" />
+    <ClInclude Include="src\VilagOS\Core\Timestep.h" />
     <ClInclude Include="src\VilagOS\EntryPoint.h" />
     <ClInclude Include="src\VilagOS\Events\ApplicationEvent.h" />
     <ClInclude Include="src\VilagOS\Events\Event.h" />
