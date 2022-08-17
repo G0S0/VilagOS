@@ -28,7 +28,7 @@
     <ClInclude Include="src\VilagOS\Core.h">
       <Filter>VilagOS</Filter>
     </ClInclude>
-    <ClInclude Include="src\VilagOS\Core\Timestep.h">
+    <ClInclude Include="src\VilagOS\Core\DeltaTime.h">
       <Filter>VilagOS\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\EntryPoint.h">

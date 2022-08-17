@@ -12,9 +12,10 @@ namespace VilagOS {
 
 	}
 
-	void Renderer::SubmitData(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray) {
+	void Renderer::SubmitData(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform) {
 		shader->Bind();
 		shader->UploadUniformMat4(m_SceneData->m_ViewProjectionMatrix, "u_ViewProjection");
+		shader->UploadUniformMat4(transform, "u_Transform");
 		vertexArray->Bind();
 		RenderCommand::DrawElements(vertexArray);
 	}

@@ -1,9 +1,9 @@
 #pragma once
 
 namespace VilagOS {
-	class Timestep {
+	class DeltaTime {
 	public:
-		Timestep(float time) : m_Time(time) {}
+		DeltaTime(float time) : m_Time(time) {}
 
 		float GetSeconds() const { return m_Time; }
 		float GetMiliseconds() const { return m_Time * 1000.0f; }

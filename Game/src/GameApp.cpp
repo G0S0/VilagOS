@@ -1,12 +1,15 @@
 #include <VilagOS.h>
 #include "imgui.h"
-#include "Timestep.h"
+#include "DeltaTime.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 class ExampleLayer : public VilagOS::Layer {
 public:
 	ExampleLayer() : Layer("Example") {
 		m_Camera = VilagOS::OrthographicCamera(-1.0f, 1.0f, -1.0f, 1.0f);
-
+		m_ScalingValue[0].x = 0.05;
+		m_ScalingValue[0].y = 0.05;
+		
 		//VertexArray
 		m_VertexArray.reset(new VilagOS::VertexArray());
 
@@ -14,7 +17,7 @@ public:
 		float verticies[3 * 7]{ //verticies with colors
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.0f, 0.8f, 1.0f,
 			0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-			0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 0.3f,
+			0.0f, 0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 0.3f
 		};
 
 		std::shared_ptr<VilagOS::VertexBuffer> m_VertexBuffer;
@@ -48,6 +51,7 @@ public:
 			layout(location = 1) in vec4 a_Color; 
 	
 			uniform mat4 u_ViewProjection;			
+			uniform mat4 u_Transform;			
 
 			out vec3 o_Position;
 			out vec4 o_Color;
@@ -55,7 +59,7 @@ public:
 			void main(){
 			o_Position = a_Position;
 			o_Color = a_Color;
-			gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
+			gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0f);
 			}
 		)";
 
@@ -100,7 +104,8 @@ public:
 			layout(location = 0) in vec3 a_Position; 	
 			layout(location = 1) in vec4 a_Color; 	
 
-			uniform mat4 u_ViewProjection;	
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
 
 			out vec3 o_Position;
 			out vec4 o_Color;
@@ -108,7 +113,7 @@ public:
 			void main(){
 			o_Position = a_Position;
 			o_Color = a_Color;
-			gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
+			gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0f);
 			}
 		)";
 
@@ -133,6 +138,7 @@ public:
 		DeltaTime /= 1000.0f; //
 		//VOS_CLIENT_TRACE("Delta time: {0}", DeltaTime);
 
+		//this needs to be transferred 
 		if(VilagOS::Input::IsKeyPressedStatic(VOS_KEY_LEFT))
 			m_CameraPosition.x -= m_CameraMovementSpeed * DeltaTime;
 		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_RIGHT))
@@ -146,13 +152,33 @@ public:
 		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_D))
 			m_CameraRotation += m_CameraRotationSpeed * DeltaTime;
 
+		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_J))
+			m_TrianglePosition.x -= m_CameraMovementSpeed * DeltaTime;
+		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_L))
+			m_TrianglePosition.x += m_CameraMovementSpeed * DeltaTime;
+		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_I))
+			m_TrianglePosition.y += m_CameraMovementSpeed * DeltaTime;
+		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_K))
+			m_TrianglePosition.y -= m_CameraMovementSpeed * DeltaTime;
+
+		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_W)) {
+			scale[0].x += 0.05;
+			scale[1].y += 0.05;
+		}
+			
+		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_S)) {
+			scale[0].x -= 0.05;
+			scale[1].y -= 0.05;
+		}
 
 		VilagOS::RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1));
 		VilagOS::Renderer::BeginScene(m_Camera);
 		m_Camera.SetPosition(m_CameraPosition);
 		m_Camera.SetRotation(m_CameraRotation);
-		VilagOS::Renderer::SubmitData(m_OtherShader, m_OtherVertexArray);
-		VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray);
+		glm::mat4 TriangleTransform = glm::translate(glm::mat4(1.0f), m_TrianglePosition) * scale;
+		glm::mat4 RectangleTransform = glm::translate(glm::mat4(1.0f), m_RectanglePosition) * scale;
+		VilagOS::Renderer::SubmitData(m_OtherShader, m_OtherVertexArray, RectangleTransform);
+		VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransform);
 		//this->OnEvent(VilagOS::Event & e);
 		//Renderer::EndScene();
 	}
@@ -176,8 +202,17 @@ private:
 	VilagOS::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 	float m_CameraRotation = 0.0f;
-	float m_CameraMovementSpeed = 0.1f;
-	float m_CameraRotationSpeed = 2.0f;
+	float m_CameraMovementSpeed = 1.0f;
+	float m_CameraRotationSpeed = 4.0f;
+
+	glm::vec3 m_RectanglePosition = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 m_TrianglePosition = glm::vec3(0.0f, 0.0f, 0.0f);
+	float m_TriangleMovementSpeed = 0.1f;
+	glm::mat4 m_scale = glm::mat4(0.5f);
+	glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+	glm::mat4 m_ScalingValue = glm::mat4(0.0f);
+	
+	
 };
 
 class Game : public VilagOS::Application {

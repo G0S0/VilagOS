@@ -14,7 +14,7 @@ namespace VilagOS{
 		void static BeginScene(OrthographicCamera& Camera);
 		void static EndScene();
 
-		void static SubmitData(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
+		void static SubmitData(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
 
 	private:
 		struct SceneData {
