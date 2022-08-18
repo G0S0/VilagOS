@@ -7,9 +7,7 @@
 class ExampleLayer : public VilagOS::Layer {
 public:
 	ExampleLayer() : Layer("Example") {
-		m_Camera = VilagOS::OrthographicCamera(-1.0f, 1.0f, -1.0f, 1.0f);
-		m_ScalingValue[0].x = 0.05;
-		m_ScalingValue[0].y = 0.05;
+		m_Camera = VilagOS::OrthographicCamera(-3.84f, 3.84f, 2.16f, -2.16f);
 		
 		//VertexArray
 		m_VertexArray.reset(new VilagOS::VertexArray());
@@ -29,6 +27,12 @@ public:
 			{"a_Color", VilagOS::DataType::Float4}
 			//{"a_Normal", DataType::Float3}
 		};
+
+		VilagOS::BufferLayout TextureLayout = { // layout setup
+			{"a_Position", VilagOS::DataType::Float3},
+			{"a_Texture", VilagOS::DataType::Float2}
+		};
+
 		m_VertexBuffer->SetLayout(layout);
 
 		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
@@ -78,16 +82,16 @@ public:
 		//////////////////////////////////////
 
 		m_OtherVertexArray.reset(new VilagOS::VertexArray());
-		float OtherVerticies[4 * 7] = {
-			-1.0f, 1.0f, 0.0f, 0.8f, 1.0f, 0.5f, 1.0f,
-			-1.0f, -1.0f, 0.0f, 0.6f, 0.9f, 0.9f, 1.0f,
-			1.0f, -1.0f, 0.0f, 0.0f, 0.8f, 0.9f, 1.0f,
-			1.0f, 1.0f, 0.0f, 0.9f, 0.4f, 0.8f, 1.0f
+		float OtherVerticies[5 * 4] = {
+			-1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+			1.0f, -1.0f, 0.0f, 1.0f, 1.0f,
+			1.0f, 1.0f, 0.0f, 1.0f, 0.0f
 		};
 
 		std::shared_ptr<VilagOS::VertexBuffer> m_OtherVertexBuffer;
 		m_OtherVertexBuffer.reset(new VilagOS::VertexBuffer(OtherVerticies, sizeof(OtherVerticies)));
-		m_OtherVertexBuffer->SetLayout(layout);
+		m_OtherVertexBuffer->SetLayout(TextureLayout);
 
 		m_OtherVertexArray->AddVertexBuffer(m_OtherVertexBuffer);
 
@@ -119,6 +123,7 @@ public:
 			in vec4 o_Color;
 		
 			uniform vec4 u_Color;
+			uniform vec2 u_Texture;
 
 			void main(){
 			//color = vec4(o_Position * 0.5f + 0.5f, 1.0f);
@@ -126,6 +131,36 @@ public:
 			}
 		)";
 		m_OtherShader.reset(new VilagOS::Shader(OthervertexSource, OtherfragmentSource));
+
+		std::string TextureVertexSource = R"( 
+			#version 330 core
+			layout(location = 0) in vec3 a_Position; 	
+			layout(location = 1) in vec2 a_TextureCord; 
+	
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
+			out vec2 o_TextureCord;
+
+			void main(){
+			o_TextureCord = a_TextureCord;
+			gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0f);
+			}
+		)";
+
+		std::string TextureFragmentSource = R"( 
+			#version 330 core
+			layout(location = 0) out vec4 color; 	
+			in vec3 o_Position;			
+			in vec2 o_TextureCord;
+		
+			uniform vec2 u_TextureCord;
+
+			void main(){
+				color = vec4(o_TextureCord, 0.0f, 1.0f);			
+				//color = u_TextureCord;
+			}
+		)";
+		m_TextureShader.reset(new VilagOS::Shader(TextureVertexSource, TextureFragmentSource));
 
 	}
 
@@ -177,16 +212,21 @@ public:
 		glm::mat4 RectangleTransform = glm::translate(glm::mat4(1.0f), m_RectanglePosition) * scale;
 
 		//Material
-		m_OtherShader->Bind();
-		m_Shader->UploadUniformVec4(someColor, "u_Color");
-		VilagOS::Renderer::SubmitData(m_OtherShader, m_OtherVertexArray, RectangleTransform);
-		m_OtherShader->Unbind();
+		 
+		m_TextureShader->Bind();
+		//m_TextureShader->UploadUniformVec2(, "u_TextureCord");
+		VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform); 
+
+		//m_OtherShader->Bind();
+		//m_Shader->UploadUniformVec4(someColor, "u_Color");
+		//VilagOS::Renderer::SubmitData(m_OtherShader, m_OtherVertexArray, RectangleTransform);
+		//m_OtherShader->Unbind();
 		
-		m_Shader->Bind();
-		m_Shader->UploadUniformVec4(someColor, "u_Color");
-		VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransform);
-		m_Shader->UploadUniformVec4(blueColor, "u_Color");
-		VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransformTwo);
+		//m_Shader->Bind();
+		//m_Shader->UploadUniformVec4(someColor, "u_Color");
+		//VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransform);
+		//m_Shader->UploadUniformVec4(blueColor, "u_Color");
+		//VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransformTwo);
 		//m_Shader->UploadUniformVec4(blueColor, "u_Color");
 		//VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransformThree);
 
@@ -213,17 +253,17 @@ public:
 	}
 
 	void OnImGuiRender() override{
-		ImGui::Begin("Materials");
-		ImGui::ColorEdit4("Material1", glm::value_ptr(blueColor));
-		ImGui::ColorEdit4("Material2", glm::value_ptr(someColor));
-		ImGui::End();
+		//ImGui::Begin("Materials");
+		//ImGui::ColorEdit4("Material1", glm::value_ptr(blueColor));
+		//ImGui::ColorEdit4("Material2", glm::value_ptr(someColor));
+		//ImGui::End();
 	}
 
 private:
 	std::shared_ptr<VilagOS::Shader> m_Shader;
 	std::shared_ptr<VilagOS::VertexArray> m_VertexArray;
 
-	std::shared_ptr<VilagOS::Shader> m_OtherShader;
+	std::shared_ptr<VilagOS::Shader> m_OtherShader, m_TextureShader;
 	std::shared_ptr<VilagOS::VertexArray> m_OtherVertexArray;
 	
 	VilagOS::OrthographicCamera m_Camera;
@@ -237,7 +277,6 @@ private:
 	float m_TriangleMovementSpeed = 0.1f;
 	glm::mat4 m_scale = glm::mat4(0.5f);
 	glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-	glm::mat4 m_ScalingValue = glm::mat4(0.0f);
 	
 	glm::vec4 blueColor = glm::vec4(0.2f, 0.3f, 0.8f, 1.0f);
 	glm::vec4 someColor = glm::vec4(0.9f, 0.1f, 0.3f, 1.0f);

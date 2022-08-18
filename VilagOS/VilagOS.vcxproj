@@ -156,6 +156,7 @@
     <ClInclude Include="src\VilagOS\Renderer\RenderCommand.h" />
     <ClInclude Include="src\VilagOS\Renderer\Renderer.h" />
     <ClInclude Include="src\VilagOS\Renderer\Shader.h" />
+    <ClInclude Include="src\VilagOS\Renderer\Texture.h" />
     <ClInclude Include="src\VilagOS\Renderer\VertexArray.h" />
     <ClInclude Include="src\VilagOS\Window\Window.h" />
     <ClInclude Include="src\VilagOS\Window\WindowMaster.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="src\VilagOS\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Renderer.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Shader.cpp" />
+    <ClCompile Include="src\VilagOS\Renderer\Texture.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\VilagOS\Window\Window.cpp" />
     <ClCompile Include="src\VilagOS\Window\WindowMasterInput.cpp" />

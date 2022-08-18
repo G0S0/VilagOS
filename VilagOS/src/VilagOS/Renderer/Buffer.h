@@ -6,7 +6,7 @@ namespace VilagOS {
 
 	enum class DataType
 	{
-		None = 0, Float3, Float4
+		None = 0, Float3, Float4, Float2
 	};
 
 	static uint32_t GetDataTypeSize(DataType type) {
@@ -17,6 +17,9 @@ namespace VilagOS {
 			break;
 		case DataType::Float4:
 			return 4 * 4;
+			break;
+		case DataType::Float2:
+			return 4 * 2;
 			break;
 		default:
 			VOS_CORE_ASSERT(false, "Unknown Data type!");
@@ -43,6 +46,8 @@ namespace VilagOS {
 				return 3;
 			case VilagOS::DataType::Float4:
 				return 4;
+			case VilagOS::DataType::Float2:
+				return 2;
 			}
 			return 0;
 		}

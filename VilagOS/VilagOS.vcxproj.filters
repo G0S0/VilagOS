@@ -95,6 +95,9 @@
       <Filter>VilagOS\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\vospch.h" />
+    <ClInclude Include="src\VilagOS\Renderer\Texture.h">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp">
@@ -140,5 +143,8 @@
       <Filter>VilagOS\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\vospch.cpp" />
+    <ClCompile Include="src\VilagOS\Renderer\Texture.cpp">
+      <Filter>VilagOS\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
