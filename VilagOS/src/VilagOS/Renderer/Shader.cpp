@@ -12,7 +12,7 @@ namespace VilagOS {
 
 		// Send the vertex shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
-		const GLchar* source = (const GLchar*)vertexSource.c_str(); 
+		const GLchar* source = (const GLchar*)vertexSource.c_str();
 		glShaderSource(vertexShader, 1, &source, 0);
 
 		// Compile the vertex shader
@@ -129,5 +129,10 @@ namespace VilagOS {
 	void Shader::UploadUniformMat4(const glm::mat4& matrix, const std::string& name) {
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+	}
+
+	void Shader::UploadUniformVec4(const glm::vec4& vec, const std::string& name) {
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform4f(location, vec.x, vec.y, vec.z, vec.w);
 	}
 }

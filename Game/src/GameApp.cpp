@@ -1,7 +1,8 @@
 #include <VilagOS.h>
 #include "imgui.h"
 #include "DeltaTime.h"
-#include "glm/gtc/matrix_transform.hpp"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class ExampleLayer : public VilagOS::Layer {
 public:
@@ -46,16 +47,13 @@ public:
 		//takes a position of out attribute inside of a vertex buffer.	
 		std::string vertexSource = R"( 
 			#version 330 core
-
 			layout(location = 0) in vec3 a_Position; 	
 			layout(location = 1) in vec4 a_Color; 
 	
 			uniform mat4 u_ViewProjection;			
 			uniform mat4 u_Transform;			
-
 			out vec3 o_Position;
 			out vec4 o_Color;
-
 			void main(){
 			o_Position = a_Position;
 			o_Color = a_Color;
@@ -66,13 +64,14 @@ public:
 		std::string fragmentSource = R"( 
 			#version 330 core
 			layout(location = 0) out vec4 color; 	
-
 			in vec3 o_Position;			
 			in vec4 o_Color;
 
+			uniform vec4 u_Color;
+
 			void main(){
-			color = vec4(o_Position * 0.5f + 0.5f, 1.0f);
-			color = o_Color;			
+			//color = vec4(o_Position * 0.5f + 0.5f, 1.0f);
+			color = u_Color;			
 			}
 		)";
 		m_Shader.reset(new VilagOS::Shader(vertexSource, fragmentSource)); //unique ptr.
@@ -100,16 +99,12 @@ public:
 
 		std::string OthervertexSource = R"( 
 			#version 330 core
-
 			layout(location = 0) in vec3 a_Position; 	
 			layout(location = 1) in vec4 a_Color; 	
-
 			uniform mat4 u_ViewProjection;
 			uniform mat4 u_Transform;
-
 			out vec3 o_Position;
 			out vec4 o_Color;
-
 			void main(){
 			o_Position = a_Position;
 			o_Color = a_Color;
@@ -120,12 +115,13 @@ public:
 		std::string OtherfragmentSource = R"( 
 			#version 330 core
 			layout(location = 0) out vec4 color; 	
-
 			in vec3 o_Position;			
 			in vec4 o_Color;
+		
+			uniform vec4 u_Color;
 
 			void main(){
-			color = vec4(o_Position * 0.5f + 0.5f, 1.0f);
+			//color = vec4(o_Position * 0.5f + 0.5f, 1.0f);
 			color = o_Color;			
 			}
 		)";
@@ -176,9 +172,33 @@ public:
 		m_Camera.SetPosition(m_CameraPosition);
 		m_Camera.SetRotation(m_CameraRotation);
 		glm::mat4 TriangleTransform = glm::translate(glm::mat4(1.0f), m_TrianglePosition) * scale;
+		glm::mat4 TriangleTransformTwo = glm::translate(glm::mat4(1.0f), m_TrianglePosition + glm::vec3(0.5f)) * scale;
+		glm::mat4 TriangleTransformThree = glm::translate(glm::mat4(1.0f), m_TrianglePosition - glm::vec3(1.0f)) * scale;
 		glm::mat4 RectangleTransform = glm::translate(glm::mat4(1.0f), m_RectanglePosition) * scale;
+
+		//Material
+		m_OtherShader->Bind();
+		m_Shader->UploadUniformVec4(someColor, "u_Color");
 		VilagOS::Renderer::SubmitData(m_OtherShader, m_OtherVertexArray, RectangleTransform);
+		m_OtherShader->Unbind();
+		
+		m_Shader->Bind();
+		m_Shader->UploadUniformVec4(someColor, "u_Color");
 		VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransform);
+		m_Shader->UploadUniformVec4(blueColor, "u_Color");
+		VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransformTwo);
+		//m_Shader->UploadUniformVec4(blueColor, "u_Color");
+		//VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransformThree);
+
+		//for (int i = 0; i < 5; i++) {
+		//	glm::mat4 TriangleTransform = glm::translate(glm::mat4(1.0f), m_TrianglePosition + glm::vec3(0.5f * i)) * scale;
+		//	if (i % 2 == 0)
+		//		m_Shader->UploadUniformVec4(blueColor, "u_Color");
+		//	else
+		//		m_Shader->UploadUniformVec4(someColor, "u_Color");
+		//	VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransform);
+		//}
+
 		//this->OnEvent(VilagOS::Event & e);
 		//Renderer::EndScene();
 	}
@@ -190,6 +210,13 @@ public:
 
 	bool OnKeyPressedEvent(VilagOS::KeyPressedEvent& e) {
 		return false;
+	}
+
+	void OnImGuiRender() override{
+		ImGui::Begin("Materials");
+		ImGui::ColorEdit4("Material1", glm::value_ptr(blueColor));
+		ImGui::ColorEdit4("Material2", glm::value_ptr(someColor));
+		ImGui::End();
 	}
 
 private:
@@ -212,6 +239,8 @@ private:
 	glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 	glm::mat4 m_ScalingValue = glm::mat4(0.0f);
 	
+	glm::vec4 blueColor = glm::vec4(0.2f, 0.3f, 0.8f, 1.0f);
+	glm::vec4 someColor = glm::vec4(0.9f, 0.1f, 0.3f, 1.0f);
 	
 };
 
