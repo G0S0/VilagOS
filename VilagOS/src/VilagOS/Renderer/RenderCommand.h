@@ -6,6 +6,10 @@
 namespace VilagOS {
 	class RenderCommand {
 	public:
+		void  static Init() {
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		}
 		inline static void DrawElements(const std::shared_ptr<VertexArray>& vertexArray) {
 			glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 		}

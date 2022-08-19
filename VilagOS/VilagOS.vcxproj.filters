@@ -1,150 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="VilagOS">
-      <UniqueIdentifier>{1AF896DC-86D7-1578-8FEF-A04EFB4D7CD9}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="VilagOS\Core">
-      <UniqueIdentifier>{B23CD1E9-9E9F-608E-4725-994433672C11}</UniqueIdentifier>
+    <Filter Include="src\VilagOS">
+      <UniqueIdentifier>{31F8D0E5-9DAD-49DB-26A2-43B2925640DF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="VilagOS\Events">
-      <UniqueIdentifier>{BE4235A8-AA10-29AE-93A4-99D47F110513}</UniqueIdentifier>
+    <Filter Include="src\VilagOS\Core">
+      <UniqueIdentifier>{29E3F1FC-15DC-104F-3E0E-F6D32A66F05A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="VilagOS\Imgui">
-      <UniqueIdentifier>{E4206424-50E1-DF5A-191C-29D8859B2437}</UniqueIdentifier>
+    <Filter Include="src\VilagOS\Events">
+      <UniqueIdentifier>{F5621906-E146-DA5B-4AA7-D4AE36AAC4DD}</UniqueIdentifier>
     </Filter>
-    <Filter Include="VilagOS\Renderer">
-      <UniqueIdentifier>{00F98B81-ECF1-AAD3-1524-9058017C8ADF}</UniqueIdentifier>
+    <Filter Include="src\VilagOS\Imgui">
+      <UniqueIdentifier>{3B96999B-A7AC-9731-F023-23535C7968B9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="VilagOS\Window">
-      <UniqueIdentifier>{C1A34BD1-AD71-3FD7-9605-B0FD82721B3C}</UniqueIdentifier>
+    <Filter Include="src\VilagOS\Renderer">
+      <UniqueIdentifier>{F702F9E8-E391-82B2-8CB0-96AD781E9358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\VilagOS\Window">
+      <UniqueIdentifier>{F8C32F2F-E4A7-F084-4D08-EBD7390BDB06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor">
+      <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\stb">
+      <UniqueIdentifier>{8BD3C5A8-778B-07F6-E092-E051CC69A2E6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\VilagOS.h" />
+    <ClInclude Include="src\VilagOS.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\VilagOS\Application.h">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Core.h">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Core\DeltaTime.h">
-      <Filter>VilagOS\Core</Filter>
+      <Filter>src\VilagOS\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\EntryPoint.h">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Events\ApplicationEvent.h">
-      <Filter>VilagOS\Events</Filter>
+      <Filter>src\VilagOS\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Events\Event.h">
-      <Filter>VilagOS\Events</Filter>
+      <Filter>src\VilagOS\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Events\KeyboardEvent.h">
-      <Filter>VilagOS\Events</Filter>
+      <Filter>src\VilagOS\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Events\MouseEvent.h">
-      <Filter>VilagOS\Events</Filter>
+      <Filter>src\VilagOS\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Imgui\ImguiLayer.h">
-      <Filter>VilagOS\Imgui</Filter>
+      <Filter>src\VilagOS\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Input.h">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\KeyCodes.h">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Layer.h">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\LayerStack.h">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Log.h">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\MouseButtonCodes.h">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Renderer\Buffer.h">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Renderer\OrthographicCamera.h">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Renderer\RenderCommand.h">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Renderer\Renderer.h">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Renderer\Shader.h">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\Texture.h">
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Renderer\VertexArray.h">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Window\Window.h">
-      <Filter>VilagOS\Window</Filter>
+      <Filter>src\VilagOS\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Window\WindowMaster.h">
-      <Filter>VilagOS\Window</Filter>
+      <Filter>src\VilagOS\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Window\WindowMasterInput.h">
-      <Filter>VilagOS\Window</Filter>
+      <Filter>src\VilagOS\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\vospch.h" />
-    <ClInclude Include="src\VilagOS\Renderer\Texture.h">
-      <Filter>VilagOS\Renderer</Filter>
+    <ClInclude Include="src\vospch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\stb\stb_image.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\VilagOS\Application.cpp">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Imgui\ImGuiBuild.cpp">
-      <Filter>VilagOS\Imgui</Filter>
+      <Filter>src\VilagOS\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Imgui\ImguiLayer.cpp">
-      <Filter>VilagOS\Imgui</Filter>
+      <Filter>src\VilagOS\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Layer.cpp">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\LayerStack.cpp">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Log.cpp">
-      <Filter>VilagOS</Filter>
+      <Filter>src\VilagOS</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\Buffer.cpp">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\OrthographicCamera.cpp">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\RenderCommand.cpp">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\Renderer.cpp">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\Shader.cpp">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\Texture.cpp">
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\VertexArray.cpp">
-      <Filter>VilagOS\Renderer</Filter>
+      <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Window\Window.cpp">
-      <Filter>VilagOS\Window</Filter>
+      <Filter>src\VilagOS\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Window\WindowMasterInput.cpp">
-      <Filter>VilagOS\Window</Filter>
+      <Filter>src\VilagOS\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\vospch.cpp" />
-    <ClCompile Include="src\VilagOS\Renderer\Texture.cpp">
-      <Filter>VilagOS\Renderer</Filter>
+    <ClCompile Include="src\vospch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\stb\stb_image.cpp">
+      <Filter>vendor\stb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

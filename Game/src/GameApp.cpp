@@ -133,12 +133,13 @@ public:
 		m_OtherShader.reset(new VilagOS::Shader(OthervertexSource, OtherfragmentSource));
 
 		std::string TextureVertexSource = R"( 
-			#version 330 core
-			layout(location = 0) in vec3 a_Position; 	
+			#version 330 core	
+			layout(location = 0) in vec3 a_Position; 
 			layout(location = 1) in vec2 a_TextureCord; 
 	
 			uniform mat4 u_ViewProjection;
 			uniform mat4 u_Transform;
+
 			out vec2 o_TextureCord;
 
 			void main(){
@@ -150,22 +151,26 @@ public:
 		std::string TextureFragmentSource = R"( 
 			#version 330 core
 			layout(location = 0) out vec4 color; 	
-			in vec3 o_Position;			
+		
 			in vec2 o_TextureCord;
 		
-			uniform vec2 u_TextureCord;
+			uniform sampler2D u_Texture;
 
 			void main(){
-				color = vec4(o_TextureCord, 0.0f, 1.0f);			
-				//color = u_TextureCord;
+				color = texture(u_Texture, o_TextureCord);			
 			}
 		)";
 		m_TextureShader.reset(new VilagOS::Shader(TextureVertexSource, TextureFragmentSource));
 
+		
+		m_Texture.reset(new VilagOS::Texture2D("assets/textures/checker.png"));
+		m_TextureClan.reset(new VilagOS::Texture2D("assets/textures/clan.png"));
+		m_TextureShader->Bind();
+		m_TextureShader->UploadUniformInt(0, "u_Texture");
 	}
 
 	void OnUpdate(float DeltaTime) override {
-
+		  
 		DeltaTime /= 1000.0f; //
 		//VOS_CLIENT_TRACE("Delta time: {0}", DeltaTime);
 
@@ -210,15 +215,19 @@ public:
 		glm::mat4 TriangleTransformTwo = glm::translate(glm::mat4(1.0f), m_TrianglePosition + glm::vec3(0.5f)) * scale;
 		glm::mat4 TriangleTransformThree = glm::translate(glm::mat4(1.0f), m_TrianglePosition - glm::vec3(1.0f)) * scale;
 		glm::mat4 RectangleTransform = glm::translate(glm::mat4(1.0f), m_RectanglePosition) * scale;
+		glm::mat4 RectangleTransform2 = glm::translate(glm::mat4(1.0f), m_RectanglePosition + glm::vec3(0.5f)) * scale;
 
 		//Material
 		 
-		m_TextureShader->Bind();
-		//m_TextureShader->UploadUniformVec2(, "u_TextureCord");
-		VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform); 
+		//m_Texture->Bind();
+		//VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform); 
+		m_Texture->Bind();
+		VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform);
+		m_TextureClan->Bind();
+		VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform);
 
 		//m_OtherShader->Bind();
-		//m_Shader->UploadUniformVec4(someColor, "u_Color");
+		//m_OtherShader->UploadUniformVec4(someColor, "u_Color");
 		//VilagOS::Renderer::SubmitData(m_OtherShader, m_OtherVertexArray, RectangleTransform);
 		//m_OtherShader->Unbind();
 		
@@ -265,6 +274,8 @@ private:
 
 	std::shared_ptr<VilagOS::Shader> m_OtherShader, m_TextureShader;
 	std::shared_ptr<VilagOS::VertexArray> m_OtherVertexArray;
+
+	std::shared_ptr<VilagOS::Texture2D> m_Texture, m_TextureClan;
 	
 	VilagOS::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);

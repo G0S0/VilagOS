@@ -14,7 +14,8 @@ namespace VilagOS {
 
 		void UploadUniformMat4(const glm::mat4& matrix, const std::string& name);
 		void UploadUniformVec4(const glm::vec4& color, const std::string& name);
-		void UploadUniformVec2(const glm::vec2& tex, const std::string& name);
+		void UploadUniformVec2(const glm::vec2& texcord, const std::string& name);
+		void UploadUniformInt(const int tex, const std::string& name);
 
 		inline uint32_t GetRendererId() { return m_RendererID; };
 

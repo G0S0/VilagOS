@@ -11,6 +11,8 @@ namespace VilagOS{
 		Renderer();
 		~Renderer();
 
+		void static Init();
+
 		void static BeginScene(OrthographicCamera& Camera);
 		void static EndScene();
 

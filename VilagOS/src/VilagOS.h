@@ -21,3 +21,5 @@
 #include "glm/glm.hpp"
 
 #include "VilagOS/Core/DeltaTime.h"
+
+#include "VilagOS/Renderer/Texture.h"

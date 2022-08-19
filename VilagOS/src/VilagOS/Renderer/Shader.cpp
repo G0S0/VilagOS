@@ -140,4 +140,9 @@ namespace VilagOS {
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform2f(location, tex.x, tex.y);
 	}
+
+	void Shader::UploadUniformInt(const int tex, const std::string& name){
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1i(location, tex);
+	}
 }

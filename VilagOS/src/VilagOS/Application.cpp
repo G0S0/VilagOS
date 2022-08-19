@@ -20,11 +20,14 @@ namespace VilagOS{
 		VOS_CORE_ASSERT(!s_Instance, "Application already exists");
 		s_Instance = this;
 
-	
+			
 
 		m_Window = std::unique_ptr<WindowMaster>(WindowMaster::Create());
 		m_Window->SetEventCallback(VOS_BIND_EVENT_FN(Application::OnEvent)); //In the end calls the OnEvent fn
-		//m_Window->SetVSync(false); --for testing deltatime - it works
+		//m_Window->SetVSync(false); //for testing deltatime - it works
+
+		Renderer::Init();
+
 		m_ImGuiLayer = new ImguiLayer();
 		PushOverlay(m_ImGuiLayer);
 
