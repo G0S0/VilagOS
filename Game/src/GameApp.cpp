@@ -3,6 +3,7 @@
 #include "DeltaTime.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "VilagOS/Renderer/Shader.h"
 
 class ExampleLayer : public VilagOS::Layer {
 public:
@@ -78,7 +79,7 @@ public:
 			color = u_Color;			
 			}
 		)";
-		m_Shader.reset(new VilagOS::Shader(vertexSource, fragmentSource)); //unique ptr.
+		m_Shader.reset(new VilagOS::Shader("Shader", vertexSource, fragmentSource)); //unique ptr.
 		//////////////////////////////////////
 
 		m_OtherVertexArray.reset(new VilagOS::VertexArray());
@@ -130,15 +131,17 @@ public:
 			color = o_Color;			
 			}
 		)";
-		m_OtherShader.reset(new VilagOS::Shader(OthervertexSource, OtherfragmentSource));
+		m_OtherShader.reset(new VilagOS::Shader("OtherShader", OthervertexSource, OtherfragmentSource));
 
-		m_TextureShader.reset(new VilagOS::Shader("assets/shaders/Texture.glsl"));
+
+		auto TextureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
+		TextureShader.reset(new VilagOS::Shader("assets/shaders/Texture.glsl"));
 
 		
 		m_Texture.reset(new VilagOS::Texture2D("assets/textures/checker.png"));
 		m_TextureClan.reset(new VilagOS::Texture2D("assets/textures/lok.jpg"));
-		m_TextureShader->Bind();
-		m_TextureShader->UploadUniformInt(0, "u_Texture");
+		TextureShader->Bind();
+		TextureShader->UploadUniformInt(0, "u_Texture");
 	}
 
 	void OnUpdate(float DeltaTime) override {
@@ -192,11 +195,14 @@ public:
 		//Material
 		 
 		//m_Texture->Bind();
-		//VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform); 
-		m_Texture->Bind();
-		VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform);
-		//m_TextureClan->Bind();
 		//VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform);
+
+		auto textureShader = m_ShaderLibrary.Get("Texture");
+
+		m_Texture->Bind();
+		VilagOS::Renderer::SubmitData(textureShader, m_OtherVertexArray, RectangleTransform);
+		m_TextureClan->Bind();
+		VilagOS::Renderer::SubmitData(textureShader, m_OtherVertexArray, RectangleTransform);
 
 		//m_OtherShader->Bind();
 		//m_OtherShader->UploadUniformVec4(someColor, "u_Color");
@@ -241,10 +247,12 @@ public:
 	}
 
 private:
+	VilagOS::ShaderLibrary m_ShaderLibrary;
+
 	std::shared_ptr<VilagOS::Shader> m_Shader;
 	std::shared_ptr<VilagOS::VertexArray> m_VertexArray;
 
-	std::shared_ptr<VilagOS::Shader> m_OtherShader, m_TextureShader;
+	std::shared_ptr<VilagOS::Shader> m_OtherShader;
 	std::shared_ptr<VilagOS::VertexArray> m_OtherVertexArray;
 
 	std::shared_ptr<VilagOS::Texture2D> m_Texture, m_TextureClan;

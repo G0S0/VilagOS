@@ -13,9 +13,15 @@ namespace VilagOS {
 		std::string source = ReadFile(filepath);
 		auto shaderSources = PreProcess(source);
 		Compile(shaderSources);
+
+		auto lastSlash = filepath.find_last_of("/\\");
+		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+		auto lastDot = filepath.rfind('.');
+		auto count = lastDot == std::string::npos ? filepath.size() - lastSlash : lastDot - lastSlash;
+		m_Name = filepath.substr(lastSlash, count);
 	}
 
-	Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource) {
+	Shader::Shader(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource) : m_Name(name) {
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSource;
 		sources[GL_FRAGMENT_SHADER] = fragmentSource;
@@ -29,7 +35,7 @@ namespace VilagOS {
 
 	std::string Shader::ReadFile(const std::string& filepath) {
 		std::string result;
-		std::ifstream in(filepath, std::ios::in, std::ios::binary);
+		std::ifstream in(filepath, std::ios::in | std::ios::binary);
 		if (in) {
 			in.seekg(0, std::ios::end);
 			result.resize(in.tellg());
@@ -79,7 +85,9 @@ namespace VilagOS {
 
 	void Shader::Compile(std::unordered_map<GLenum, std::string> shaderSources) {
 		GLuint program = glCreateProgram(); //I want my program to exist outside this constructor so im assigning it to a member variable
-		std::vector<GLenum> glShaderIDs(shaderSources.size());
+		VOS_CORE_ASSERT(shaderSources <= 2, "Since source codes are being alocated on stack the defines size of an array is 2 so you cant put in more than 2 source codes.");
+		std::array<GLenum, 2> glShaderIDs;
+		int glShaderIDIndex = 0;
 		// Attach our shaders to our program
 		
 		for (auto& el : shaderSources) {
@@ -115,7 +123,7 @@ namespace VilagOS {
 				return;
 			}
 			glAttachShader(program, shader);
-			glShaderIDs.push_back(shader);
+			glShaderIDs[glShaderIDIndex++] = shader;
 		}
 
 		// Vertex and fragment shaders are successfully compiled.
@@ -183,4 +191,33 @@ namespace VilagOS {
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1i(location, tex);
 	}
+
+	//Shader Library:
+
+	void ShaderLibrary::Add(const std::string& name, const std::shared_ptr<Shader>& shader) {
+		VOS_CORE_ASSERT(m_Shaders.find(name) == m_Shaders.end(), "Shader already exists");
+		m_Shaders[name] = shader;
+	}
+
+	void ShaderLibrary::Add(const std::shared_ptr<Shader>& shader) {
+		auto& name = shader->GetName();
+		ShaderLibrary::Add(name, shader);
+	}
+
+	std::shared_ptr < Shader > ShaderLibrary::Load(const std::string& filepath) {
+		auto shader = std::shared_ptr<Shader>(new Shader(filepath));
+		ShaderLibrary::Add(shader);
+		return shader;
+	}
+	std::shared_ptr < Shader > ShaderLibrary::Load(const std::string& name, const std::string& filepath) {
+		auto shader = std::shared_ptr<Shader>(new Shader(filepath));
+		ShaderLibrary::Add(name, shader);
+		return shader;
+	}
+							  
+	std::shared_ptr < Shader > ShaderLibrary::Get(const::std::string& name) {
+		VOS_CORE_ASSERT(m_Shaders.find(name) == m_Shaders.end(), "Shader not found");
+		return m_Shaders[name];
+	}
+
 }
