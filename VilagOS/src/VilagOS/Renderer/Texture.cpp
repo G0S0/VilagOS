@@ -7,7 +7,7 @@
 namespace VilagOS {
 	Texture2D::Texture2D(const std::string& path) : m_Path(path) {
 		int width, height, channels;
-		stbi_set_flip_vertically_on_load(1);
+		stbi_set_flip_vertically_on_load(0); //Idk why this suddenly had to switch from 1 to 0 but it was after I added the camera controls.
 		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 		VOS_CORE_ASSERT(data, "Failed to load image");
 		m_Width = width;

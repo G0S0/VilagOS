@@ -10,7 +10,7 @@
 #include "VilagOS/MouseButtonCodes.h"
 #include "VilagOS/KeyCodes.h"
 
-#include "VilagOS/Renderer/OrthographicCamera.h"
+#include "VilagOS/Renderer/OrthographicCameraController.h"
 #include "VilagOS/Renderer/Renderer.h"
 #include "VilagOS/Renderer/Shader.h"
 #include "VilagOS/Renderer/RenderCommand.h"

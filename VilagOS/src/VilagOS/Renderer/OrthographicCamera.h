@@ -6,6 +6,7 @@ namespace VilagOS {
 	public:
 		OrthographicCamera() {}
 		OrthographicCamera(float left, float right, float bottom, float top); //dont need near and far
+		void SetProjection(float left, float right, float bottom, float top);
 
 		glm::vec3 GetPosition() { return m_Position; }
 		inline void SetPosition(const glm::vec3& position) {

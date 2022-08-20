@@ -8,7 +8,7 @@
 class ExampleLayer : public VilagOS::Layer {
 public:
 	ExampleLayer() : Layer("Example") {
-		m_Camera = VilagOS::OrthographicCamera(-3.84f, 3.84f, 2.16f, -2.16f);
+		m_CameraController = VilagOS::OrthographicCameraController(1280.0f/720.0f);
 		
 		//VertexArray
 		m_VertexArray.reset(new VilagOS::VertexArray());
@@ -84,10 +84,10 @@ public:
 
 		m_OtherVertexArray.reset(new VilagOS::VertexArray());
 		float OtherVerticies[5 * 4] = {
-			-1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			-1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
-			1.0f, -1.0f, 0.0f, 1.0f, 1.0f,
-			1.0f, 1.0f, 0.0f, 1.0f, 0.0f
+			-0.5f, 0.5f, 0.0f, 0.0f, 0.0f,
+			-0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
+			0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+			0.5f, 0.5f, 0.0f, 1.0f, 0.0f
 		};
 
 		std::shared_ptr<VilagOS::VertexBuffer> m_OtherVertexBuffer;
@@ -139,58 +139,22 @@ public:
 
 		
 		m_Texture.reset(new VilagOS::Texture2D("assets/textures/checker.png"));
-		m_TextureClan.reset(new VilagOS::Texture2D("assets/textures/lok.jpg"));
+		m_TextureClan.reset(new VilagOS::Texture2D("assets/textures/clan.png"));
 		TextureShader->Bind();
 		TextureShader->UploadUniformInt(0, "u_Texture");
 	}
 
 	void OnUpdate(float DeltaTime) override {
-		  
-		DeltaTime /= 1000.0f; //
-		//VOS_CLIENT_TRACE("Delta time: {0}", DeltaTime);
 
-		//this needs to be transferred 
-		if(VilagOS::Input::IsKeyPressedStatic(VOS_KEY_LEFT))
-			m_CameraPosition.x -= m_CameraMovementSpeed * DeltaTime;
-		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_RIGHT))
-			m_CameraPosition.x += m_CameraMovementSpeed * DeltaTime;
-		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_UP))
-			m_CameraPosition.y += m_CameraMovementSpeed * DeltaTime;
-		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_DOWN))
-			m_CameraPosition.y -= m_CameraMovementSpeed * DeltaTime;
-		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_A))
-			m_CameraRotation -= m_CameraRotationSpeed * DeltaTime;
-		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_D))
-			m_CameraRotation += m_CameraRotationSpeed * DeltaTime;
-
-		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_J))
-			m_TrianglePosition.x -= m_CameraMovementSpeed * DeltaTime;
-		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_L))
-			m_TrianglePosition.x += m_CameraMovementSpeed * DeltaTime;
-		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_I))
-			m_TrianglePosition.y += m_CameraMovementSpeed * DeltaTime;
-		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_K))
-			m_TrianglePosition.y -= m_CameraMovementSpeed * DeltaTime;
-
-		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_W)) {
-			scale[0].x += 0.05;
-			scale[1].y += 0.05;
-		}
-			
-		if (VilagOS::Input::IsKeyPressedStatic(VOS_KEY_S)) {
-			scale[0].x -= 0.05;
-			scale[1].y -= 0.05;
-		}
+		m_CameraController.OnUpdate(DeltaTime);
 
 		VilagOS::RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1));
-		VilagOS::Renderer::BeginScene(m_Camera);
-		m_Camera.SetPosition(m_CameraPosition);
-		m_Camera.SetRotation(m_CameraRotation);
-		glm::mat4 TriangleTransform = glm::translate(glm::mat4(1.0f), m_TrianglePosition) * scale;
-		glm::mat4 TriangleTransformTwo = glm::translate(glm::mat4(1.0f), m_TrianglePosition + glm::vec3(0.5f)) * scale;
-		glm::mat4 TriangleTransformThree = glm::translate(glm::mat4(1.0f), m_TrianglePosition - glm::vec3(1.0f)) * scale;
-		glm::mat4 RectangleTransform = glm::translate(glm::mat4(1.0f), m_RectanglePosition) * scale;
-		glm::mat4 RectangleTransform2 = glm::translate(glm::mat4(1.0f), m_RectanglePosition + glm::vec3(0.5f)) * scale;
+		VilagOS::Renderer::BeginScene(m_CameraController.GetCamera());
+		glm::mat4 TriangleTransform = glm::translate(glm::mat4(1.0f), m_TrianglePosition);
+		glm::mat4 TriangleTransformTwo = glm::translate(glm::mat4(1.0f), m_TrianglePosition + glm::vec3(0.5f));
+		glm::mat4 TriangleTransformThree = glm::translate(glm::mat4(1.0f), m_TrianglePosition - glm::vec3(1.0f));
+		glm::mat4 RectangleTransform = glm::translate(glm::mat4(1.0f), m_RectanglePosition);
+		glm::mat4 RectangleTransform2 = glm::translate(glm::mat4(1.0f), m_RectanglePosition + glm::vec3(0.5f));
 
 		//Material
 		 
@@ -209,9 +173,9 @@ public:
 		//VilagOS::Renderer::SubmitData(m_OtherShader, m_OtherVertexArray, RectangleTransform);
 		//m_OtherShader->Unbind();
 		
-		//m_Shader->Bind();
-		//m_Shader->UploadUniformVec4(someColor, "u_Color");
-		//VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransform);
+		m_Shader->Bind();
+		m_Shader->UploadUniformVec4(someColor, "u_Color");
+		VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransformThree);
 		//m_Shader->UploadUniformVec4(blueColor, "u_Color");
 		//VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransformTwo);
 		//m_Shader->UploadUniformVec4(blueColor, "u_Color");
@@ -231,6 +195,7 @@ public:
 	}
 
 	void OnEvent(VilagOS::Event& e) override {
+		m_CameraController.OnEvent(e);
 		VilagOS::EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<VilagOS::KeyPressedEvent>(VOS_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
 	}
@@ -257,17 +222,11 @@ private:
 
 	std::shared_ptr<VilagOS::Texture2D> m_Texture, m_TextureClan;
 	
-	VilagOS::OrthographicCamera m_Camera;
-	glm::vec3 m_CameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-	float m_CameraRotation = 0.0f;
-	float m_CameraMovementSpeed = 1.0f;
-	float m_CameraRotationSpeed = 4.0f;
+	VilagOS::OrthographicCameraController m_CameraController;
 
 	glm::vec3 m_RectanglePosition = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 m_TrianglePosition = glm::vec3(0.0f, 0.0f, 0.0f);
 	float m_TriangleMovementSpeed = 0.1f;
-	glm::mat4 m_scale = glm::mat4(0.5f);
-	glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 	
 	glm::vec4 blueColor = glm::vec4(0.2f, 0.3f, 0.8f, 1.0f);
 	glm::vec4 someColor = glm::vec4(0.9f, 0.1f, 0.3f, 1.0f);
