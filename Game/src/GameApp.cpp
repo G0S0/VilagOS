@@ -132,39 +132,11 @@ public:
 		)";
 		m_OtherShader.reset(new VilagOS::Shader(OthervertexSource, OtherfragmentSource));
 
-		std::string TextureVertexSource = R"( 
-			#version 330 core	
-			layout(location = 0) in vec3 a_Position; 
-			layout(location = 1) in vec2 a_TextureCord; 
-	
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
-
-			out vec2 o_TextureCord;
-
-			void main(){
-			o_TextureCord = a_TextureCord;
-			gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0f);
-			}
-		)";
-
-		std::string TextureFragmentSource = R"( 
-			#version 330 core
-			layout(location = 0) out vec4 color; 	
-		
-			in vec2 o_TextureCord;
-		
-			uniform sampler2D u_Texture;
-
-			void main(){
-				color = texture(u_Texture, o_TextureCord);			
-			}
-		)";
-		m_TextureShader.reset(new VilagOS::Shader(TextureVertexSource, TextureFragmentSource));
+		m_TextureShader.reset(new VilagOS::Shader("assets/shaders/Texture.glsl"));
 
 		
 		m_Texture.reset(new VilagOS::Texture2D("assets/textures/checker.png"));
-		m_TextureClan.reset(new VilagOS::Texture2D("assets/textures/clan.png"));
+		m_TextureClan.reset(new VilagOS::Texture2D("assets/textures/lok.jpg"));
 		m_TextureShader->Bind();
 		m_TextureShader->UploadUniformInt(0, "u_Texture");
 	}
@@ -223,8 +195,8 @@ public:
 		//VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform); 
 		m_Texture->Bind();
 		VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform);
-		m_TextureClan->Bind();
-		VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform);
+		//m_TextureClan->Bind();
+		//VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform);
 
 		//m_OtherShader->Bind();
 		//m_OtherShader->UploadUniformVec4(someColor, "u_Color");
