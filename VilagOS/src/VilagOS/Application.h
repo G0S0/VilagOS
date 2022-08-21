@@ -26,8 +26,11 @@ namespace VilagOS {
 		inline static Application& GetApp() { return *s_Instance; };
 	private:
 		bool OnWindowClose(WindowCloseEvent& event);
+		bool OnWindowResize(WindowResizeEvent& event);
 		static Application* s_Instance;
+
 		bool m_Running = true;
+		bool m_Minimized = false; //It makes sense that this is in the app
 
 		std::unique_ptr<WindowMaster> m_Window;
 

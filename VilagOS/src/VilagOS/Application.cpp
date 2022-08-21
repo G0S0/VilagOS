@@ -44,25 +44,25 @@ namespace VilagOS{
 		float DeltaTime = 0.0f;
 		while (m_Running) {
 			std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-			
-			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate(DeltaTime);
-
-			m_ImGuiLayer->Begin();
+			if (!m_Minimized) { //I should do some testing to see if chrono should actually be outside this block - this has beem resolvec: It has to be outside since if got more stuff outsied now
+				for (Layer* layer : m_LayerStack)
+					layer->OnUpdate(DeltaTime);
+			}
+			m_ImGuiLayer->Begin(); // Why does this not delete imgui window when it is not called?
 			for (Layer* layer : m_LayerStack)
 				layer->OnImGuiRender();
 			m_ImGuiLayer->End();
-			m_Window->OnUpdate();
 
+			m_Window->OnUpdate(); //I have to be pulling event from window even when it is minimized so that you know... i can expand it again? 
 			std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 			DeltaTime = std::chrono::duration_cast<std::chrono::milliseconds> (end - begin).count();
-				
 		}
 	}
 
 	void Application::OnEvent(Event& e) {
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(VOS_BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(VOS_BIND_EVENT_FN(Application::OnWindowResize));
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();){
 			(*--it)->OnEvent(e);
 			if (e.m_Handled)
@@ -83,5 +83,14 @@ namespace VilagOS{
 	void Application::PushOverlay(Layer* overlay) {
 		m_LayerStack.LayerStack::PushOverlay(overlay);
 		overlay->OnAttach();
+	}
+
+	bool Application::OnWindowResize(WindowResizeEvent& e) {
+		if (e.getSizes().first == 0 || e.getSizes().second == 0) {
+			m_Minimized = true;
+			return false;
+		}
+		m_Minimized = false;
+		return false;
 	}
 }
