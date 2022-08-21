@@ -1,5 +1,5 @@
 #pragma once
-#include "VilagOS/Input.h"
+#include "VilagOS/Core/Input.h"
 
 namespace VilagOS {
 	class WindowMasterInput: public Input{

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "VilagOS/Events/Event.h"
-#include "Core/DeltaTime.h"
+#include "VilagOS/Core/DeltaTime.h"
 
 namespace VilagOS {
 	//Interface
@@ -12,7 +12,7 @@ namespace VilagOS {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate(float DeltaTime) {}
+		virtual void OnUpdate(DeltaTime DeltaTime) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& e) {}
 

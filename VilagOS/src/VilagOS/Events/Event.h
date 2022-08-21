@@ -1,7 +1,7 @@
 #pragma once
 
 #include "vospch.h"
-#include "VilagOS/Core.h"
+#include "VilagOS/Core/Core.h"
 
 namespace VilagOS {
 	enum class EventType { 

@@ -1,7 +1,7 @@
 #include "vospch.h"
 #include "WindowMasterInput.h"
 #include "glfw3.h"
-#include "VilagOS/Application.h"
+#include "VilagOS/Core/Application.h"
 
 namespace VilagOS {
 	Input* Input::s_Instance = new WindowMasterInput();

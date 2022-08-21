@@ -12,6 +12,7 @@ namespace VilagOS{
 		~Renderer();
 
 		void static Init();
+		void static OnWindowResize(uint32_t width, uint32_t height);
 
 		void static BeginScene(OrthographicCamera& Camera);
 		void static EndScene();

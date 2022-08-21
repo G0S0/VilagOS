@@ -33,17 +33,35 @@
     <ClInclude Include="src\VilagOS.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\VilagOS\Application.h">
-      <Filter>src\VilagOS</Filter>
+    <ClInclude Include="src\VilagOS\Core\Application.h">
+      <Filter>src\VilagOS\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\VilagOS\Core.h">
-      <Filter>src\VilagOS</Filter>
+    <ClInclude Include="src\VilagOS\Core\Core.h">
+      <Filter>src\VilagOS\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Core\DeltaTime.h">
       <Filter>src\VilagOS\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\VilagOS\EntryPoint.h">
-      <Filter>src\VilagOS</Filter>
+    <ClInclude Include="src\VilagOS\Core\EntryPoint.h">
+      <Filter>src\VilagOS\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Core\Input.h">
+      <Filter>src\VilagOS\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Core\KeyCodes.h">
+      <Filter>src\VilagOS\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Core\Layer.h">
+      <Filter>src\VilagOS\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Core\LayerStack.h">
+      <Filter>src\VilagOS\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Core\Log.h">
+      <Filter>src\VilagOS\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Core\MouseButtonCodes.h">
+      <Filter>src\VilagOS\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Events\ApplicationEvent.h">
       <Filter>src\VilagOS\Events</Filter>
@@ -60,28 +78,13 @@
     <ClInclude Include="src\VilagOS\Imgui\ImguiLayer.h">
       <Filter>src\VilagOS\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="src\VilagOS\Input.h">
-      <Filter>src\VilagOS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VilagOS\KeyCodes.h">
-      <Filter>src\VilagOS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VilagOS\Layer.h">
-      <Filter>src\VilagOS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VilagOS\LayerStack.h">
-      <Filter>src\VilagOS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VilagOS\Log.h">
-      <Filter>src\VilagOS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VilagOS\MouseButtonCodes.h">
-      <Filter>src\VilagOS</Filter>
-    </ClInclude>
     <ClInclude Include="src\VilagOS\Renderer\Buffer.h">
       <Filter>src\VilagOS\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Renderer\OrthographicCamera.h">
+      <Filter>src\VilagOS\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\OrthographicCameraController.h">
       <Filter>src\VilagOS\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VilagOS\Renderer\RenderCommand.h">
@@ -114,13 +117,19 @@
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="src\VilagOS\Renderer\OrthographicCameraController.h">
-      <Filter>src\VilagOS\Renderer</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\VilagOS\Application.cpp">
-      <Filter>src\VilagOS</Filter>
+    <ClCompile Include="src\VilagOS\Core\Application.cpp">
+      <Filter>src\VilagOS\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Core\Layer.cpp">
+      <Filter>src\VilagOS\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Core\LayerStack.cpp">
+      <Filter>src\VilagOS\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Core\Log.cpp">
+      <Filter>src\VilagOS\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Imgui\ImGuiBuild.cpp">
       <Filter>src\VilagOS\Imgui</Filter>
@@ -128,19 +137,13 @@
     <ClCompile Include="src\VilagOS\Imgui\ImguiLayer.cpp">
       <Filter>src\VilagOS\Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="src\VilagOS\Layer.cpp">
-      <Filter>src\VilagOS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VilagOS\LayerStack.cpp">
-      <Filter>src\VilagOS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VilagOS\Log.cpp">
-      <Filter>src\VilagOS</Filter>
-    </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\Buffer.cpp">
       <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\OrthographicCamera.cpp">
+      <Filter>src\VilagOS\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\OrthographicCameraController.cpp">
       <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\RenderCommand.cpp">
@@ -169,9 +172,6 @@
     </ClCompile>
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VilagOS\Renderer\OrthographicCameraController.cpp">
-      <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

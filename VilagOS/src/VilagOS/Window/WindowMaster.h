@@ -1,7 +1,7 @@
 #pragma once
 #include "vospch.h"
 
-#include "VilagOS/Core.h"
+#include "VilagOS/Core/Core.h"
 #include "VilagOS/Events/Event.h"
 
 namespace VilagOS {

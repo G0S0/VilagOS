@@ -1,12 +1,12 @@
 #pragma once
 #include "Core.h"
-#include "Window/WindowMaster.h"
-#include "Events/ApplicationEvent.h"
+#include "VilagOS/Window/WindowMaster.h"
+#include "VilagOS/Events/ApplicationEvent.h"
 #include "LayerStack.h"
 #include "VilagOS/Imgui/ImguiLayer.h"
 #include "VilagOS/Renderer/Shader.h"
-#include "Renderer/Buffer.h"
-#include "Renderer/VertexArray.h"
+#include "VilagOS/Renderer/Buffer.h"
+#include "VilagOS/Renderer/VertexArray.h"
 #include "VilagOS/Renderer/OrthographicCamera.h"
 #include "VilagOS/Core/DeltaTime.h"
 

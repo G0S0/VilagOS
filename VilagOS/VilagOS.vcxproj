@@ -136,21 +136,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\VilagOS.h" />
-    <ClInclude Include="src\VilagOS\Application.h" />
-    <ClInclude Include="src\VilagOS\Core.h" />
+    <ClInclude Include="src\VilagOS\Core\Application.h" />
+    <ClInclude Include="src\VilagOS\Core\Core.h" />
     <ClInclude Include="src\VilagOS\Core\DeltaTime.h" />
-    <ClInclude Include="src\VilagOS\EntryPoint.h" />
+    <ClInclude Include="src\VilagOS\Core\EntryPoint.h" />
+    <ClInclude Include="src\VilagOS\Core\Input.h" />
+    <ClInclude Include="src\VilagOS\Core\KeyCodes.h" />
+    <ClInclude Include="src\VilagOS\Core\Layer.h" />
+    <ClInclude Include="src\VilagOS\Core\LayerStack.h" />
+    <ClInclude Include="src\VilagOS\Core\Log.h" />
+    <ClInclude Include="src\VilagOS\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\VilagOS\Events\ApplicationEvent.h" />
     <ClInclude Include="src\VilagOS\Events\Event.h" />
     <ClInclude Include="src\VilagOS\Events\KeyboardEvent.h" />
     <ClInclude Include="src\VilagOS\Events\MouseEvent.h" />
     <ClInclude Include="src\VilagOS\Imgui\ImguiLayer.h" />
-    <ClInclude Include="src\VilagOS\Input.h" />
-    <ClInclude Include="src\VilagOS\KeyCodes.h" />
-    <ClInclude Include="src\VilagOS\Layer.h" />
-    <ClInclude Include="src\VilagOS\LayerStack.h" />
-    <ClInclude Include="src\VilagOS\Log.h" />
-    <ClInclude Include="src\VilagOS\MouseButtonCodes.h" />
     <ClInclude Include="src\VilagOS\Renderer\Buffer.h" />
     <ClInclude Include="src\VilagOS\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\VilagOS\Renderer\OrthographicCameraController.h" />
@@ -166,12 +166,12 @@
     <ClInclude Include="vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\VilagOS\Application.cpp" />
+    <ClCompile Include="src\VilagOS\Core\Application.cpp" />
+    <ClCompile Include="src\VilagOS\Core\Layer.cpp" />
+    <ClCompile Include="src\VilagOS\Core\LayerStack.cpp" />
+    <ClCompile Include="src\VilagOS\Core\Log.cpp" />
     <ClCompile Include="src\VilagOS\Imgui\ImGuiBuild.cpp" />
     <ClCompile Include="src\VilagOS\Imgui\ImguiLayer.cpp" />
-    <ClCompile Include="src\VilagOS\Layer.cpp" />
-    <ClCompile Include="src\VilagOS\LayerStack.cpp" />
-    <ClCompile Include="src\VilagOS\Log.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\Buffer.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\VilagOS\Renderer\OrthographicCameraController.cpp" />

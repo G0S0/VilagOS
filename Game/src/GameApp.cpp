@@ -4,6 +4,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "VilagOS/Renderer/Shader.h"
+#include "Game2D.h"
+#include "VilagOS/Core/EntryPoint.h"
 
 class ExampleLayer : public VilagOS::Layer {
 public:
@@ -47,39 +49,8 @@ public:
 		m_IndexBuffer.reset(new VilagOS::IndexBuffer(indicies, sizeof(indicies) / sizeof(uint32_t)));
 		m_VertexArray->AddIndexBuffer(m_IndexBuffer);
 
-		//Shader:
-		//multiple lines string
-		//takes a position of out attribute inside of a vertex buffer.	
-		std::string vertexSource = R"( 
-			#version 330 core
-			layout(location = 0) in vec3 a_Position; 	
-			layout(location = 1) in vec4 a_Color; 
-	
-			uniform mat4 u_ViewProjection;			
-			uniform mat4 u_Transform;			
-			out vec3 o_Position;
-			out vec4 o_Color;
-			void main(){
-			o_Position = a_Position;
-			o_Color = a_Color;
-			gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0f);
-			}
-		)";
 
-		std::string fragmentSource = R"( 
-			#version 330 core
-			layout(location = 0) out vec4 color; 	
-			in vec3 o_Position;			
-			in vec4 o_Color;
-
-			uniform vec4 u_Color;
-
-			void main(){
-			//color = vec4(o_Position * 0.5f + 0.5f, 1.0f);
-			color = u_Color;			
-			}
-		)";
-		m_Shader.reset(new VilagOS::Shader("Shader", vertexSource, fragmentSource)); //unique ptr.
+		m_Shader.reset(new VilagOS::Shader("assets/shaders/FlatColor.glsl")); //unique ptr.
 		//////////////////////////////////////
 
 		m_OtherVertexArray.reset(new VilagOS::VertexArray());
@@ -144,60 +115,15 @@ public:
 		TextureShader->UploadUniformInt(0, "u_Texture");
 	}
 
-	void OnUpdate(float DeltaTime) override {
+	void OnUpdate(VilagOS::DeltaTime DeltaTime) override {
 
 		m_CameraController.OnUpdate(DeltaTime);
 
-		VilagOS::RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1));
-		VilagOS::Renderer::BeginScene(m_CameraController.GetCamera());
-		glm::mat4 TriangleTransform = glm::translate(glm::mat4(1.0f), m_TrianglePosition);
-		glm::mat4 TriangleTransformTwo = glm::translate(glm::mat4(1.0f), m_TrianglePosition + glm::vec3(0.5f));
-		glm::mat4 TriangleTransformThree = glm::translate(glm::mat4(1.0f), m_TrianglePosition - glm::vec3(1.0f));
-		glm::mat4 RectangleTransform = glm::translate(glm::mat4(1.0f), m_RectanglePosition);
-		glm::mat4 RectangleTransform2 = glm::translate(glm::mat4(1.0f), m_RectanglePosition + glm::vec3(0.5f));
-
-		//Material
-		 
-		//m_Texture->Bind();
-		//VilagOS::Renderer::SubmitData(m_TextureShader, m_OtherVertexArray, RectangleTransform);
-
-		auto textureShader = m_ShaderLibrary.Get("Texture");
-
-		m_Texture->Bind();
-		VilagOS::Renderer::SubmitData(textureShader, m_OtherVertexArray, RectangleTransform);
-		m_TextureClan->Bind();
-		VilagOS::Renderer::SubmitData(textureShader, m_OtherVertexArray, RectangleTransform);
-
-		//m_OtherShader->Bind();
-		//m_OtherShader->UploadUniformVec4(someColor, "u_Color");
-		//VilagOS::Renderer::SubmitData(m_OtherShader, m_OtherVertexArray, RectangleTransform);
-		//m_OtherShader->Unbind();
 		
-		m_Shader->Bind();
-		m_Shader->UploadUniformVec4(someColor, "u_Color");
-		VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransformThree);
-		//m_Shader->UploadUniformVec4(blueColor, "u_Color");
-		//VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransformTwo);
-		//m_Shader->UploadUniformVec4(blueColor, "u_Color");
-		//VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransformThree);
-
-		//for (int i = 0; i < 5; i++) {
-		//	glm::mat4 TriangleTransform = glm::translate(glm::mat4(1.0f), m_TrianglePosition + glm::vec3(0.5f * i)) * scale;
-		//	if (i % 2 == 0)
-		//		m_Shader->UploadUniformVec4(blueColor, "u_Color");
-		//	else
-		//		m_Shader->UploadUniformVec4(someColor, "u_Color");
-		//	VilagOS::Renderer::SubmitData(m_Shader, m_VertexArray, TriangleTransform);
-		//}
-
-		//this->OnEvent(VilagOS::Event & e);
-		//Renderer::EndScene();
 	}
 
 	void OnEvent(VilagOS::Event& e) override {
 		m_CameraController.OnEvent(e);
-		VilagOS::EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<VilagOS::KeyPressedEvent>(VOS_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
 	}
 
 	bool OnKeyPressedEvent(VilagOS::KeyPressedEvent& e) {
@@ -237,7 +163,8 @@ class Game : public VilagOS::Application {
 public:
 	Game() {
 		
-		PushLayer(new ExampleLayer());
+		//PushLayer(new ExampleLayer());
+		PushLayer(new Game2D());
 	}
 	~Game() {}
 };

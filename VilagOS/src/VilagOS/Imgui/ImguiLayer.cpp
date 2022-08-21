@@ -5,8 +5,8 @@
 //#include "OpenGl/imgui_impl_opengl3_loader.h"
 #include "imgui.h"
 #include "glfw3.h"
-#include "VilagOS/Application.h"
-#include "VilagOS/Core.h"
+#include "VilagOS/Core/Application.h"
+#include "VilagOS/Core/Core.h"
 #include "glad/glad.h"
 
 

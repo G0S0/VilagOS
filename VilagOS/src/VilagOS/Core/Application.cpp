@@ -2,12 +2,12 @@
 #include "Application.h"
 #include "Log.h"
 #include "Core.h"
-#include "VilagOS/Input.h"
-#include "VilagOS/MouseButtonCodes.h"
-#include "VilagOS/KeyCodes.h"
+#include "VilagOS/Core/Input.h"
+#include "VilagOS/Core/MouseButtonCodes.h"
+#include "VilagOS/Core/KeyCodes.h"
 #include "glfw3.h"
-#include "Renderer/Buffer.h"
-#include "Renderer/Renderer.h"
+#include "VilagOS/Renderer/Buffer.h"
+#include "VilagOS/Renderer/Renderer.h"
 #include <chrono>
 
 
@@ -20,8 +20,6 @@ namespace VilagOS{
 		VOS_CORE_ASSERT(!s_Instance, "Application already exists");
 		s_Instance = this;
 
-			
-
 		m_Window = std::unique_ptr<WindowMaster>(WindowMaster::Create());
 		m_Window->SetEventCallback(VOS_BIND_EVENT_FN(Application::OnEvent)); //In the end calls the OnEvent fn
 		//m_Window->SetVSync(false); //for testing deltatime - it works
@@ -30,8 +28,6 @@ namespace VilagOS{
 
 		m_ImGuiLayer = new ImguiLayer();
 		PushOverlay(m_ImGuiLayer);
-
-		
 	}
 
 	Application::~Application() {
@@ -91,6 +87,8 @@ namespace VilagOS{
 			return false;
 		}
 		m_Minimized = false;
+
+		Renderer::OnWindowResize(e.getSizes().first, e.getSizes().second);
 		return false;
 	}
 }

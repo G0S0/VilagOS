@@ -1,7 +1,7 @@
 #include "vospch.h"
 #include "OrthographicCameraController.h"
-#include "VilagOS/Input.h"
-#include "VilagOS/KeyCodes.h"
+#include "VilagOS/Core/Input.h"
+#include "VilagOS/Core/KeyCodes.h"
 
 namespace VilagOS {
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio): 

@@ -1,6 +1,6 @@
 #include "vospch.h"
 #include "Window.h"
-#include "VilagOS/Core.h"
+#include "VilagOS/Core/Core.h"
 #include "VilagOS/Events/ApplicationEvent.h"
 #include "VilagOS/Events/KeyboardEvent.h"
 #include "VilagOS/Events/MouseEvent.h"
@@ -64,6 +64,8 @@ namespace VilagOS {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			data.Width = width;
 			data.Height = height;
+
+
 
 			WindowResizeEvent event(width, height);
 			data.EventCallback(event);
