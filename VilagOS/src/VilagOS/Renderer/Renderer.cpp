@@ -8,6 +8,7 @@ namespace VilagOS {
 	void Renderer::Init() {
 		RenderCommand::Init();
 		Renderer2D::Init();
+
 	}
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height) { //This is needed so that when I resize the window rendering space expands as well

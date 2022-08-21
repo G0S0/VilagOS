@@ -9,6 +9,8 @@ namespace VilagOS {
 		void  static Init() { //what does this do?
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+			glEnable(GL_DEPTH_TEST); //check which pixel is in front or back
 		}
 		inline static void DrawElements(const std::shared_ptr<VertexArray>& vertexArray) {
 			glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);

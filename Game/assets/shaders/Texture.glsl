@@ -22,7 +22,7 @@ in vec2 o_TextureCord;
 uniform sampler2D u_Texture;
 
 void main(){
-	color = texture(u_Texture, o_TextureCord);			
+	color = texture(u_Texture, o_TextureCord * 10);	
 }
 
 

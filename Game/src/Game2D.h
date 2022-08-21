@@ -16,6 +16,9 @@ private:
 	std::shared_ptr<VilagOS::Shader> m_Shader;
 	std::shared_ptr<VilagOS::VertexArray> m_VertexArray;
 
+	std::shared_ptr<VilagOS::Texture2D> m_Texture; 
+	std::shared_ptr<VilagOS::Texture2D> m_TextureClan;  
+
 	glm::vec4 blueColor = glm::vec4(0.2f, 0.3f, 0.8f, 1.0f);
 
 	VilagOS::OrthographicCameraController m_CameraController;
