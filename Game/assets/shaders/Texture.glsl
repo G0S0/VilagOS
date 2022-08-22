@@ -17,12 +17,16 @@ void main(){
 #version 330 core
 layout(location = 0) out vec4 color; 	
 
+uniform vec4 u_Color;
+uniform sampler2D u_Texture;
+uniform float u_Tiling;
+
 in vec2 o_TextureCord;
 
-uniform sampler2D u_Texture;
+
 
 void main(){
-	color = texture(u_Texture, o_TextureCord * 10);	
+	color = texture(u_Texture, o_TextureCord * u_Tiling) * u_Color;	
 }
 
 

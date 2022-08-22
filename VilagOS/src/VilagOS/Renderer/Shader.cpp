@@ -192,6 +192,11 @@ namespace VilagOS {
 		glUniform1i(location, tex);
 	}
 
+
+	void Shader::UploadUniformFloat(const float ft, const std::string& name) {
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1f(location, ft);
+	}
 	//Shader Library:
 
 	void ShaderLibrary::Add(const std::string& name, const std::shared_ptr<Shader>& shader) {

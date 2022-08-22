@@ -14,6 +14,7 @@ namespace VilagOS {
 		}
 		inline static void DrawElements(const std::shared_ptr<VertexArray>& vertexArray) {
 			glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			glBindTexture(GL_TEXTURE_2D, 0); //clearing 0 texture slot
 		}
 
 		inline static void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
