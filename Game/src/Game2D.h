@@ -22,11 +22,6 @@ private:
 	std::shared_ptr<VilagOS::Texture2D> m_TextureClan;  
 
 	std::unique_ptr<VilagOS::OrthographicCamera> m_Camera;
-
-
-	float m_TimeElapsed = 0.0f;
-	uint32_t m_Rounds = 1;
-	uint32_t m_AsteroidRateCoeficient = 3;
 	
 
 	enum class GameState {

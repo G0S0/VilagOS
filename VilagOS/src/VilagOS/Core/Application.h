@@ -9,6 +9,7 @@
 #include "VilagOS/Renderer/VertexArray.h"
 #include "VilagOS/Renderer/OrthographicCamera.h"
 #include "VilagOS/Core/DeltaTime.h"
+#include "VilagOS/Renderer/Texture.h"
 
 namespace VilagOS {
 
@@ -24,6 +25,7 @@ namespace VilagOS {
 
 		inline WindowMaster& GetWindow() { return *m_Window; };
 		inline static Application& GetApp() { return *s_Instance; };
+		
 	private:
 		bool OnWindowClose(WindowCloseEvent& event);
 		bool OnWindowResize(WindowResizeEvent& event);
@@ -38,6 +40,7 @@ namespace VilagOS {
 		
 		LayerStack m_LayerStack;
 		DeltaTime m_TimeOfLastFrame = 0.0f;
+		std::shared_ptr<Texture2D> m_Texture;
 		
 		
 	};

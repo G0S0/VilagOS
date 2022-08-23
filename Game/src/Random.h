@@ -1,5 +1,6 @@
 #pragma once
 #include <random>
+#include <stdlib.h> 
 
 class Random {
 public:
@@ -9,6 +10,10 @@ public:
 
 	static float Dist() {
 		return (float)s_Distribution(s_Randomizer) / (float)std::numeric_limits<uint32_t>::max(); //returns random number between 0 and 1
+	}
+
+	static int myRandom() {
+		return (rand() > RAND_MAX / 2) ? 1 : -1;
 	}
 private:
 	static std::mt19937 s_Randomizer;

@@ -12,6 +12,7 @@ Game2D::Game2D(): Layer("Game2D"){
 	CreateCamera(window.GetWidth(), window.GetHeight());
 	Random::Init();
 	m_Texture.reset(new VilagOS::Texture2D("assets/textures/background.png"));
+	m_Level.Init();
 }
 
 void Game2D::OnAttach() {
@@ -21,24 +22,14 @@ void Game2D::OnDetach(){
 
 void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 	//OnUpdate
-	Renderer2D::DrawRotatedQuad(glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 1.0f), 1.0f, m_Texture);
-
-	m_TimeElapsed += dt.GetMiliseconds();
-	VOS_CORE_TRACE("{0}", m_TimeElapsed);
-	if (m_TimeElapsed > 15.0f * m_Rounds) {
-		m_Rounds++;
-		m_AsteroidRateCoeficient = std::max(m_AsteroidRateCoeficient + 1.0f, 30.0f);
-	}
-
-	if (m_Rounds % 2 == 0) {
-		m_Level.SetSpeed(std::max(m_Level.GetSpeed() + 5.0f, 30.0f));
-	}
+	
+	
+	
 
 	//for (auto& asteroid : m_Level.GetAsteroids()) {
 	//	asteroid.position.y -= m_Level.GetSpeed();
 	//	asteroid.rotation += asteroid.rotationSpeed;
 	//}
-
 	switch (m_GameState)
 	{
 	case Game2D::GameState::InGame:
@@ -47,10 +38,13 @@ void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 	}
 
 	//OnRender
-	VilagOS::RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1));
+	VilagOS::RenderCommand::Clear(glm::vec4(0.0f, 0.0f, 0.0f, 1));
 	VilagOS::Renderer2D::BeginScene(*m_Camera);
-	//VilagOS::Renderer2D::DrawQuad({ -0.5f, -0.5f, -0.1f}, { 30.0f, 30.0f }, m_Texture, 5.0f);
 	m_Level.OnRender();
+	
+	
+	//
+	//m_Level.OnRender();
 	//this->OnEvent(VilagOS::Event & e);
 	VilagOS::Renderer2D::EndScene();
 }

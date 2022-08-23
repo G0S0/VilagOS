@@ -9,6 +9,7 @@
 #include "VilagOS/Renderer/Buffer.h"
 #include "VilagOS/Renderer/Renderer.h"
 #include <chrono>
+#include "VilagOS/Renderer/Renderer2D.h"
 
 
 
@@ -25,6 +26,7 @@ namespace VilagOS{
 		//m_Window->SetVSync(false); //for testing deltatime - it works
 
 		Renderer::Init();
+		
 
 		m_ImGuiLayer = new ImguiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -40,6 +42,7 @@ namespace VilagOS{
 		float DeltaTime = 0.0f;
 		while (m_Running) {
 			std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+			Renderer2D::DrawRotatedQuad(glm::vec2(1.0f, 1.0f), glm::vec2(1.0f, 1.0f), 1.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 			if (!m_Minimized) { //I should do some testing to see if chrono should actually be outside this block - this has beem resolvec: It has to be outside since if got more stuff outsied now
 				for (Layer* layer : m_LayerStack)
 					layer->OnUpdate(DeltaTime);
