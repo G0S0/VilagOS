@@ -6,16 +6,15 @@ void Level::Init() {
 	m_Texture.reset(new VilagOS::Texture2D("assets/textures/GreyAsteroid.png"));
 	m_TextureQuad.reset(new VilagOS::Texture2D("assets/textures/background.jpg"));
 	m_Player.LoadAssets();
-
 }
 
 void Level::OnUpdate(DeltaTime dt) {
 	m_Player.OnUpdate(dt);
 
-	//if (OnCollision()) {
-	//	GameOver();
-	//	return;
-	//}
+	if (OnCollision()) {
+		m_GameOver = true;
+		return;
+	}
 
 	m_TimeElapsed += dt.GetMiliseconds();
 	m_AsteroidSpeed = m_Incrament * dt.GetMiliseconds();
@@ -27,7 +26,7 @@ void Level::OnUpdate(DeltaTime dt) {
 		}
 
 		m_Stars.resize(25);
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 4; i++) {
 			CreateStar(i);
 			m_Index = 4;
 		}
@@ -47,6 +46,8 @@ void Level::OnUpdate(DeltaTime dt) {
 		if (asteroid.position.y < -9.0f) {
 			CreateAsteroid(asteroid.index);
 		}
+		asteroid.position.y -= asteroid.speed;
+		asteroid.rotation += asteroid.rotationSpeed;
 	}
 
 	for (auto& star : m_Stars) {
@@ -58,6 +59,7 @@ void Level::OnUpdate(DeltaTime dt) {
 				//VOS_CORE_INFO("{0}, {1}", m_StarCounter, m_TimeElapsed);
 			}
 		}
+		star.position.y -= star.speed;
 	}
 }
 
@@ -67,18 +69,16 @@ void Level::OnRender() {
 	m_Player.OnRender();
 
 	for (auto& asteroid : m_Asteroids) {
-		asteroid.position.y -= asteroid.speed;
-		asteroid.rotation += asteroid.rotationSpeed;
 		Renderer2D::DrawRotatedQuad(asteroid.position, glm::vec2(asteroid.size), (float)asteroid.rotation, m_Texture);
 	}
 
 	for (auto& star : m_Stars) {
-		star.position.y -= star.speed;
 		Renderer2D::DrawQuad(star.position, glm::vec2(0.06f, 0.06f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 
 	VilagOS::Renderer2D::DrawQuad({7.08f, 8.0f }, { 4.0f, 32.0f }, m_TextureQuad);
 	VilagOS::Renderer2D::DrawQuad({ -7.08f, 8.0f }, { -4.0f, 32.0f }, m_TextureQuad);
+
 }
 
 void Level::CreateAsteroid(int index) {
@@ -98,8 +98,19 @@ void Level::CreateStar(int index) {
 	star.index = index;
 }
 
-void Level::GameOver() {
-	
+void Level::Reset() {
+	m_Player.LoadAssets();
+	int m_AsteroidIndex = 0;
+	float m_TimeElapsed = 0.0f;
+	float m_Incrament = 5.0f;
+	int m_Rounds = 0;
+	int m_Index = 0;
+	int m_StarCounter = 0;
+	uint32_t m_AsteroidRateCoeficient = 3;
+}
+
+bool Level::OnCollision() {
+	return false;
 }
 
 

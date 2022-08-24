@@ -17,9 +17,13 @@ public:
 
 	inline void SetSpeed(float speed) { m_AsteroidSpeed = speed; }
 
-	inline bool IsGameOver() { return m_GameOver; };
+	inline bool IsGameOver() { return m_GameOver; }
 
 	inline Player& GetPlayer() { return m_Player; }
+
+	inline float GetTime() { return m_TimeElapsed; }
+
+	void Reset();
 
 private:
 
@@ -46,9 +50,7 @@ private:
 
 	void CreateAsteroid(int index);
 	void CreateStar(int index);
-	//bool OnCollision();
-
-	void GameOver();
+	bool OnCollision();
 private:
 	bool m_GameOver = false;
 	float m_AsteroidSpeed;
@@ -65,4 +67,6 @@ private:
 	std::shared_ptr<Texture2D> m_Texture;
 	std::shared_ptr<Texture2D> m_TextureQuad;
 	Player m_Player;
+
+	
 };
