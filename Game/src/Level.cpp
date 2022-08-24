@@ -5,14 +5,12 @@
 void Level::Init() {
 	m_Texture.reset(new VilagOS::Texture2D("assets/textures/GreyAsteroid.png"));
 	m_TextureQuad.reset(new VilagOS::Texture2D("assets/textures/background.jpg"));
-	//m_Player.LoadAssets();
-
-	
+	m_Player.LoadAssets();
 
 }
 
 void Level::OnUpdate(DeltaTime dt) {
-	//m_Player.OnUpdate(dt);
+	m_Player.OnUpdate(dt);
 
 	//if (OnCollision()) {
 	//	GameOver();
@@ -28,15 +26,14 @@ void Level::OnUpdate(DeltaTime dt) {
 			CreateAsteroid(i);
 		}
 
-		m_Stars.resize(15);
-		for (int i = 0; i < 4; i++) {
+		m_Stars.resize(25);
+		for (int i = 0; i < 2; i++) {
 			CreateStar(i);
 			m_Index = 4;
 		}
-		
 	}
 
-	if (m_TimeElapsed > 17.0f * m_Rounds) {
+	if (m_TimeElapsed > 5.0f * m_Rounds) {
 		m_Rounds++;
 		m_Incrament += 0.5;
 		
@@ -44,20 +41,22 @@ void Level::OnUpdate(DeltaTime dt) {
 			m_Asteroids.resize(std::min(6, ((m_Rounds/2) + 3)));
 			CreateAsteroid(m_Asteroids.size() - 1);
 		}
-			
 	}
 
 	for (auto& asteroid : m_Asteroids) {
 		if (asteroid.position.y < -9.0f) {
 			CreateAsteroid(asteroid.index);
-			
 		}
 	}
 
 	for (auto& star : m_Stars) {
 		if (star.position.y < -8.0f) {
-			CreateStar(m_Index);
-			m_Index = ++m_Index % m_Stars.size();
+			if (m_TimeElapsed > m_StarCounter) {
+				CreateStar(m_Index);
+				m_Index = ++m_Index % m_Stars.size();
+				m_StarCounter = m_TimeElapsed + (0.9 * dt.GetMiliseconds());
+				//VOS_CORE_INFO("{0}, {1}", m_StarCounter, m_TimeElapsed);
+			}
 		}
 	}
 }
@@ -65,11 +64,7 @@ void Level::OnUpdate(DeltaTime dt) {
 void Level::OnRender() {
 	const glm::vec2 playerPositoion = Level::m_Player.GetPosition();
 
-	//if (m_TimeElapsed > 30 * m_Rounds) {
-	//	auto it = 
-	//	VilagOS::Renderer2D::DrawQuad({ 7.08f, 8.0f }, { 4.0f, 32.0f }, );
-	//}
-
+	m_Player.OnRender();
 
 	for (auto& asteroid : m_Asteroids) {
 		asteroid.position.y -= asteroid.speed;
@@ -84,8 +79,6 @@ void Level::OnRender() {
 
 	VilagOS::Renderer2D::DrawQuad({7.08f, 8.0f }, { 4.0f, 32.0f }, m_TextureQuad);
 	VilagOS::Renderer2D::DrawQuad({ -7.08f, 8.0f }, { -4.0f, 32.0f }, m_TextureQuad);
-
-
 }
 
 void Level::CreateAsteroid(int index) {

@@ -57,8 +57,8 @@ private:
 	float m_Incrament = 5.0f;
 	int m_Rounds = 0;
 	int m_Index = 0;
+	int m_StarCounter = 0;
 	uint32_t m_AsteroidRateCoeficient = 3;
-	//std::unordered_map< m_Stars;
 	std::vector<Asteroid> m_Asteroids;
 	std::vector<Star> m_Stars;
 	std::vector<Planet> m_Planets;

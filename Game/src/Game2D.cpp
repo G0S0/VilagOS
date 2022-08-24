@@ -23,13 +23,7 @@ void Game2D::OnDetach(){
 void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 	//OnUpdate
 	
-	
-	
 
-	//for (auto& asteroid : m_Level.GetAsteroids()) {
-	//	asteroid.position.y -= m_Level.GetSpeed();
-	//	asteroid.rotation += asteroid.rotationSpeed;
-	//}
 	switch (m_GameState)
 	{
 	case Game2D::GameState::InGame:
@@ -42,10 +36,6 @@ void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 	VilagOS::Renderer2D::BeginScene(*m_Camera);
 	m_Level.OnRender();
 	
-	
-	//
-	//m_Level.OnRender();
-	//this->OnEvent(VilagOS::Event & e);
 	VilagOS::Renderer2D::EndScene();
 }
 void Game2D::OnImGuiRender() {
