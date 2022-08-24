@@ -1,6 +1,9 @@
 #include "Level.h"
 #include "Random.h"
 #include "VilagOS/Renderer/Renderer2D.h"
+#include "glm/glm.hpp"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 void Level::Init() {
 	m_Texture.reset(new VilagOS::Texture2D("assets/textures/GreyAsteroid.png"));
@@ -10,11 +13,8 @@ void Level::Init() {
 
 void Level::OnUpdate(DeltaTime dt) {
 	m_Player.OnUpdate(dt);
-
-	if (OnCollision()) {
-		m_GameOver = true;
-		return;
-	}
+	
+	VOS_CORE_INFO("Here");
 
 	m_TimeElapsed += dt.GetMiliseconds();
 	m_AsteroidSpeed = m_Incrament * dt.GetMiliseconds();
@@ -56,10 +56,15 @@ void Level::OnUpdate(DeltaTime dt) {
 				CreateStar(m_Index);
 				m_Index = ++m_Index % m_Stars.size();
 				m_StarCounter = m_TimeElapsed + (0.9 * dt.GetMiliseconds());
-				//VOS_CORE_INFO("{0}, {1}", m_StarCounter, m_TimeElapsed);
+				
 			}
 		}
 		star.position.y -= star.speed;
+	}
+
+	if (OnCollision()) {
+		m_GameOver = true;
+		return;
 	}
 }
 
@@ -69,7 +74,7 @@ void Level::OnRender() {
 	m_Player.OnRender();
 
 	for (auto& asteroid : m_Asteroids) {
-		Renderer2D::DrawRotatedQuad(asteroid.position, glm::vec2(asteroid.size), (float)asteroid.rotation, m_Texture);
+		Renderer2D::DrawRotatedQuad(asteroid.position, asteroid.size, (float)asteroid.rotation, m_Texture);
 	}
 
 	for (auto& star : m_Stars) {
@@ -87,7 +92,7 @@ void Level::CreateAsteroid(int index) {
 	asteroid.speed = std::max(Random::Dist() * m_AsteroidSpeed, 0.5f * m_AsteroidSpeed) ;
 	asteroid.rotation = Random::Dist()*360 * Random::myRandom();
 	asteroid.rotationSpeed = Random::Dist() * 3;
-	asteroid.size = std::max(Random::Dist() * 1.0f, 0.5f);
+	asteroid.size = glm::vec2(std::max(Random::Dist() * 1.0f, 0.5f));
 	asteroid.index = index;
 }
 
@@ -100,17 +105,62 @@ void Level::CreateStar(int index) {
 
 void Level::Reset() {
 	m_Player.LoadAssets();
-	int m_AsteroidIndex = 0;
-	float m_TimeElapsed = 0.0f;
-	float m_Incrament = 5.0f;
-	int m_Rounds = 0;
-	int m_Index = 0;
-	int m_StarCounter = 0;
-	uint32_t m_AsteroidRateCoeficient = 3;
+	m_AsteroidIndex = 0;
+	m_TimeElapsed = 0.0f;
+	m_Incrament = 5.0f;
+	m_Rounds = 0;
+	m_Index = 0;
+	m_StarCounter = 0;
+	m_GameOver = false;
+	m_AsteroidRateCoeficient = 3;
+	m_Asteroids.clear();
+	m_Stars.clear();
+
+}
+
+bool Collided(glm::vec2 vert, glm::vec2 vertOne, glm::vec2 vertTwo, glm::vec2 vertThree, glm::vec2 vertFour) {
+	float DOne = (vertTwo.x - vertOne.x) * (vert.y - vertOne.y) - (vert.x - vertOne.x) * (vertTwo.y - vertOne.y);
+	float DTwo = (vertThree.x - vertTwo.x) * (vert.y - vertTwo.y) - (vert.x - vertTwo.x) * (vertThree.y - vertTwo.y);
+	float DThree = (vertFour.x - vertThree.x) * (vert.y - vertThree.y) - (vert.x - vertThree.x) * (vertFour.y - vertThree.y);
+	float DFour = (vertOne.x - vertFour.x) * (vert.y - vertFour.y) - (vert.x - vertFour.x) * (vertOne.y - vertFour.y);
+	if (DOne >= 0 && DTwo >= 0 && DThree >= 0 && DFour >= 0) { return true; }
+	else { return false; }
 }
 
 bool Level::OnCollision() {
+	glm::vec4 Verticies[4] = {
+		{-0.5f, 0.5f, 0.0f, 1.0f },
+		{-0.5f, -0.5f, 0.0f, 1.0f},
+		{0.5f, -0.5f, 0.0f, 1.0f},
+		{0.5f, 0.5f, 0.0f, 1.0f}
+	};
+
+	glm::vec4 playerTransformedVerticies[4];
+	
+	const auto& position = m_Player.GetPosition();
+	const auto& size = m_Player.GetSize();
+
+	for (int i = 0; i < 4; i++) {
+		playerTransformedVerticies[i] = glm::translate(glm::mat4(1.0f), { position, 1.0f }) * glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f)) * Verticies[i];
+	}
+
+	for (auto& asteroid : m_Asteroids) {
+		
+		glm::vec2 asteroidVertecies[4];
+
+		for (int i = 0; i < 4; i++) {
+			asteroidVertecies[i] = glm::translate(glm::mat4(1.0f), { asteroid.position, 1.0f }) * glm::rotate(glm::mat4(1.0f), glm::radians(asteroid.rotation) ,glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(asteroid.size.x, asteroid.size.y, 1.0f)) * Verticies[i];
+		}
+
+		for (auto vert : playerTransformedVerticies) {
+			if (Collided(glm::vec2(vert.x, vert.y), asteroidVertecies[0], asteroidVertecies[1], asteroidVertecies[2], asteroidVertecies[3])) {
+				return true;
+			}
+		}
+	}
 	return false;
 }
+
+
 
 

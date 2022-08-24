@@ -4,6 +4,7 @@ void Player::LoadAssets() {
 	m_ShipTexture.reset(new Texture2D("assets/textures/ship.png"));
 	m_Position = glm::vec2(0.0f, -6.0f);
 	m_Speed = 10.f;
+	m_Size = glm::vec2(0.75f, 0.75f);
 }
 
 bool CheckInput() {
@@ -39,9 +40,8 @@ void Player::OnUpdate(DeltaTime dt) {
 	
 	m_Position.x = glm::clamp(m_Position.x, -4.75f, 4.75f);
 	m_Position.y = glm::clamp(m_Position.y, -8.0f, 8.0f);
-	VOS_CORE_TRACE("{0}", m_Speed);
 }
 
 void Player::OnRender() {
-	Renderer2D::DrawRotatedQuad(m_Position, glm::vec2(0.75f, 0.75f), 180.f, m_ShipTexture);
+	Renderer2D::DrawRotatedQuad(m_Position, m_Size, 180.f, m_ShipTexture);
 }

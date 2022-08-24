@@ -29,7 +29,6 @@ void Game2D::OnDetach() {
 
 void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 	//OnUpdate
-
 	if (m_Level.IsGameOver())
 		m_GameState = GameState::GameOver;
 
@@ -79,9 +78,19 @@ bool Game2D::Resize(VilagOS::WindowResizeEvent& e) {
 }
 
 bool Game2D::OnMousePressed(VilagOS::MouseButtonPressedEvent& e) {
-	if (m_GameState == GameState::GameOver)
+	if (m_GameState == GameState::GameOver) {
 		m_Level.Reset();
-	m_GameState = GameState::InGame;
+		m_GameState = GameState::InGame;
+	}
+		
+
+	if (m_GameState == GameState::InGame)
+		m_GameState = GameState::MainMenu;
+	else if (m_GameState == GameState::MainMenu)
+		m_GameState = GameState::InGame;
+
+	//m_GameState = GameState::InGame;
+
 	return false;
 }
 

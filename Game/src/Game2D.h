@@ -28,7 +28,7 @@ private:
 		InGame = 0, MainMenu = 1, GameOver = 2
 	};
 
-	GameState m_GameState = GameState::InGame;
+	GameState m_GameState;
 	
 	Level m_Level;
 

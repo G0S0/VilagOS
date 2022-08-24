@@ -30,9 +30,9 @@ private:
 	struct Asteroid {
 		float speed;
 		glm::vec2 position;
+		glm::vec2 size;
 		float rotation;
 		float rotationSpeed;
-		float size;
 		int index;
 	};
 

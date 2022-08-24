@@ -6,7 +6,7 @@
 
 namespace VilagOS {
 	Texture2D::Texture2D(uint32_t width, uint32_t height): m_Width(width), m_Height(height) {
-		m_OpenGlFormat = GL_RGBA8; //Zašto ovjde ne može biti jedno ili drugo?
+		m_OpenGlFormat = GL_RGBA8; 
 		m_DataFormat = GL_RGBA;
 
 		VOS_CORE_ASSERT(openGlFormat && dataFormat, "Format not supported!");
