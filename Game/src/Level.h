@@ -6,27 +6,19 @@ using namespace VilagOS;
 
 class Level {
 public:
-
 	void Init();
 	void OnRender();
 	void OnUpdate(DeltaTime dt);
-
-	inline float GetSpeed() { return m_AsteroidSpeed; }
-
-
-
-	inline void SetSpeed(float speed) { m_AsteroidSpeed = speed; }
-
-	inline bool IsGameOver() { return m_GameOver; }
-
-	inline Player& GetPlayer() { return m_Player; }
-
-	inline float GetTime() { return m_TimeElapsed; }
-
+	void OnImguiRender();
 	void Reset();
 
-private:
+	inline Player& GetPlayer() { return m_Player; }
+	inline float GetSpeed() { return m_AsteroidSpeed; }
+	inline float GetTime() { return m_TimeElapsed; }
+	inline int GetRounds() { return m_Rounds; }
+	inline bool IsGameOver() { return m_GameOver; }
 
+private:
 	struct Asteroid {
 		float speed;
 		glm::vec3 position;
@@ -47,10 +39,14 @@ private:
 		glm::vec3 position;
 		float speed;
 	};
-
+	
+private:
 	void CreateAsteroid(int index);
 	void CreateStar(int index);
 	bool OnCollision();
+	inline void SetSpeed(float speed) { m_AsteroidSpeed = speed; }
+	
+
 private:
 	bool m_GameOver = false;
 	float m_AsteroidSpeed;

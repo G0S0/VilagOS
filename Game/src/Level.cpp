@@ -13,8 +13,6 @@ void Level::Init() {
 
 void Level::OnUpdate(DeltaTime dt) {
 	m_Player.OnUpdate(dt);
-	
-	VOS_CORE_INFO("Here");
 
 	m_TimeElapsed += dt.GetMiliseconds();
 	m_AsteroidSpeed = m_Incrament * dt.GetMiliseconds();
@@ -32,18 +30,18 @@ void Level::OnUpdate(DeltaTime dt) {
 		}
 	}
 
-	if (m_TimeElapsed > 5.0f * m_Rounds) {
+	if (m_TimeElapsed > 15.0f * m_Rounds) {
 		m_Rounds++;
-		m_Incrament += 0.5;
+		m_Incrament += 3.0f;
 		
 		if (m_Rounds % 2 == 0) {
-			m_Asteroids.resize(std::min(6, ((m_Rounds/2) + 3)));
+			m_Asteroids.resize(std::min(8, ((m_Rounds/2) + 3)));
 			CreateAsteroid(m_Asteroids.size() - 1);
 		}
 	}
 
 	for (auto& asteroid : m_Asteroids) {
-		if (asteroid.position.y < -9.0f) {
+		if (asteroid.position.y < -8.5f) {
 			CreateAsteroid(asteroid.index);
 		}
 		asteroid.position.y -= asteroid.speed;
@@ -70,8 +68,6 @@ void Level::OnUpdate(DeltaTime dt) {
 
 void Level::OnRender() {
 	const glm::vec2 playerPositoion = Level::m_Player.GetPosition();
-
-	
 
 	for (auto& asteroid : m_Asteroids) {
 		Renderer2D::DrawRotatedQuad(glm::vec3{asteroid.position}, asteroid.size, (float)asteroid.rotation, m_Texture);
@@ -107,16 +103,16 @@ void Level::Reset() {
 	m_Player.LoadAssets();
 	m_AsteroidIndex = 0;
 	m_TimeElapsed = 0.0f;
-	m_Incrament = 5.0f;
+	m_Incrament = 17.0f;
 	m_Rounds = 0;
 	m_Index = 0;
 	m_StarCounter = 0;
 	m_GameOver = false;
-	m_AsteroidRateCoeficient = 3;
 	m_Asteroids.clear();
 	m_Stars.clear();
 
 }
+
 
 bool Collided(glm::vec2 vert, glm::vec2 vertOne, glm::vec2 vertTwo, glm::vec2 vertThree, glm::vec2 vertFour) {
 	float DOne = (vertTwo.x - vertOne.x) * (vert.y - vertOne.y) - (vert.x - vertOne.x) * (vertTwo.y - vertOne.y);
@@ -160,7 +156,5 @@ bool Level::OnCollision() {
 	}
 	return false;
 }
-
-
 
 

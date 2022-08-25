@@ -26,7 +26,6 @@ namespace VilagOS{
 		//m_Window->SetVSync(false); //for testing deltatime - it works
 
 		Renderer::Init();
-		
 
 		m_ImGuiLayer = new ImguiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -47,6 +46,8 @@ namespace VilagOS{
 				for (Layer* layer : m_LayerStack)
 					layer->OnUpdate(DeltaTime);
 			}
+
+			
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)

@@ -7,6 +7,11 @@
 #include "imgui_internal.h"
 #include "backends/imgui_impl_opengl3.cpp"
 #include "backends/imgui_impl_glfw.cpp"
+#include <iomanip>
+#include <sstream>
+#include <iostream>
+#include <string>
+
 
 using namespace VilagOS;
 
@@ -24,6 +29,7 @@ void Game2D::OnAttach() {
 	m_Font = io.Fonts->AddFontFromFileTTF("assets/fonts/VT323-Regular.ttf", 120.0f);
 	m_Texture.reset(new VilagOS::Texture2D("assets/textures/background.png"));
 	m_GameState = GameState::MainMenu;
+	
 }
 
 void Game2D::OnDetach() {
@@ -46,35 +52,51 @@ void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 	VilagOS::RenderCommand::Clear(glm::vec4(0.0f, 0.0f, 0.0f, 1));
 	VilagOS::Renderer2D::BeginScene(*m_Camera);
 	m_Level.OnRender();
-	OnImGuiRender();
 	VilagOS::Renderer2D::EndScene();
 }
 
+float Round(float var) {
+	float value = (int)(var * 100 + .5);
+	return (float)value / 100;
+}
+
 void Game2D::OnImGuiRender() {
-	
+	//glm::vec3 blueColor = glm::vec3(1.0f);
+	//ImGui::Begin("Materials");
+	//ImGui::ColorEdit4("Material1", glm::value_ptr(blueColor));
+	////ImGui::ColorEdit4("Material2", glm::value_ptr(someColor));
+	//ImGui::End();
+	ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+	ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoBackground;
+	ImGui::Begin("Score", new bool(true), flags);
+	auto width = Application::GetApp().GetWindow().GetWidth();
+	auto height = Application::GetApp().GetWindow().GetHeight();
+	std::stringstream toPrint;
+
+	auto pos = ImGui::GetWindowPos();
+	pos.x -= 40.0f;
+	pos.y -= 20.0f;
+	toPrint.precision(2);
+	toPrint << "Time: " << std::fixed << m_Level.GetTime() << "s\n" <<
+		"Round: " << m_Level.GetRounds();
+	ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, toPrint.str().c_str());
+
 	switch (m_GameState)
 	{
-	case Game2D::GameState::InGame: {
-		//ImGui_ImplOpenGL3_NewFrame();
-		//ImGui_ImplGlfw_NewFrame();
-		//ImGui::NewFrame();
-		//ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-		//	ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
-		//ImGui::Begin("Score", new bool(true), flags);
-		//std::string toPrint = std::string("Time: ") + std::to_string(m_Level.GetTime());
-		//ImGui::GetForegroundDrawList()->AddText(m_Font, 48.0f, ImGui::GetWindowPos(), 48.0f, toPrint.c_str());
-		//ImGui::Render();
-		//ImGui::End();
-		//break;
-	}
 	case Game2D::GameState::GameOver: {
+		pos = ImGui::GetWindowPos();
+		pos.x += width * 0.5f - 275.0f;
+		ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, "Click left mouse button to restart.");
 		break;
 	}
 	case Game2D::GameState::MainMenu: {
+		pos = ImGui::GetWindowPos();
+		pos.x += width * 0.5f - 275.0f;
+		ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, "Click left mouse button to continue.");
 		break;
 	}
-
 	}
+	ImGui::End();
 	
 }
 void Game2D::OnEvent(VilagOS::Event& e) {
@@ -94,13 +116,12 @@ bool Game2D::OnMousePressed(VilagOS::MouseButtonPressedEvent& e) {
 		m_GameState = GameState::InGame;
 	}
 		
-
 	if (m_GameState == GameState::InGame)
 		m_GameState = GameState::MainMenu;
+
 	else if (m_GameState == GameState::MainMenu)
 		m_GameState = GameState::InGame;
 
-	//m_GameState = GameState::InGame;
 
 	return false;
 }
