@@ -4,6 +4,9 @@
 #include "imgui.h"
 #include "VilagOS/Renderer/Renderer2D.h"
 #include "Random.h"
+#include "imgui_internal.h"
+#include "backends/imgui_impl_opengl3.cpp"
+#include "backends/imgui_impl_glfw.cpp"
 
 using namespace VilagOS;
 
@@ -52,8 +55,16 @@ void Game2D::OnImGuiRender() {
 	switch (m_GameState)
 	{
 	case Game2D::GameState::InGame: {
+		//ImGui_ImplOpenGL3_NewFrame();
+		//ImGui_ImplGlfw_NewFrame();
+		//ImGui::NewFrame();
+		//ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+		//	ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
+		//ImGui::Begin("Score", new bool(true), flags);
 		//std::string toPrint = std::string("Time: ") + std::to_string(m_Level.GetTime());
 		//ImGui::GetForegroundDrawList()->AddText(m_Font, 48.0f, ImGui::GetWindowPos(), 48.0f, toPrint.c_str());
+		//ImGui::Render();
+		//ImGui::End();
 		//break;
 	}
 	case Game2D::GameState::GameOver: {

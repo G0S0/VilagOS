@@ -71,24 +71,24 @@ void Level::OnUpdate(DeltaTime dt) {
 void Level::OnRender() {
 	const glm::vec2 playerPositoion = Level::m_Player.GetPosition();
 
-	m_Player.OnRender();
+	
 
 	for (auto& asteroid : m_Asteroids) {
-		Renderer2D::DrawRotatedQuad(asteroid.position, asteroid.size, (float)asteroid.rotation, m_Texture);
+		Renderer2D::DrawRotatedQuad(glm::vec3{asteroid.position}, asteroid.size, (float)asteroid.rotation, m_Texture);
 	}
 
 	for (auto& star : m_Stars) {
 		Renderer2D::DrawQuad(star.position, glm::vec2(0.06f, 0.06f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 
-	VilagOS::Renderer2D::DrawQuad({7.08f, 8.0f }, { 4.0f, 32.0f }, m_TextureQuad);
-	VilagOS::Renderer2D::DrawQuad({ -7.08f, 8.0f }, { -4.0f, 32.0f }, m_TextureQuad);
-
+	VilagOS::Renderer2D::DrawQuad({7.08f, 8.0f ,-0.2f}, { 4.0f, 32.0f }, m_TextureQuad);
+	VilagOS::Renderer2D::DrawQuad({ -7.08f, 8.0f, -0.2f }, { -4.0f, 32.0f }, m_TextureQuad);
+	m_Player.OnRender();
 }
 
 void Level::CreateAsteroid(int index) {
 	Asteroid& asteroid = m_Asteroids[index];
-	asteroid.position = glm::vec2(Random::Dist() * 5.0f * Random::myRandom(), 10.f);
+	asteroid.position = glm::vec3(Random::Dist() * 5.0f * Random::myRandom(), 10.f, index * 0.1f - 0.5f);
 	asteroid.speed = std::max(Random::Dist() * m_AsteroidSpeed, 0.5f * m_AsteroidSpeed) ;
 	asteroid.rotation = Random::Dist()*360 * Random::myRandom();
 	asteroid.rotationSpeed = Random::Dist() * 3;
@@ -141,7 +141,7 @@ bool Level::OnCollision() {
 	const auto& size = m_Player.GetSize();
 
 	for (int i = 0; i < 4; i++) {
-		playerTransformedVerticies[i] = glm::translate(glm::mat4(1.0f), { position, 1.0f }) * glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f)) * Verticies[i];
+		playerTransformedVerticies[i] = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f)) * Verticies[i];
 	}
 
 	for (auto& asteroid : m_Asteroids) {
@@ -149,7 +149,7 @@ bool Level::OnCollision() {
 		glm::vec2 asteroidVertecies[4];
 
 		for (int i = 0; i < 4; i++) {
-			asteroidVertecies[i] = glm::translate(glm::mat4(1.0f), { asteroid.position, 1.0f }) * glm::rotate(glm::mat4(1.0f), glm::radians(asteroid.rotation) ,glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(asteroid.size.x, asteroid.size.y, 1.0f)) * Verticies[i];
+			asteroidVertecies[i] = glm::translate(glm::mat4(1.0f),  asteroid.position) * glm::rotate(glm::mat4(1.0f), glm::radians(asteroid.rotation) ,glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(asteroid.size.x, asteroid.size.y, 1.0f)) * Verticies[i];
 		}
 
 		for (auto vert : playerTransformedVerticies) {

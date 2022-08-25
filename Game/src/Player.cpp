@@ -2,7 +2,7 @@
 
 void Player::LoadAssets() {
 	m_ShipTexture.reset(new Texture2D("assets/textures/ship.png"));
-	m_Position = glm::vec2(0.0f, -6.0f);
+	m_Position = glm::vec3(0.0f, -6.0f, 0.0f);
 	m_Speed = 10.f;
 	m_Size = glm::vec2(0.75f, 0.75f);
 }

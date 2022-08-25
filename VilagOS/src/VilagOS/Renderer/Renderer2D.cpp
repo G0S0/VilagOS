@@ -44,7 +44,7 @@ namespace VilagOS {
 		s_Data.WhiteTexture.reset(new Texture2D(1, 1));
 		uint32_t whiteTextureData = 0xffffffff;
 		s_Data.WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
-		s_Data.Shader.reset(new Shader("assets/shaders/FlatColor.glsl"));
+		//s_Data.Shader.reset(new Shader("assets/shaders/FlatColor.glsl"));
 		s_Data.Shader.reset(new Shader("assets/shaders/Texture.glsl"));
 		s_Data.Shader->Bind();
 		s_Data.Shader->UploadUniformInt(0, "u_Texture");
