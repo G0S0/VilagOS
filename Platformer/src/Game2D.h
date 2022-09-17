@@ -35,6 +35,6 @@ private:
 	Level m_Level;
 
 	ImFont* m_Font;
-
+	float m_AspectRatio;
 	glm::vec3 m_RectanglePosition = glm::vec3(0.0f);
 }; 

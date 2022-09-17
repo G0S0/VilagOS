@@ -47,6 +47,7 @@ void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 		m_Level.OnUpdate(dt);
 		break;
 	}
+	m_Camera->SetPosition({ m_Level.GetPlayer().GetPosition().x / (8.0f * m_AspectRatio), (m_Level.GetPlayer().GetPosition().y +2.0f)/8.0f, 0.0f });
 
 	//OnRender
 	VilagOS::RenderCommand::Clear(glm::vec4(0.0f, 0.0f, 0.0f, 1));
@@ -76,9 +77,10 @@ void Game2D::OnImGuiRender() {
 	auto pos = ImGui::GetWindowPos();
 	pos.x -= 40.0f;
 	pos.y -= 20.0f;
+	toPrint.precision(0);
+	toPrint << "Score: " << m_Level.GetScore() << "\n";
 	toPrint.precision(2);
-	toPrint << "Time: " << std::fixed << m_Level.GetTime() << "s\n";// <<
-		//"Round: " << m_Level.GetRounds();
+	toPrint << "Time: " << std::fixed << m_Level.GetTime()<<"s";
 	ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, toPrint.str().c_str());
 
 	switch (m_GameState)
@@ -112,7 +114,7 @@ bool Game2D::Resize(VilagOS::WindowResizeEvent& e) {
 
 bool Game2D::OnMousePressed(VilagOS::MouseButtonPressedEvent& e) {
 	if (m_GameState == GameState::GameOver) {
-		m_Level.Reset();
+		//m_Level.Reset();
 		m_GameState = GameState::InGame;
 	}
 		
@@ -133,5 +135,6 @@ void Game2D::CreateCamera(uint32_t width, uint32_t height) {
 	float top = camHeight;
 	float left = bottom * aspectRatio;
 	float right = top * aspectRatio;
+	m_AspectRatio = aspectRatio;
 	m_Camera.reset(new OrthographicCamera(left, right, bottom, top));
 }

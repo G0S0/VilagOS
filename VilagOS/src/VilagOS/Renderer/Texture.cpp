@@ -39,7 +39,6 @@ namespace VilagOS {
 			openGlFormat = GL_RGBA8;
 			dataFormat = GL_RGB;
 		}
-
 		m_OpenGlFormat = openGlFormat;
 		m_DataFormat = dataFormat;
 

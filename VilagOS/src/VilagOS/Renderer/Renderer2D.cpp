@@ -123,5 +123,19 @@ namespace VilagOS {
 		RenderCommand::DrawElements(s_Data.VertexArray);
 	}
 
+	void Renderer2D::DrawRotatedQuadZ(const glm::vec3& position, glm::vec2 size, float rotation, const std::shared_ptr<Texture2D>& texture, float tiling) {
+		s_Data.Shader->UploadUniformVec4(glm::vec4(1.0f), "u_Color");
+		s_Data.Shader->UploadUniformFloat(tiling, "u_Tiling");
+		texture->Bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 1.0f, 0.0f }) * glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
+		s_Data.Shader->UploadUniformMat4(transform, "u_Transform");
+
+
+		texture->Bind();
+		s_Data.VertexArray->Bind();
+		RenderCommand::DrawElements(s_Data.VertexArray);
+	}
+
 }
 

@@ -19,5 +19,6 @@ namespace VilagOS{
 		static void DrawRotatedQuad(const glm::vec3& position, glm::vec2 size, float rotation, const glm::vec4& color);
 		static void DrawRotatedQuad(const glm::vec2& position, glm::vec2 size, float rotation, const std::shared_ptr<Texture2D>& texture, float tiling = 1.0f);
 		static void DrawRotatedQuad(const glm::vec3& position, glm::vec2 size, float rotation, const std::shared_ptr<Texture2D>& texture, float tiling = 1.0f);
+		static void DrawRotatedQuadZ(const glm::vec3& position, glm::vec2 size, float rotation, const std::shared_ptr<Texture2D>& texture, float tiling = 1.0f);
 	};
 }

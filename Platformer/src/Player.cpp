@@ -38,7 +38,6 @@ void Player::OnUpdate(DeltaTime dt) {
 			m_Position.y -= (m_FallSpeed + 4.0f)*dt.GetMiliseconds();
 			m_EnableJump = false;
 		}
-		VOS_CLIENT_INFO("m_speed: {0}; fall_speed: {1};", m_Speed, m_FallSpeed);
 	}
 	else {
 		m_EnableJump = true;
@@ -78,10 +77,16 @@ void Player::OnUpdate(DeltaTime dt) {
 		}
 		
 	}
-	//else if (Input::IsKeyPressedStatic(VOS_KEY_S)) {
-	//	m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
-	//	m_Position.y -= m_Speed * dt.GetMiliseconds();
-	//}
+	else if (Input::IsKeyPressedStatic(VOS_KEY_S)) {
+		if (m_InAir) {
+			m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
+			m_Position.y -= (m_Speed + 4.0f) * dt.GetMiliseconds();
+		}
+		else {
+			m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
+			m_Position.y -= m_Speed * dt.GetMiliseconds();
+		}
+	}
 	m_Position.x = glm::clamp(m_Position.x, -10.75f, 100.0f);
 	m_Position.y = glm::clamp(m_Position.y, -5.0f, 8.0f);
 }

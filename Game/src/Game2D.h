@@ -34,5 +34,7 @@ private:
 
 	ImFont* m_Font;
 
+	
+
 	glm::vec3 m_RectanglePosition = glm::vec3(0.0f);
 }; 
