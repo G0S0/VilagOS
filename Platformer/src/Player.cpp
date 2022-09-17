@@ -1,7 +1,9 @@
 #include "Player.h"
-
+#include <chrono>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <chrono>
+
 
 void Player::LoadAssets() {
 	m_ShipTexture.reset(new Texture2D("assets/textures/unknown.png"));
@@ -11,6 +13,7 @@ void Player::LoadAssets() {
 	m_FallSpeed = 0.0f;
 	m_InAir = false;
 	m_Size = glm::vec2(2.5f, 2.5f);
+	m_TimeElapsed = 0.0f;
 }
 
 bool CheckInput() {
@@ -28,22 +31,23 @@ void Player::OnUpdate(DeltaTime dt) {
 		m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed -= 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
 	}
 	if (m_InAir) {
-		if (Input::IsKeyPressedStatic(VOS_KEY_W)) {
-			m_FallSpeed = glm::clamp(m_FallSpeed * dt.GetMiliseconds(), m_FallSpeed += 16.0f * dt.GetMiliseconds(), 700.0f * dt.GetMiliseconds());
-			if (m_FallSpeed > m_Speed) {
-				m_EnableJump = false;
-			}
-		}
-		else {
-			m_FallSpeed = 9.6;
+		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+			//m_FallSpeed = glm::clamp(m_FallSpeed * dt.GetMiliseconds(), m_FallSpeed += 16.0f * dt.GetMiliseconds(), 700.0f * dt.GetMiliseconds());
+		if (m_TimeElapsed > 1000) {
+			//m_FallSpeed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 16.0f * dt.GetMiliseconds(), 700.0f * dt.GetMiliseconds());
+			m_Position.y -= (m_Speed)*dt.GetMiliseconds();
 			m_EnableJump = false;
+			VOS_CORE_INFO("CantJump");
 		}
-		m_Position.y -= (m_FallSpeed) * dt.GetMiliseconds();
-		VOS_CORE_INFO("speed: {0}; fall speed: {1};", m_Speed, m_FallSpeed);
+		//VOS_CORE_INFO("speed: {0}; fall speed: {1};", m_Speed, m_FallSpeed);
+		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+		m_TimeElapsed += std::chrono::duration_cast<std::chrono::microseconds> (end - begin).count();
 	}
 	else {
 		m_FallSpeed = 0.0f;
 		m_EnableJump = true;
+		m_TimeElapsed = 0.0f;
+		VOS_CORE_INFO("CanJump");
 	}
 	if (Input::IsKeyPressedStatic(VOS_KEY_A )) {
 		m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds()) ;
@@ -63,6 +67,7 @@ void Player::OnUpdate(DeltaTime dt) {
 	//}
 	m_Position.x = glm::clamp(m_Position.x, -10.75f, 100.0f);
 	m_Position.y = glm::clamp(m_Position.y, -5.0f, 8.0f);
+	VOS_CORE_INFO("TimeElapsed: {0};", m_TimeElapsed * 1000.0f);
 }
 
 void Player::OnRender() {
