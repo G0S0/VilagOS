@@ -1,2 +1,5 @@
-# VilagOS
-My first shot at creating a game engine. It is also a college project.
+Acknowledgements:
+  Textures:
+  - grass: Designed by macrovector / Freepik
+  - planets: 
+  - asteroid:
