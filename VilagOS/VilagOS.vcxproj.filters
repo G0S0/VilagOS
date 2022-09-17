@@ -93,6 +93,9 @@
     <ClInclude Include="src\VilagOS\Renderer\Renderer.h">
       <Filter>src\VilagOS\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\VilagOS\Renderer\Renderer2D.h">
+      <Filter>src\VilagOS\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\VilagOS\Renderer\Shader.h">
       <Filter>src\VilagOS\Renderer</Filter>
     </ClInclude>
@@ -116,9 +119,6 @@
     </ClInclude>
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VilagOS\Renderer\Renderer2D.h">
-      <Filter>src\VilagOS\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +155,9 @@
     <ClCompile Include="src\VilagOS\Renderer\Renderer.cpp">
       <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\VilagOS\Renderer\Renderer2D.cpp">
+      <Filter>src\VilagOS\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\VilagOS\Renderer\Shader.cpp">
       <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
@@ -175,9 +178,6 @@
     </ClCompile>
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VilagOS\Renderer\Renderer2D.cpp">
-      <Filter>src\VilagOS\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

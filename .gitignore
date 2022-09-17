@@ -10,7 +10,7 @@
 *.sln.docstates
 
 # External files
-vendor/
+#vendor/
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

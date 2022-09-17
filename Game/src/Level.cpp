@@ -8,6 +8,12 @@
 void Level::Init() {
 	m_Texture.reset(new VilagOS::Texture2D("assets/textures/GreyAsteroid.png"));
 	m_TextureQuad.reset(new VilagOS::Texture2D("assets/textures/background.jpg"));
+	m_Textures.resize(6);
+	m_Textures[0].reset(new VilagOS::Texture2D("assets/textures/planet.png"));
+	m_Textures[1].reset(new VilagOS::Texture2D("assets/textures/red.png"));
+	m_Textures[2].reset(new VilagOS::Texture2D("assets/textures/earth.png"));
+	m_Textures[3].reset(new VilagOS::Texture2D("assets/textures/smth.png"));
+	m_Textures[4].reset(new VilagOS::Texture2D("assets/textures/cyborg.png"));
 	m_Player.LoadAssets();
 }
 
@@ -30,10 +36,19 @@ void Level::OnUpdate(DeltaTime dt) {
 		}
 	}
 
+	if (m_Planet.show) {
+		m_Planet.position.y -= m_Planet.speed;
+	}
+
 	if (m_TimeElapsed > 15.0f * m_Rounds) {
 		m_Rounds++;
 		m_Incrament += 3.0f;
 		
+		if (m_Rounds < 6 && m_Rounds > 1) {
+			CreatePlanet(m_Rounds - 1);
+			VOS_CORE_INFO("{0}", m_Planet.show);
+		}
+
 		if (m_Rounds % 2 == 0) {
 			m_Asteroids.resize(std::min(8, ((m_Rounds/2) + 3)));
 			CreateAsteroid(m_Asteroids.size() - 1);
@@ -54,7 +69,6 @@ void Level::OnUpdate(DeltaTime dt) {
 				CreateStar(m_Index);
 				m_Index = ++m_Index % m_Stars.size();
 				m_StarCounter = m_TimeElapsed + (0.9 * dt.GetMiliseconds());
-				
 			}
 		}
 		star.position.y -= star.speed;
@@ -75,6 +89,14 @@ void Level::OnRender() {
 
 	for (auto& star : m_Stars) {
 		Renderer2D::DrawQuad(star.position, glm::vec2(0.06f, 0.06f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	}
+
+	if(m_Planet.position.y > -10.0f && m_Planet.show) {
+		VilagOS::Renderer2D::DrawQuad(m_Planet.position, { 2.0f, 2.0f }, m_Planet.planetTexture);
+		
+	}
+	else {
+		m_Planet.show = false;
 	}
 
 	VilagOS::Renderer2D::DrawQuad({7.08f, 8.0f ,-0.2f}, { 4.0f, 32.0f }, m_TextureQuad);
@@ -99,6 +121,13 @@ void Level::CreateStar(int index) {
 	star.index = index;
 }
 
+void Level::CreatePlanet(int index) {
+	m_Planet.planetTexture = m_Textures[index];
+	m_Planet.position = glm::vec3(Random::Dist() * 5.0f * Random::myRandom(), 10.f, -0.7f);
+	m_Planet.speed = 0.3f * m_AsteroidSpeed;
+	m_Planet.show = true;
+}
+
 void Level::Reset() {
 	m_Player.LoadAssets();
 	m_AsteroidIndex = 0;
@@ -107,6 +136,8 @@ void Level::Reset() {
 	m_Rounds = 0;
 	m_Index = 0;
 	m_StarCounter = 0;
+	m_Planet.show = false;
+	m_Planet.position.y = 11.0f;
 	m_GameOver = false;
 	m_Asteroids.clear();
 	m_Stars.clear();

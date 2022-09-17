@@ -38,11 +38,13 @@ private:
 		std::shared_ptr<Texture2D> planetTexture;
 		glm::vec3 position;
 		float speed;
+		bool show;
 	};
 	
 private:
 	void CreateAsteroid(int index);
 	void CreateStar(int index);
+	void CreatePlanet(int index);
 	bool OnCollision();
 	inline void SetSpeed(float speed) { m_AsteroidSpeed = speed; }
 	
@@ -62,6 +64,8 @@ private:
 	std::vector<Planet> m_Planets;
 	std::shared_ptr<Texture2D> m_Texture;
 	std::shared_ptr<Texture2D> m_TextureQuad;
+	std::vector<std::shared_ptr<Texture2D>> m_Textures;
+	Planet m_Planet;
 	Player m_Player;
 
 	

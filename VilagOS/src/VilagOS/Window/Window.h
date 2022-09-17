@@ -9,7 +9,7 @@ namespace VilagOS{
 
 	class Window : public WindowMaster{
 	public:
-		using EventCallbackFn = std::function<void(Event&)>; //Need to figure this out
+		using EventCallbackFn = std::function<void(Event&)>; 
 		Window(const WindowProps& props);
 		virtual ~Window();
 
