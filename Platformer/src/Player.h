@@ -22,6 +22,6 @@ private:
 	float m_JumpSpeed;
 	bool m_InAir;
 	bool m_EnableJump;
-	float m_TimeElapsed;
+	int m_TimeElapsed;
 	std::shared_ptr<Texture2D> m_ShipTexture;
 };

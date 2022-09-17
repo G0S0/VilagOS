@@ -13,7 +13,7 @@ void Player::LoadAssets() {
 	m_FallSpeed = 0.0f;
 	m_InAir = false;
 	m_Size = glm::vec2(2.5f, 2.5f);
-	m_TimeElapsed = 0.0f;
+	m_TimeElapsed = 0;
 }
 
 bool CheckInput() {
@@ -30,36 +30,53 @@ void Player::OnUpdate(DeltaTime dt) {
 	{
 		m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed -= 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
 	}
+
 	if (m_InAir) {
-		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-			//m_FallSpeed = glm::clamp(m_FallSpeed * dt.GetMiliseconds(), m_FallSpeed += 16.0f * dt.GetMiliseconds(), 700.0f * dt.GetMiliseconds());
-		if (m_TimeElapsed > 1000) {
-			//m_FallSpeed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 16.0f * dt.GetMiliseconds(), 700.0f * dt.GetMiliseconds());
-			m_Position.y -= (m_Speed)*dt.GetMiliseconds();
+		float temp = m_Speed;
+		m_FallSpeed = glm::clamp(m_FallSpeed * dt.GetMiliseconds(), m_FallSpeed += 25.0f * dt.GetMiliseconds(), 700.0f * dt.GetMiliseconds());
+		if (m_FallSpeed > m_Speed || !(Input::IsKeyPressedStatic(VOS_KEY_W))) {
+			m_Position.y -= (m_FallSpeed + 4.0f)*dt.GetMiliseconds();
 			m_EnableJump = false;
-			VOS_CORE_INFO("CantJump");
 		}
-		//VOS_CORE_INFO("speed: {0}; fall speed: {1};", m_Speed, m_FallSpeed);
-		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-		m_TimeElapsed += std::chrono::duration_cast<std::chrono::microseconds> (end - begin).count();
+		VOS_CLIENT_INFO("m_speed: {0}; fall_speed: {1};", m_Speed, m_FallSpeed);
 	}
 	else {
-		m_FallSpeed = 0.0f;
 		m_EnableJump = true;
-		m_TimeElapsed = 0.0f;
-		VOS_CORE_INFO("CanJump");
+		m_FallSpeed = 0.0f;
 	}
+
 	if (Input::IsKeyPressedStatic(VOS_KEY_A )) {
-		m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds()) ;
-		m_Position.x -= m_Speed * dt.GetMiliseconds();
+		
+		if (m_InAir) {
+			m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
+			m_Position.x -= (m_Speed + 4.0f) * dt.GetMiliseconds();
+		}
+		else {
+			m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
+			m_Position.x -= m_Speed * dt.GetMiliseconds();
+		}
+
 	}
 	else if (Input::IsKeyPressedStatic(VOS_KEY_D)) {
-		m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
-		m_Position.x += m_Speed * dt.GetMiliseconds();
+		if (m_InAir) {
+			m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
+			m_Position.x += (m_Speed + 4.0f) * dt.GetMiliseconds();
+		}
+		else {
+			m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
+			m_Position.x += m_Speed * dt.GetMiliseconds();
+		}
 	}
 	if (Input::IsKeyPressedStatic(VOS_KEY_W) && m_EnableJump) {
-		m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
-		m_Position.y += (m_Speed) * dt.GetMiliseconds();
+		//m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
+		if (m_Speed <= 5.0f) {
+			m_Speed = 5.0f;
+			m_Position.y += (m_Speed)*dt.GetMiliseconds();
+		}
+		else {
+			m_Position.y += (m_Speed + 4.0f) * dt.GetMiliseconds();
+		}
+		
 	}
 	//else if (Input::IsKeyPressedStatic(VOS_KEY_S)) {
 	//	m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
@@ -67,7 +84,6 @@ void Player::OnUpdate(DeltaTime dt) {
 	//}
 	m_Position.x = glm::clamp(m_Position.x, -10.75f, 100.0f);
 	m_Position.y = glm::clamp(m_Position.y, -5.0f, 8.0f);
-	VOS_CORE_INFO("TimeElapsed: {0};", m_TimeElapsed * 1000.0f);
 }
 
 void Player::OnRender() {
