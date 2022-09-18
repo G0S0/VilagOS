@@ -13,12 +13,14 @@ void Level::Init() {
 
 void Level::OnUpdate(DeltaTime dt) {
 	m_Player.OnUpdate(dt);
-
 	m_TimeElapsed += dt.GetMiliseconds();
-	//VOS_CLIENT_INFO("{0}", m_TimeElapsed);
 
-	for (auto& el : m_Scripts) {
-		el.rotation += 1.0f;
+	if (m_Player.GetHp() <= 0) {
+		m_GameOver = true;
+	}
+
+	if (m_Score == 2) {
+		m_Victory = true;
 	}
 
 	if (OnPickup()) {
@@ -44,12 +46,32 @@ void Level::OnUpdate(DeltaTime dt) {
 		}
 	}
 	
-
 	if (OnCollision()) {
 		m_Player.SetInAir(false);
 	}
 	else {
 		m_Player.SetInAir(true);
+	}
+
+	for (auto& el : m_Scripts) {
+		el.rotation += 1.0f;
+	}
+
+	for (auto& obs : m_Obstacles) {
+		obs.rotation += obs.speed * dt.GetMiliseconds();
+		obs.position += obs.toChange * obs.speed * dt.GetMiliseconds();
+		if (obs.orientation) {
+			obs.travel += obs.speed * dt.GetMiliseconds();
+		}
+		else {
+			obs.travel -= obs.speed * dt.GetMiliseconds();
+		}
+
+		if (obs.travel >= obs.toTravel) {
+			obs.speed *= -1.0f;
+			obs.travel = 0.0f;
+			obs.orientation = !obs.orientation;
+		}
 	}
 }
 
@@ -74,8 +96,9 @@ void Level::Reset() {
 	m_Player.LoadAssets();
 	LoadLevel();
 	m_TimeElapsed = 0.0f;
-	m_Incrament = 17.0f;
 	m_GameOver = false;
+	m_Flag = true;
+	m_Score = 0;
 }
 
 void Level::CreateFloors() {
@@ -100,25 +123,38 @@ void Level::CreatePlatforms() {
 
 void Level::CreateScripts() {
 	m_Scripts.resize(2);
+
 	for (int i = 0; i < m_Scripts.size(); i++) {
 		m_Scripts[i].size = glm::vec2(1.5f, 1.4f*1.5f);
 		m_Scripts[i].rotation = 0.0f;
 		m_Scripts[i].scriptTexture.reset(new VilagOS::Texture2D("assets/textures/script.png"));
 		m_Scripts[i].index = i;
 	}
-	m_Scripts[0].position = glm::vec3(8.5f, 4.1f, -0.2f);
+	m_Scripts[0].position = glm::vec3(8.5f, 6.0f, -0.2f);
 	m_Scripts[1].position = glm::vec3(-3.0f, 0.1f, -0.2f);
 }
 
 void Level::CreateObstacles() {
 	m_Obstacles.resize(2);
+	m_Obstacles[0].position = glm::vec3(5.0f, 5.0f, 0.0f);
+	m_Obstacles[0].toChange = glm::vec3(1.0f, 0.0f, 0.0f);
+	m_Obstacles[0].speed = 2.0f;
+	m_Obstacles[0].toTravel = 4.0f;
+
+	m_Obstacles[1].position = glm::vec3(3.0f, 3.0f, 0.0f);
+	m_Obstacles[1].toChange = glm::vec3(0.0f, 1.0f, 0.0f);
+	m_Obstacles[1].speed = 5.0f;
+	m_Obstacles[1].toTravel = 4.0f;
+
 	for (int i = 0; i < m_Obstacles.size(); i++) {
 		m_Obstacles[i].size = glm::vec2(1.6f, 1.6f);
 		m_Obstacles[i].obstacleTexture.reset(new VilagOS::Texture2D("assets/textures/Burazin.png"));
 		m_Obstacles[i].rotation = 0.0f;
+		m_Obstacles[i].startPosition = m_Obstacles[i].position;
+		m_Obstacles[i].travel = 0.0f;
+		m_Obstacles[i].orientation = true;
 	}
-	m_Obstacles[0].position = glm::vec3(5.0f, 5.0f, 0.0f);
-	m_Obstacles[1].position = glm::vec3(3.0f, 3.0f, 0.0f);
+	
 }
 
 void Level::LoadLevel() {
@@ -126,6 +162,8 @@ void Level::LoadLevel() {
 	CreatePlatforms();
 	CreateScripts();
 	CreateObstacles();
+	m_Score = 0;
+	m_Victory = false;
 }
 
 bool Collided(glm::vec2 vert, glm::vec2 vertOne, glm::vec2 vertTwo, glm::vec2 vertThree, glm::vec2 vertFour) {

@@ -17,7 +17,7 @@ public:
 	inline float GetScore() { return m_Score; }
 
 	inline bool IsGameOver() { return m_GameOver; }
-
+	inline bool IsVictorious() { return m_Victory; }
 private:
 	struct Script {
 		float rotation;
@@ -36,10 +36,14 @@ private:
 	struct Obstacle {
 		std::shared_ptr<Texture2D> obstacleTexture;
 		glm::vec3 position;
+		glm::vec3 startPosition;
+		glm::vec3 toChange;
 		glm::vec2 size;
 		float rotation;
 		float travel;
-		void MoveIt();
+		float speed;
+		float toTravel;
+		bool orientation;
 	};
 
 	
@@ -63,6 +67,7 @@ private:
 	std::vector<Script>::iterator m_Itr;
 	int m_Index;
 	bool m_Flag;
+	bool m_Victory;
 	float m_CountDown;
 	
 	

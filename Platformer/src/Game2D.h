@@ -16,7 +16,6 @@ public:
 	void CreateCamera(uint32_t width, uint32_t height);
 	bool Resize(VilagOS::WindowResizeEvent& e);
 	bool OnMousePressed(VilagOS::MouseButtonPressedEvent& e);
-	//std::unique_ptr<VilagOS::OrthographicCamera> getCamera() { return m_Camera; };
 	
 private:
 	std::shared_ptr<VilagOS::Shader> m_Shader;
@@ -28,7 +27,7 @@ private:
 	std::unique_ptr<VilagOS::OrthographicCameraController> m_CameraController;
 	
 	enum class GameState {
-		InGame = 0, MainMenu = 1, GameOver = 2
+		InGame = 0, MainMenu = 1, GameOver = 2, Victory = 3
 	};
 
 	GameState m_GameState;

@@ -42,6 +42,8 @@ void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 	//OnUpdate
 	if (m_Level.IsGameOver())
 		m_GameState = GameState::GameOver;
+	if (m_Level.IsVictorious())
+		m_GameState = GameState::Victory;
 
 	switch (m_GameState)
 	{
@@ -49,10 +51,11 @@ void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 		m_Level.OnUpdate(dt);
 		break;
 	}
-	if ((Input::IsKeyPressedStatic(VOS_KEY_LEFT_SHIFT))) {
+
+	if ((Input::IsKeyPressedStatic(VOS_KEY_LEFT_ALT))) {
 		m_CameraController->OnUpdate(dt);
-		m_CameraController->GetCameraRef()->SetPosition(glm::clamp(m_CameraController->GetCameraRef()->GetPosition(), glm::vec3{ -15.75f /( 8.0f * m_AspectRatio), -3.0f / 8.0f, 0.0f }, glm::vec3{ 57.0f / (8.0f * m_AspectRatio), 20.0f / 8.0f, 0.0f }));
-		VOS_CLIENT_INFO("{0}", m_CameraController->GetCameraRef()->GetPosition().x);
+		m_CameraController->GetCameraRef()->SetPosition(glm::clamp(m_CameraController->GetCameraRef()->GetPosition(), 
+			glm::vec3{ -15.75f /( 8.0f * m_AspectRatio), -2.5f / 8.0f, 0.0f }, glm::vec3{ 57.0f / (8.0f * m_AspectRatio), 20.0f / 8.0f, 0.0f }));
 	}
 	else {
 		m_CameraController->GetCameraRef()->SetPosition({ m_Level.GetPlayer().GetPosition().x / (8.0f * m_AspectRatio), (m_Level.GetPlayer().GetPosition().y + 2.0f) / 8.0f, 0.0f });
@@ -76,23 +79,37 @@ float Round(float var) {
 }
 
 void Game2D::OnImGuiRender() {
-	//glm::vec3 blueColor = glm::vec3(1.0f);
-	//ImGui::Begin("Materials");
-	//ImGui::ColorEdit4("Material1", glm::value_ptr(blueColor));
-	////ImGui::ColorEdit4("Material2", glm::value_ptr(someColor));
-	//ImGui::End();
 	ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
 	ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoBackground;
 	ImGui::Begin("Score", new bool(true), flags);
 	auto width = Application::GetApp().GetWindow().GetWidth();
 	auto height = Application::GetApp().GetWindow().GetHeight();
 	std::stringstream toPrint;
-
+	
 	auto pos = ImGui::GetWindowPos();
 	pos.x -= 40.0f;
 	pos.y -= 20.0f;
+
+	toPrint << "HP: ";
+	switch (m_Level.GetPlayer().GetHp())
+	{
+	case 3:
+		toPrint<< "Redovan student" << "\n";
+		break;
+	case 2:
+		toPrint << "Apsolventska" << "\n";
+		break;
+	case 1:
+		toPrint << "Ponavlja godinu" << "\n";
+		break;
+	case 0:
+		toPrint << "Neslavno diplomirao" << "\n";
+		break;
+	default:
+		break;
+	}
 	toPrint.precision(0);
-	toPrint << "Score: " << m_Level.GetScore() << "\n" <<"HP: "<<m_Level.GetPlayer().GetHp()<<"\n";
+	toPrint << "Score: " << m_Level.GetScore() << "\n";
 	toPrint.precision(2);
 	toPrint << "Time: " << std::fixed << m_Level.GetTime()<<"s";
 	ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, toPrint.str().c_str());
@@ -111,6 +128,12 @@ void Game2D::OnImGuiRender() {
 		ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, "Click left mouse button to continue.");
 		break;
 	}
+	case Game2D::GameState::Victory: {
+		pos = ImGui::GetWindowPos();
+		pos.x += width * 0.5f - 250.0f;
+		ImGui::GetForegroundDrawList()->AddText(m_Font, 35.0f, pos, 0Xffffffff, "YOU'VE GRADUATED GOOD JOB!");
+		break;
+	}
 	}
 	ImGui::End();
 	
@@ -127,8 +150,8 @@ bool Game2D::Resize(VilagOS::WindowResizeEvent& e) {
 }
 
 bool Game2D::OnMousePressed(VilagOS::MouseButtonPressedEvent& e) {
-	if (m_GameState == GameState::GameOver) {
-		//m_Level.Reset();
+	if (m_GameState == GameState::GameOver || m_GameState == GameState::Victory) {
+		m_Level.Reset();
 		m_GameState = GameState::InGame;
 	}
 		
@@ -150,6 +173,5 @@ void Game2D::CreateCamera(uint32_t width, uint32_t height) {
 	float left = bottom * aspectRatio;
 	float right = top * aspectRatio;
 	m_AspectRatio = aspectRatio;
-	//m_Camera.reset(new OrthographicCamera(left, right, bottom, top));
 	m_CameraController.reset(new OrthographicCameraController(left, right, bottom, top, aspectRatio));
 }
