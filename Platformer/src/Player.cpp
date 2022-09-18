@@ -10,10 +10,10 @@ void Player::LoadAssets() {
 	m_Position = glm::vec3(0.0f, -6.0f, 0.0f);
 	m_Speed = 10.f;
 	m_JumpSpeed = 80.0f;
-	m_FallSpeed = 0.0f;
 	m_InAir = false;
-	m_Size = glm::vec2(2.5f, 2.5f);
+	m_Size = glm::vec2(2.5f, -2.5f);
 	m_TimeElapsed = 0;
+	m_Hp = 3;
 }
 
 bool CheckInput() {
@@ -87,8 +87,8 @@ void Player::OnUpdate(DeltaTime dt) {
 			m_Position.y -= m_Speed * dt.GetMiliseconds();
 		}
 	}
-	m_Position.x = glm::clamp(m_Position.x, -10.75f, 100.0f);
-	m_Position.y = glm::clamp(m_Position.y, -5.0f, 8.0f);
+	m_Position.x = glm::clamp(m_Position.x, -15.75f, 57.0f);
+	m_Position.y = glm::clamp(m_Position.y, -4.75f, 20.0f);
 }
 
 void Player::OnRender() {

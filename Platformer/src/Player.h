@@ -14,6 +14,9 @@ public:
 	inline void SetInAir(bool inAir) { m_InAir = inAir; }
 	inline float* GetSpeed() { return &m_Speed; }
 	void OnImGUIRender();
+	inline unsigned int GetHp() { return m_Hp; }
+	inline void GetHit() { m_Hp--; }
+
 private:
 	glm::vec3 m_Position;
 	glm::vec2 m_Size;
@@ -23,5 +26,6 @@ private:
 	bool m_InAir;
 	bool m_EnableJump;
 	int m_TimeElapsed;
+	unsigned int m_Hp;
 	std::shared_ptr<Texture2D> m_ShipTexture;
 };

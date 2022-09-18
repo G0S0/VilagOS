@@ -28,18 +28,32 @@ private:
 	};
 
 	struct Floor {
-		std::shared_ptr<Texture2D> m_GrassTexture;
+		std::shared_ptr<Texture2D> grassTexture;
 		glm::vec3 position;
 		glm::vec2 size;
 	};
+
+	struct Obstacle {
+		std::shared_ptr<Texture2D> obstacleTexture;
+		glm::vec3 position;
+		glm::vec2 size;
+		float rotation;
+		float travel;
+		void MoveIt();
+	};
+
 	
 private:
 	void CreateScripts();
-	void LoadLevel();
 	void CreatePlatforms();
 	void CreateFloors();
+	void CreateObstacles();
+
 	bool OnCollision();
 	bool OnPickup();
+	bool OnHit();
+
+	void LoadLevel();
 
 private:
 	bool m_GameOver = false;
@@ -48,11 +62,14 @@ private:
 	int m_Score = 0;
 	std::vector<Script>::iterator m_Itr;
 	int m_Index;
+	bool m_Flag;
+	float m_CountDown;
 	
-	std::shared_ptr<Texture2D> m_BackgroundTexture;
+	
 	std::vector<Floor> m_Floors;
 	std::vector<Floor> m_FlyingStuff;
 	std::vector<Script> m_Scripts;
+	std::vector<Obstacle> m_Obstacles;
 	Player m_Player;
 
 	

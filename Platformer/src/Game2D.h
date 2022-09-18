@@ -25,6 +25,7 @@ private:
 	std::shared_ptr<VilagOS::Texture2D> m_TextureClan;  
 
 	std::unique_ptr<VilagOS::OrthographicCamera> m_Camera;
+	std::unique_ptr<VilagOS::OrthographicCameraController> m_CameraController;
 	
 	enum class GameState {
 		InGame = 0, MainMenu = 1, GameOver = 2
@@ -33,8 +34,10 @@ private:
 	GameState m_GameState;
 	
 	Level m_Level;
-
+	std::shared_ptr<Texture2D> m_BackgroundTexture;
+	std::shared_ptr<Texture2D> m_WallTexture;
 	ImFont* m_Font;
 	float m_AspectRatio;
+	float temp1, temp2;
 	glm::vec3 m_RectanglePosition = glm::vec3(0.0f);
 }; 

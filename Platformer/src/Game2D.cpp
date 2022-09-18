@@ -27,7 +27,9 @@ void Game2D::OnAttach() {
 	m_Level.Init();
 	ImGuiIO io = ImGui::GetIO();
 	m_Font = io.Fonts->AddFontFromFileTTF("assets/fonts/VT323-Regular.ttf", 120.0f);
-	m_Texture.reset(new VilagOS::Texture2D("assets/textures/background.png"));
+	//m_Texture.reset(new VilagOS::Texture2D("assets/textures/background.png"));
+	m_BackgroundTexture.reset(new VilagOS::Texture2D("assets/textures/saul.png"));
+	m_WallTexture.reset(new VilagOS::Texture2D("assets/textures/wall.png"));
 	m_GameState = GameState::MainMenu;
 	
 }
@@ -47,12 +49,24 @@ void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 		m_Level.OnUpdate(dt);
 		break;
 	}
-	m_Camera->SetPosition({ m_Level.GetPlayer().GetPosition().x / (8.0f * m_AspectRatio), (m_Level.GetPlayer().GetPosition().y +2.0f)/8.0f, 0.0f });
-
+	if ((Input::IsKeyPressedStatic(VOS_KEY_LEFT_SHIFT))) {
+		m_CameraController->OnUpdate(dt);
+		m_CameraController->GetCameraRef()->SetPosition(glm::clamp(m_CameraController->GetCameraRef()->GetPosition(), glm::vec3{ -15.75f /( 8.0f * m_AspectRatio), -3.0f / 8.0f, 0.0f }, glm::vec3{ 57.0f / (8.0f * m_AspectRatio), 20.0f / 8.0f, 0.0f }));
+		VOS_CLIENT_INFO("{0}", m_CameraController->GetCameraRef()->GetPosition().x);
+	}
+	else {
+		m_CameraController->GetCameraRef()->SetPosition({ m_Level.GetPlayer().GetPosition().x / (8.0f * m_AspectRatio), (m_Level.GetPlayer().GetPosition().y + 2.0f) / 8.0f, 0.0f });
+	}
+	
 	//OnRender
 	VilagOS::RenderCommand::Clear(glm::vec4(0.0f, 0.0f, 0.0f, 1));
-	VilagOS::Renderer2D::BeginScene(*m_Camera);
+	VilagOS::Renderer2D::BeginScene(m_CameraController->GetCamera());
+	VilagOS::Renderer2D::DrawQuad(glm::vec3{ -24.5f, 18.0f, -0.1f }, glm::vec2{ 16.0f, 60.0f }, m_WallTexture, 3.0f);
+	VilagOS::Renderer2D::DrawQuad(glm::vec3{ 66.5f, 18.0f, -0.1f }, glm::vec2{ 16.0f, 60.0f }, m_WallTexture, 3.0f);
+	VilagOS::Renderer2D::DrawQuad(glm::vec3{0.0f + m_CameraController->GetCameraRef()->GetPosition().x * 8.0f * m_AspectRatio * 0.95, 2.0f + m_CameraController->GetCameraRef()->GetPosition().y * 8.0f * 0.95, -0.9f }, glm::vec2{2.0f * 8.0f * m_AspectRatio + 5.0f, (2.0f * 8.0f) + 5.0f}, m_BackgroundTexture);
+	//VOS_CLIENT_INFO("{0}, {1}, {2}", m_CameraController->GetCameraRef()->GetPosition().x, m_Level.GetPlayer().GetPosition().x, m_AspectRatio);
 	m_Level.OnRender();
+	
 	VilagOS::Renderer2D::EndScene();
 }
 
@@ -78,7 +92,7 @@ void Game2D::OnImGuiRender() {
 	pos.x -= 40.0f;
 	pos.y -= 20.0f;
 	toPrint.precision(0);
-	toPrint << "Score: " << m_Level.GetScore() << "\n";
+	toPrint << "Score: " << m_Level.GetScore() << "\n" <<"HP: "<<m_Level.GetPlayer().GetHp()<<"\n";
 	toPrint.precision(2);
 	toPrint << "Time: " << std::fixed << m_Level.GetTime()<<"s";
 	ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, toPrint.str().c_str());
@@ -136,5 +150,6 @@ void Game2D::CreateCamera(uint32_t width, uint32_t height) {
 	float left = bottom * aspectRatio;
 	float right = top * aspectRatio;
 	m_AspectRatio = aspectRatio;
-	m_Camera.reset(new OrthographicCamera(left, right, bottom, top));
+	//m_Camera.reset(new OrthographicCamera(left, right, bottom, top));
+	m_CameraController.reset(new OrthographicCameraController(left, right, bottom, top, aspectRatio));
 }

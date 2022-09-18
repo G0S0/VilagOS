@@ -7,18 +7,21 @@ namespace VilagOS {
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio): 
 		m_Camera(-m_AspectRatio * m_ZoomLevel, m_AspectRatio* m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel), m_AspectRatio(aspectRatio) {}
 
+	OrthographicCameraController::OrthographicCameraController(float left, float right, float bottom, float top, float aspectRatio) :
+		m_Camera(left, right, bottom, top), m_AspectRatio(aspectRatio) {}
+
 	void OrthographicCameraController::OnUpdate(DeltaTime dt) {
-		//if (Input::IsKeyPressedStatic(VOS_KEY_A))
-		//	m_CameraPosition.x -= m_CameraMovementSpeed * dt.GetMiliseconds();
-		//else if (Input::IsKeyPressedStatic(VOS_KEY_D))
-		//	m_CameraPosition.x += m_CameraMovementSpeed * dt.GetMiliseconds();
-		//if (Input::IsKeyPressedStatic(VOS_KEY_W))
-		//	m_CameraPosition.y += m_CameraMovementSpeed * dt.GetMiliseconds();
-		//else if (Input::IsKeyPressedStatic(VOS_KEY_S))
-		//	m_CameraPosition.y -= m_CameraMovementSpeed * dt.GetMiliseconds();
-		//
-		//m_Camera.SetPosition(m_CameraPosition);
-		//m_Camera.SetRotation(m_CameraRotation);
+		m_CameraPosition = m_Camera.GetPosition();
+		if (Input::IsKeyPressedStatic(VOS_KEY_J))
+			m_CameraPosition.x -= m_CameraMovementSpeed * dt.GetMiliseconds();
+		else if (Input::IsKeyPressedStatic(VOS_KEY_L))
+			m_CameraPosition.x += m_CameraMovementSpeed * dt.GetMiliseconds();
+		if (Input::IsKeyPressedStatic(VOS_KEY_I))
+			m_CameraPosition.y += m_CameraMovementSpeed * dt.GetMiliseconds();
+		else if (Input::IsKeyPressedStatic(VOS_KEY_K))
+			m_CameraPosition.y -= m_CameraMovementSpeed * dt.GetMiliseconds();
+		
+		m_Camera.SetPosition(m_CameraPosition);
 	}
 	void OrthographicCameraController::OnEvent(Event& e) {
 		EventDispatcher dispatcher(e);
