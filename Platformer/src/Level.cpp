@@ -19,7 +19,7 @@ void Level::OnUpdate(DeltaTime dt) {
 		m_GameOver = true;
 	}
 
-	if (m_Score == 2) {
+	if (m_Score == m_Scripts.size()) {
 		m_Victory = true;
 	}
 
@@ -37,11 +37,10 @@ void Level::OnUpdate(DeltaTime dt) {
 			m_CountDown = m_TimeElapsed;
 			m_Flag = false;
 			m_Player.GetHit();
-			VOS_CLIENT_INFO("HIT!");
 		}
 	}
 	else {
-		if (m_TimeElapsed - m_CountDown > 3) {
+		if (m_TimeElapsed - m_CountDown > 1.5f) {
 			m_Flag = true;
 		}
 	}
@@ -111,14 +110,42 @@ void Level::CreateFloors() {
 }
 
 void Level::CreatePlatforms() {
-	m_FlyingStuff.resize(2);
-	m_FlyingStuff[0].grassTexture.reset(new VilagOS::Texture2D("assets/textures/grass.png"));
+	m_FlyingStuff.resize(11);
+	for (auto& el : m_FlyingStuff) {
+		el.grassTexture.reset(new VilagOS::Texture2D("assets/textures/grass.png"));
+	}
 	m_FlyingStuff[0].position = glm::vec3(3.0f, -1.0f, -0.3f);
 	m_FlyingStuff[0].size = glm::vec2(5.1f, 0.9f);
 
-	m_FlyingStuff[1].grassTexture.reset(new VilagOS::Texture2D("assets/textures/grass.png"));
 	m_FlyingStuff[1].position = glm::vec3(8.0f, 4.0f, -0.3f);
 	m_FlyingStuff[1].size = glm::vec2(5.1f, 0.9f);
+
+	m_FlyingStuff[2].position = glm::vec3(3.0f, -1.0f, -0.3f);
+	m_FlyingStuff[2].size = glm::vec2(5.1f, 0.9f);
+
+	m_FlyingStuff[3].position = glm::vec3(8.0f, 4.0f, -0.3f);
+	m_FlyingStuff[3].size = glm::vec2(5.1f, 0.9f);
+
+	m_FlyingStuff[4].position = glm::vec3(3.0f, -1.0f, -0.3f);
+	m_FlyingStuff[4].size = glm::vec2(5.1f, 0.9f);
+
+	m_FlyingStuff[5].position = glm::vec3(8.0f, 4.0f, -0.3f);
+	m_FlyingStuff[5].size = glm::vec2(5.1f, 0.9f);
+
+	m_FlyingStuff[6].position = glm::vec3(3.0f, -1.0f, -0.3f);
+	m_FlyingStuff[6].size = glm::vec2(5.1f, 0.9f);
+
+	m_FlyingStuff[7].position = glm::vec3(8.0f, 4.0f, -0.3f);
+	m_FlyingStuff[7].size = glm::vec2(5.1f, 0.9f);
+
+	m_FlyingStuff[8].position = glm::vec3(3.0f, -1.0f, -0.3f);
+	m_FlyingStuff[8].size = glm::vec2(5.1f, 0.9f);
+
+	m_FlyingStuff[9].position = glm::vec3(8.0f, 4.0f, -0.3f);
+	m_FlyingStuff[9].size = glm::vec2(5.1f, 0.9f);
+
+	m_FlyingStuff[10].position = glm::vec3(8.0f, 4.0f, -0.3f);
+	m_FlyingStuff[10].size = glm::vec2(5.1f, 0.9f);
 }
 
 void Level::CreateScripts() {
@@ -154,7 +181,6 @@ void Level::CreateObstacles() {
 		m_Obstacles[i].travel = 0.0f;
 		m_Obstacles[i].orientation = true;
 	}
-	
 }
 
 void Level::LoadLevel() {

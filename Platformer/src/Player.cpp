@@ -7,7 +7,7 @@
 
 void Player::LoadAssets() {
 	m_ShipTexture.reset(new Texture2D("assets/textures/unknown.png"));
-	m_Position = glm::vec3(0.0f, -4.75f, 0.0f);
+	m_Position = glm::vec3(-10.0f, -4.75f, 0.0f);
 	m_Speed = 10.f;
 	m_JumpSpeed = 80.0f;
 	m_InAir = false;
@@ -57,7 +57,6 @@ void Player::OnUpdate(DeltaTime dt) {
 		}
 		if(m_Size.x < 0.0f)
 			m_Size.x *= -1.0f;
-
 	}
 	else if (Input::IsKeyPressedStatic(VOS_KEY_D)) {
 		if (m_InAir) {
@@ -97,7 +96,6 @@ void Player::OnUpdate(DeltaTime dt) {
 	else {
 		m_SpeedCap = 1000.0f;
 	}
-	VOS_CLIENT_INFO("{0}", m_Speed);
 	m_Position.x = glm::clamp(m_Position.x, -15.75f, 57.0f);
 	m_Position.y = glm::clamp(m_Position.y, -4.75f, 20.0f);
 }

@@ -1,13 +1,6 @@
-[submodule "VilagOS/vendor/Imgui"]
-	path = VilagOS/vendor/Imgui
-	url = https://github.com/ocornut/imgui
-	branch = docking
 [submodule "VilagOS/vendor/glm"]
 	path = VilagOS/vendor/glm
 	url = https://github.com/g-truc/glm
 [submodule "VilagOS/vendor/spdlog"]
 	path = VilagOS/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-[submodule "VilagOS/vendor/glad"]
-	path = VilagOS/vendor/glad
-	url = https://github.com/Dav1dde/glad
