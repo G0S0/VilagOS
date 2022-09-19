@@ -99,8 +99,8 @@ void Level::OnRender() {
 		m_Planet.show = false;
 	}
 
-	VilagOS::Renderer2D::DrawQuad({7.08f, 8.0f ,-0.2f}, { 4.0f, 32.0f }, m_TextureQuad);
-	VilagOS::Renderer2D::DrawQuad({ -7.08f, 8.0f, -0.2f }, { -4.0f, 32.0f }, m_TextureQuad);
+	VilagOS::Renderer2D::DrawQuad({7.08f, 8.0f ,-0.2f}, { 4.0f, -32.0f }, m_TextureQuad);
+	VilagOS::Renderer2D::DrawQuad({-7.08f, 8.0f, -0.2f }, { -4.0f, -32.0f }, m_TextureQuad);
 	m_Player.OnRender();
 }
 

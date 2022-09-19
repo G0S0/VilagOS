@@ -27,7 +27,6 @@ void Game2D::OnAttach() {
 	m_Level.Init();
 	ImGuiIO io = ImGui::GetIO();
 	m_Font = io.Fonts->AddFontFromFileTTF("assets/fonts/VT323-Regular.ttf", 120.0f);
-	m_Texture.reset(new VilagOS::Texture2D("assets/textures/background.png"));
 	m_GameState = GameState::MainMenu;
 	
 }

@@ -56,34 +56,18 @@ void Level::OnUpdate(DeltaTime dt) {
 		el.rotation += 1.0f;
 	}
 
-	//for (auto& obs : m_Obstacles) {
-	//	obs.rotation += obs.speed * dt.GetMiliseconds() * 100.0f;
-	//	if (obs.orientation) {
-	//		obs.position = glm::clamp(obs.position, obs.destination, obs.position += obs.speed * dt.GetMiliseconds());
-	//	}
-	//	else {
-	//		obs.position = glm::clamp(obs.position, obs.startPosition, obs.position += obs.toChange * (obs.speed * dt.GetMiliseconds()));
-	//	}
-	//	if (obs.toTravel < obs.travel) {
-	//		obs.orientation = !(obs.orientation);
-	//		obs.speed *= -1.0f;
-	//	}
-	//
-	//}
-
 	for (auto& obs : m_Obstacles) {
-		obs.rotation += obs.speed * dt.GetMiliseconds() * 100.0f;
+		obs.rotation += obs.speed * 90.0f * dt.GetMiliseconds();
 		obs.position += obs.toChange * obs.speed * dt.GetMiliseconds();
 		if (obs.orientation) {
-			obs.travel += obs.speed * dt.GetMiliseconds();
+			obs.travel = glm::distance(obs.position, obs.startPosition);
 		}
 		else {
-			obs.travel -= obs.speed * dt.GetMiliseconds();
+			obs.travel = glm::distance(obs.position, obs.destination);
 		}
-
-		if (obs.travel >= obs.toTravel) {
-			obs.speed *= -1.0f;
-			obs.travel = 0.0f;
+		//VOS_CLIENT_INFO("{0}, {1}, {2}, {3}", obs.toTravel, obs.travel, obs.position.x, obs.position.y);
+		if(obs.toTravel < obs.travel){
+			obs.speed *= -1;
 			obs.orientation = !obs.orientation;
 		}
 	}
@@ -178,65 +162,61 @@ void Level::CreateScripts() {
 		m_Scripts[i].scriptTexture.reset(new VilagOS::Texture2D("assets/textures/script.png"));
 		m_Scripts[i].index = i;
 	}
-	m_Scripts[0].position = glm::vec3(-3.0f, -4.0f, -0.2f);
-	m_Scripts[1].position = glm::vec3(55.0f, -4.0f, -0.2f);
-	m_Scripts[2].position = glm::vec3(-12.0f, 16.5f, -0.3f);
-	m_Scripts[3].position = glm::vec3(23.0f, 11.5f, -0.3f);
-	m_Scripts[4].position = glm::vec3(35.0f, 7.5f, -0.3f);
+	m_Scripts[0].position = glm::vec3(-3.0f, -3.5f, -0.2f);
+	m_Scripts[1].position = glm::vec3(55.0f, -3.5f, -0.2f);
+	m_Scripts[2].position = glm::vec3(-12.0f, 17.5f, -0.3f);
+	m_Scripts[3].position = glm::vec3(23.0f, 12.5f, -0.3f);
+	m_Scripts[4].position = glm::vec3(35.0f, 8.5f, -0.3f);
 	m_Scripts[5].position = glm::vec3(23.0f, 27.0f, -0.3f);
-	m_Scripts[6].position = glm::vec3(53.0f, 31.5f, -0.3f);
+	m_Scripts[6].position = glm::vec3(53.0f, 32.0f, -0.3f);
 
 }
 
 void Level::CreateObstacles() {
-	m_Obstacles.resize(7);
-	m_Obstacles[0].position = glm::vec3(50.0f, -4.0f, 0.0f);
-	m_Obstacles[0].destination = glm::vec3(0.0f, -4.0f, 0.0f);
+	m_Obstacles.resize(8);
+	m_Obstacles[0].position = glm::vec3(56.5f, -4.0f, 0.0f);
+	m_Obstacles[0].destination = glm::vec3(-15.0f, -4.0f, 0.0f);
 	m_Obstacles[0].toChange = glm::vec3(1.0f, 0.0f, 0.0f);
-	m_Obstacles[0].speed = -10.0f;
-	m_Obstacles[0].orientation = false;
+	m_Obstacles[0].speed = 10.0f;
 	
 	m_Obstacles[1].position = glm::vec3(-1.5f, 7.3f, 0.0f);
 	m_Obstacles[1].destination = glm::vec3(-4.0f, 25.0f, 0.0f);
 	m_Obstacles[1].toChange = glm::vec3(0.0, 1.0f, 0.0f);
 	m_Obstacles[1].speed = 12.0f;
-	m_Obstacles[1].orientation = true;
-
+	
 	m_Obstacles[2].position = glm::vec3(35.6f, 26.5f, 0.0f);
 	m_Obstacles[2].destination = glm::vec3(55.5f, 26.5f, 0.0f);
 	m_Obstacles[2].toChange = glm::vec3(1.0f, 0.0f, 0.0f);
 	m_Obstacles[2].speed = 12.0f;
-	m_Obstacles[2].orientation = true;
-
+	
 	m_Obstacles[3].position = glm::vec3(25.5f, 29.5f, 0.0f); //gore
 	m_Obstacles[3].destination = glm::vec3(19.0f, 27.0f, 0.0f);
 	m_Obstacles[3].toChange = glm::vec3(1.0f, 0.0f, 0.0f);
-	m_Obstacles[3].speed = -8.0f;
-	m_Obstacles[3].orientation = false;
-
+	m_Obstacles[3].speed = 8.0f;
+	
+	
 	m_Obstacles[4].position = glm::vec3(25.5f, 29.5f, 0.0f); //desno
-	m_Obstacles[4].destination = glm::vec3(19.0f, 27.1f, 0.0f);
+	m_Obstacles[4].destination = glm::vec3(25.5f, 24.5f, 0.0f);
 	m_Obstacles[4].toChange = glm::vec3(0.0f, 1.0f, 0.0f);
-	m_Obstacles[4].speed = -8.0f;
-	m_Obstacles[4].orientation = false;
-
+	m_Obstacles[4].speed = 8.0f;
+	
+	
 	m_Obstacles[5].position = glm::vec3(19.0f, 24.5f, 0.0f); //dolje
 	m_Obstacles[5].destination = glm::vec3(25.5f, 26.5f, 0.0f);
 	m_Obstacles[5].toChange = glm::vec3(1.0f, 0.0f, 0.0f);
 	m_Obstacles[5].speed = 8.0f;
-	m_Obstacles[5].orientation = true;
-
-	m_Obstacles[6].position = glm::vec3(19.0f, 29.5f, 0.0f); //desno
-	m_Obstacles[6].destination = glm::vec3(25.5f, 27.1f, 0.0f);
+	
+	
+	m_Obstacles[6].position = glm::vec3(19.0f, 24.5f, 0.0f); //lijevo
+	m_Obstacles[6].destination = glm::vec3(19.0f, 29.5f, 0.0f);
 	m_Obstacles[6].toChange = glm::vec3(0.0f, 1.0f, 0.0f);
-	m_Obstacles[6].speed = -8.0f;
-	m_Obstacles[6].orientation = false;
+	m_Obstacles[6].speed = 8.0f;
 
-	//m_Obstacles[7].position = glm::vec3(3.0f, 3.0f, 0.0f);
-	//m_Obstacles[7].toChange = glm::vec3(0.0f, 1.0f, 0.0f);
-	//m_Obstacles[7].speed = -5.0f;
-	//m_Obstacles[7].toTravel = 4.0f;
-	//m_Obstacles[7].orientation = false;
+	m_Obstacles[7].position = glm::vec3(56.5f, 34.5f, 0.0f);
+	m_Obstacles[7].destination = glm::vec3(-15.25, -4.25f, 0.0f);
+	m_Obstacles[7].toChange = glm::vec3(1.0f * 1.77777778f, 1.0f, 0.0f);
+	m_Obstacles[7].speed = 5.0f;
+
 
 	for (int i = 0; i < m_Obstacles.size(); i++) {
 		m_Obstacles[i].size = glm::vec2(1.6f, 1.6f);
@@ -245,7 +225,10 @@ void Level::CreateObstacles() {
 		m_Obstacles[i].startPosition = m_Obstacles[i].position;
 		m_Obstacles[i].travel = 0.0f;
 		m_Obstacles[i].toTravel = glm::distance(m_Obstacles[i].startPosition, m_Obstacles[i].destination);
-		
+		m_Obstacles[i].orientation = true;
+		if (glm::dot(m_Obstacles[i].startPosition, m_Obstacles[i].toChange) > glm::dot(m_Obstacles[i].destination, m_Obstacles[i].toChange)) {
+			m_Obstacles[i].speed *= -1.0f;
+		}
 	}
 }
 
