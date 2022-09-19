@@ -92,7 +92,6 @@ project "VilagOS"
 
 project "Game"
 	location "Game" --project folder
-	kind "ConsoleApp" --console app
 	cppdialect "C++17"
 	language "C++"
 	staticruntime "On"
@@ -133,23 +132,25 @@ project "Game"
 		}
 
 	filter "configurations:Release"
+		kind "WindowedApp"
 		defines "VOS_RELEASE"
 		symbols "On"
 		buildoptions "/MD"
 
 	filter "configurations:Debug"
+		kind "ConsoleApp" --console app
 		defines "VOS_DEBUG"
 		symbols "On"
 		buildoptions "/MDd"
 
 	filter "configurations:Dist"
+		kind "ConsoleApp" --console app
 		defines "VOS_DIST"
 		symbols "On"
 		buildoptions "/MD"
 ----------------------------------------------------------------------------------------------
 project "Platformer"
 	location "Platformer" --project folder
-	kind "ConsoleApp" --console app
 	cppdialect "C++17"
 	language "C++"
 	staticruntime "On"
@@ -190,16 +191,19 @@ project "Platformer"
 		}
 
 	filter "configurations:Release"
+		kind "WindowedApp"
 		defines "VOS_RELEASE"
 		symbols "On"
 		buildoptions "/MD"
 
 	filter "configurations:Debug"
+		kind "ConsoleApp" --console app
 		defines "VOS_DEBUG"
 		symbols "On"
 		buildoptions "/MDd"
 
 	filter "configurations:Dist"
+		kind "ConsoleApp" --console app
 		defines "VOS_DIST"
 		symbols "On"
 		buildoptions "/MD"

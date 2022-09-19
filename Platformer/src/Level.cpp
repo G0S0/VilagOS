@@ -220,7 +220,16 @@ void Level::CreateObstacles() {
 
 	for (int i = 0; i < m_Obstacles.size(); i++) {
 		m_Obstacles[i].size = glm::vec2(1.6f, 1.6f);
-		m_Obstacles[i].obstacleTexture.reset(new VilagOS::Texture2D("assets/textures/Burazin.png"));
+		if (i % 3 == 0) {
+			m_Obstacles[i].obstacleTexture.reset(new VilagOS::Texture2D("assets/textures/insta.png"));
+		}
+		if (i % 3 == 1) {
+			m_Obstacles[i].obstacleTexture.reset(new VilagOS::Texture2D("assets/textures/whap.png"));
+		}
+		if (i % 3 == 2) {
+			m_Obstacles[i].obstacleTexture.reset(new VilagOS::Texture2D("assets/textures/fb.png"));
+		}
+		
 		m_Obstacles[i].rotation = 0.0f;
 		m_Obstacles[i].startPosition = m_Obstacles[i].position;
 		m_Obstacles[i].travel = 0.0f;
