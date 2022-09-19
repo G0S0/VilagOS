@@ -38,6 +38,7 @@ private:
 		glm::vec3 position;
 		glm::vec3 startPosition;
 		glm::vec3 toChange;
+		glm::vec3 destination;
 		glm::vec2 size;
 		float rotation;
 		float travel;

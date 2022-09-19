@@ -19,7 +19,7 @@ void Level::OnUpdate(DeltaTime dt) {
 		m_GameOver = true;
 	}
 
-	if (m_Score == m_Scripts.size()) {
+	if (m_Score == 7) {
 		m_Victory = true;
 	}
 
@@ -40,7 +40,7 @@ void Level::OnUpdate(DeltaTime dt) {
 		}
 	}
 	else {
-		if (m_TimeElapsed - m_CountDown > 1.5f) {
+		if (m_TimeElapsed - m_CountDown > 0.75f) {
 			m_Flag = true;
 		}
 	}
@@ -56,8 +56,23 @@ void Level::OnUpdate(DeltaTime dt) {
 		el.rotation += 1.0f;
 	}
 
+	//for (auto& obs : m_Obstacles) {
+	//	obs.rotation += obs.speed * dt.GetMiliseconds() * 100.0f;
+	//	if (obs.orientation) {
+	//		obs.position = glm::clamp(obs.position, obs.destination, obs.position += obs.speed * dt.GetMiliseconds());
+	//	}
+	//	else {
+	//		obs.position = glm::clamp(obs.position, obs.startPosition, obs.position += obs.toChange * (obs.speed * dt.GetMiliseconds()));
+	//	}
+	//	if (obs.toTravel < obs.travel) {
+	//		obs.orientation = !(obs.orientation);
+	//		obs.speed *= -1.0f;
+	//	}
+	//
+	//}
+
 	for (auto& obs : m_Obstacles) {
-		obs.rotation += obs.speed * dt.GetMiliseconds();
+		obs.rotation += obs.speed * dt.GetMiliseconds() * 100.0f;
 		obs.position += obs.toChange * obs.speed * dt.GetMiliseconds();
 		if (obs.orientation) {
 			obs.travel += obs.speed * dt.GetMiliseconds();
@@ -110,7 +125,7 @@ void Level::CreateFloors() {
 }
 
 void Level::CreatePlatforms() {
-	m_FlyingStuff.resize(11);
+	m_FlyingStuff.resize(13);
 	for (auto& el : m_FlyingStuff) {
 		el.grassTexture.reset(new VilagOS::Texture2D("assets/textures/grass.png"));
 	}
@@ -120,36 +135,42 @@ void Level::CreatePlatforms() {
 	m_FlyingStuff[1].position = glm::vec3(8.0f, 4.0f, -0.3f);
 	m_FlyingStuff[1].size = glm::vec2(5.1f, 0.9f);
 
-	m_FlyingStuff[2].position = glm::vec3(3.0f, -1.0f, -0.3f);
+	m_FlyingStuff[2].position = glm::vec3(23.0f, 10.0f, -0.3f);
 	m_FlyingStuff[2].size = glm::vec2(5.1f, 0.9f);
 
-	m_FlyingStuff[3].position = glm::vec3(8.0f, 4.0f, -0.3f);
+	m_FlyingStuff[3].position = glm::vec3(-1.5f, 7.3f, -0.3f);
 	m_FlyingStuff[3].size = glm::vec2(5.1f, 0.9f);
 
-	m_FlyingStuff[4].position = glm::vec3(3.0f, -1.0f, -0.3f);
+	m_FlyingStuff[4].position = glm::vec3(-12.0f, 15.0f, -0.3f);
 	m_FlyingStuff[4].size = glm::vec2(5.1f, 0.9f);
 
-	m_FlyingStuff[5].position = glm::vec3(8.0f, 4.0f, -0.3f);
+	m_FlyingStuff[5].position = glm::vec3(3.5f, 20.0f, -0.3f);
 	m_FlyingStuff[5].size = glm::vec2(5.1f, 0.9f);
 
-	m_FlyingStuff[6].position = glm::vec3(3.0f, -1.0f, -0.3f);
+	m_FlyingStuff[6].position = glm::vec3(14.5f, 27.0f, -0.3f);
 	m_FlyingStuff[6].size = glm::vec2(5.1f, 0.9f);
 
-	m_FlyingStuff[7].position = glm::vec3(8.0f, 4.0f, -0.3f);
+	m_FlyingStuff[7].position = glm::vec3(30.5f, 27.0f, -0.3f);
 	m_FlyingStuff[7].size = glm::vec2(5.1f, 0.9f);
 
-	m_FlyingStuff[8].position = glm::vec3(3.0f, -1.0f, -0.3f);
+	m_FlyingStuff[8].position = glm::vec3(40.0f, 20.0f, -0.3f);
 	m_FlyingStuff[8].size = glm::vec2(5.1f, 0.9f);
 
-	m_FlyingStuff[9].position = glm::vec3(8.0f, 4.0f, -0.3f);
+	m_FlyingStuff[9].position = glm::vec3(53.0f, 30.0f, -0.3f);
 	m_FlyingStuff[9].size = glm::vec2(5.1f, 0.9f);
 
-	m_FlyingStuff[10].position = glm::vec3(8.0f, 4.0f, -0.3f);
+	m_FlyingStuff[10].position = glm::vec3(35.0f, 6.0f, -0.3f);
 	m_FlyingStuff[10].size = glm::vec2(5.1f, 0.9f);
+
+	m_FlyingStuff[11].position = glm::vec3(47.0f, 0.0f, -0.3f);
+	m_FlyingStuff[11].size = glm::vec2(5.1f, 0.9f);
+
+	m_FlyingStuff[12].position = glm::vec3(50.0f, 12.0f, -0.3f);
+	m_FlyingStuff[12].size = glm::vec2(5.1f, 0.9f);
 }
 
 void Level::CreateScripts() {
-	m_Scripts.resize(2);
+	m_Scripts.resize(7);
 
 	for (int i = 0; i < m_Scripts.size(); i++) {
 		m_Scripts[i].size = glm::vec2(1.5f, 1.4f*1.5f);
@@ -157,21 +178,65 @@ void Level::CreateScripts() {
 		m_Scripts[i].scriptTexture.reset(new VilagOS::Texture2D("assets/textures/script.png"));
 		m_Scripts[i].index = i;
 	}
-	m_Scripts[0].position = glm::vec3(8.5f, 6.0f, -0.2f);
-	m_Scripts[1].position = glm::vec3(-3.0f, 0.1f, -0.2f);
+	m_Scripts[0].position = glm::vec3(-3.0f, -4.0f, -0.2f);
+	m_Scripts[1].position = glm::vec3(55.0f, -4.0f, -0.2f);
+	m_Scripts[2].position = glm::vec3(-12.0f, 16.5f, -0.3f);
+	m_Scripts[3].position = glm::vec3(23.0f, 11.5f, -0.3f);
+	m_Scripts[4].position = glm::vec3(35.0f, 7.5f, -0.3f);
+	m_Scripts[5].position = glm::vec3(23.0f, 27.0f, -0.3f);
+	m_Scripts[6].position = glm::vec3(53.0f, 31.5f, -0.3f);
+
 }
 
 void Level::CreateObstacles() {
-	m_Obstacles.resize(2);
-	m_Obstacles[0].position = glm::vec3(5.0f, 5.0f, 0.0f);
+	m_Obstacles.resize(7);
+	m_Obstacles[0].position = glm::vec3(50.0f, -4.0f, 0.0f);
+	m_Obstacles[0].destination = glm::vec3(0.0f, -4.0f, 0.0f);
 	m_Obstacles[0].toChange = glm::vec3(1.0f, 0.0f, 0.0f);
-	m_Obstacles[0].speed = 2.0f;
-	m_Obstacles[0].toTravel = 4.0f;
+	m_Obstacles[0].speed = -10.0f;
+	m_Obstacles[0].orientation = false;
+	
+	m_Obstacles[1].position = glm::vec3(-1.5f, 7.3f, 0.0f);
+	m_Obstacles[1].destination = glm::vec3(-4.0f, 25.0f, 0.0f);
+	m_Obstacles[1].toChange = glm::vec3(0.0, 1.0f, 0.0f);
+	m_Obstacles[1].speed = 12.0f;
+	m_Obstacles[1].orientation = true;
 
-	m_Obstacles[1].position = glm::vec3(3.0f, 3.0f, 0.0f);
-	m_Obstacles[1].toChange = glm::vec3(0.0f, 1.0f, 0.0f);
-	m_Obstacles[1].speed = 5.0f;
-	m_Obstacles[1].toTravel = 4.0f;
+	m_Obstacles[2].position = glm::vec3(35.6f, 26.5f, 0.0f);
+	m_Obstacles[2].destination = glm::vec3(55.5f, 26.5f, 0.0f);
+	m_Obstacles[2].toChange = glm::vec3(1.0f, 0.0f, 0.0f);
+	m_Obstacles[2].speed = 12.0f;
+	m_Obstacles[2].orientation = true;
+
+	m_Obstacles[3].position = glm::vec3(25.5f, 29.5f, 0.0f); //gore
+	m_Obstacles[3].destination = glm::vec3(19.0f, 27.0f, 0.0f);
+	m_Obstacles[3].toChange = glm::vec3(1.0f, 0.0f, 0.0f);
+	m_Obstacles[3].speed = -8.0f;
+	m_Obstacles[3].orientation = false;
+
+	m_Obstacles[4].position = glm::vec3(25.5f, 29.5f, 0.0f); //desno
+	m_Obstacles[4].destination = glm::vec3(19.0f, 27.1f, 0.0f);
+	m_Obstacles[4].toChange = glm::vec3(0.0f, 1.0f, 0.0f);
+	m_Obstacles[4].speed = -8.0f;
+	m_Obstacles[4].orientation = false;
+
+	m_Obstacles[5].position = glm::vec3(19.0f, 24.5f, 0.0f); //dolje
+	m_Obstacles[5].destination = glm::vec3(25.5f, 26.5f, 0.0f);
+	m_Obstacles[5].toChange = glm::vec3(1.0f, 0.0f, 0.0f);
+	m_Obstacles[5].speed = 8.0f;
+	m_Obstacles[5].orientation = true;
+
+	m_Obstacles[6].position = glm::vec3(19.0f, 29.5f, 0.0f); //desno
+	m_Obstacles[6].destination = glm::vec3(25.5f, 27.1f, 0.0f);
+	m_Obstacles[6].toChange = glm::vec3(0.0f, 1.0f, 0.0f);
+	m_Obstacles[6].speed = -8.0f;
+	m_Obstacles[6].orientation = false;
+
+	//m_Obstacles[7].position = glm::vec3(3.0f, 3.0f, 0.0f);
+	//m_Obstacles[7].toChange = glm::vec3(0.0f, 1.0f, 0.0f);
+	//m_Obstacles[7].speed = -5.0f;
+	//m_Obstacles[7].toTravel = 4.0f;
+	//m_Obstacles[7].orientation = false;
 
 	for (int i = 0; i < m_Obstacles.size(); i++) {
 		m_Obstacles[i].size = glm::vec2(1.6f, 1.6f);
@@ -179,7 +244,8 @@ void Level::CreateObstacles() {
 		m_Obstacles[i].rotation = 0.0f;
 		m_Obstacles[i].startPosition = m_Obstacles[i].position;
 		m_Obstacles[i].travel = 0.0f;
-		m_Obstacles[i].orientation = true;
+		m_Obstacles[i].toTravel = glm::distance(m_Obstacles[i].startPosition, m_Obstacles[i].destination);
+		
 	}
 }
 

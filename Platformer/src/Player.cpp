@@ -97,7 +97,8 @@ void Player::OnUpdate(DeltaTime dt) {
 		m_SpeedCap = 1000.0f;
 	}
 	m_Position.x = glm::clamp(m_Position.x, -15.75f, 57.0f);
-	m_Position.y = glm::clamp(m_Position.y, -4.75f, 20.0f);
+	m_Position.y = glm::clamp(m_Position.y, -4.75f, 35.0f);
+	//VOS_CLIENT_INFO("({0}, {1})", m_Position.x, m_Position.y);
 }
 
 void Player::OnRender() {

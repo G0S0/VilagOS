@@ -42,5 +42,7 @@ project "Imgui"
         
 
     filter {"system:windows", "configurations:Release"}
+        defines "VOS_RELEASE"
+        symbols "On"
         buildoptions "/MD"
 

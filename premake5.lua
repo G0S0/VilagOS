@@ -72,17 +72,17 @@ project "VilagOS"
 			"IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
+	
+	filter "configurations:Release"
+		defines "VOS_RELEASE"
+		symbols "On"
+		buildoptions "/MD"
 
 	filter "configurations:Debug"
 		defines "VOS_DEBUG"
 		symbols "On"
 		--runtime "Debug"
 		buildoptions "/MDd"
-	
-	filter "configurations:Release"
-		defines "VOS_RELEASE"
-		symbols "On"
-		buildoptions "/MD"
 
 	filter "configurations:Dist"
 		defines "VOS_DIST"
@@ -132,15 +132,15 @@ project "Game"
 			"VOS_PLATFORM_WINDOWS"
 		}
 
-	filter "configurations:Debug"
-		defines "VOS_DEBUG"
-		symbols "On"
-		buildoptions "/MDd"
-	
 	filter "configurations:Release"
 		defines "VOS_RELEASE"
 		symbols "On"
 		buildoptions "/MD"
+
+	filter "configurations:Debug"
+		defines "VOS_DEBUG"
+		symbols "On"
+		buildoptions "/MDd"
 
 	filter "configurations:Dist"
 		defines "VOS_DIST"
@@ -189,15 +189,15 @@ project "Platformer"
 			"VOS_PLATFORM_WINDOWS"
 		}
 
-	filter "configurations:Debug"
-		defines "VOS_DEBUG"
-		symbols "On"
-		buildoptions "/MDd"
-	
 	filter "configurations:Release"
 		defines "VOS_RELEASE"
 		symbols "On"
 		buildoptions "/MD"
+
+	filter "configurations:Debug"
+		defines "VOS_DEBUG"
+		symbols "On"
+		buildoptions "/MDd"
 
 	filter "configurations:Dist"
 		defines "VOS_DIST"

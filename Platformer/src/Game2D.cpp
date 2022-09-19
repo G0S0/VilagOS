@@ -55,7 +55,7 @@ void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 	if ((Input::IsKeyPressedStatic(VOS_KEY_LEFT_ALT))) {
 		m_CameraController->OnUpdate(dt);
 		m_CameraController->GetCameraRef()->SetPosition(glm::clamp(m_CameraController->GetCameraRef()->GetPosition(), 
-			glm::vec3{ -15.75f /( 8.0f * m_AspectRatio), -2.5f / 8.0f, 0.0f }, glm::vec3{ 57.0f / (8.0f * m_AspectRatio), 20.0f / 8.0f, 0.0f }));
+			glm::vec3{ -15.75f /( 8.0f * m_AspectRatio), -2.5f / 8.0f, 0.0f }, glm::vec3{ 57.0f / (8.0f * m_AspectRatio), 35.0f / 8.0f, 0.0f }));
 	}
 	else {
 		m_CameraController->GetCameraRef()->SetPosition({ m_Level.GetPlayer().GetPosition().x / (8.0f * m_AspectRatio), (m_Level.GetPlayer().GetPosition().y + 2.0f) / 8.0f, 0.0f });
@@ -66,6 +66,7 @@ void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 	VilagOS::Renderer2D::BeginScene(m_CameraController->GetCamera());
 	VilagOS::Renderer2D::DrawQuad(glm::vec3{ -24.5f, 18.0f, -0.1f }, glm::vec2{ 16.0f, 60.0f }, m_WallTexture, 3.0f);
 	VilagOS::Renderer2D::DrawQuad(glm::vec3{ 66.5f, 18.0f, -0.1f }, glm::vec2{ 16.0f, 60.0f }, m_WallTexture, 3.0f);
+	VilagOS::Renderer2D::DrawRotatedQuad(glm::vec3{ -4.75f, 45.5f, -0.1f }, glm::vec2{ 19.0f, 130.0f }, 90.0f, m_WallTexture, 4.0f);
 	VilagOS::Renderer2D::DrawQuad(glm::vec3{0.0f + m_CameraController->GetCameraRef()->GetPosition().x * 8.0f * m_AspectRatio * 0.95, 2.0f + m_CameraController->GetCameraRef()->GetPosition().y * 8.0f * 0.95, -0.9f }, glm::vec2{2.0f * 8.0f * m_AspectRatio + 5.0f, (2.0f * 8.0f) + 5.0f}, m_BackgroundTexture);
 	//VOS_CLIENT_INFO("{0}, {1}, {2}", m_CameraController->GetCameraRef()->GetPosition().x, m_Level.GetPlayer().GetPosition().x, m_AspectRatio);
 	m_Level.OnRender();
@@ -173,5 +174,6 @@ void Game2D::CreateCamera(uint32_t width, uint32_t height) {
 	float left = bottom * aspectRatio;
 	float right = top * aspectRatio;
 	m_AspectRatio = aspectRatio;
+	//VOS_CLIENT_INFO("{0}", m_AspectRatio);
 	m_CameraController.reset(new OrthographicCameraController(left, right, bottom, top, aspectRatio));
 }

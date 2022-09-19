@@ -25,7 +25,7 @@ void Player::OnUpdate(DeltaTime dt) {
 		m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds()) ;
 		m_Position.x -= m_Speed * dt.GetMiliseconds();
 	}
-	else if (Input::IsKeyPressedStatic(VOS_KEY_D)) {
+	if (Input::IsKeyPressedStatic(VOS_KEY_D)) {
 		m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
 		m_Position.x += m_Speed * dt.GetMiliseconds();
 	}
@@ -33,7 +33,7 @@ void Player::OnUpdate(DeltaTime dt) {
 		m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
 		m_Position.y += m_Speed * dt.GetMiliseconds();
 	}
-	else if (Input::IsKeyPressedStatic(VOS_KEY_S)) {
+	if (Input::IsKeyPressedStatic(VOS_KEY_S)) {
 		m_Speed = glm::clamp(m_Speed * dt.GetMiliseconds(), m_Speed += 8.0f * dt.GetMiliseconds(), 600.0f * dt.GetMiliseconds());
 		m_Position.y -= m_Speed * dt.GetMiliseconds();
 	}
