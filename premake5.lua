@@ -118,9 +118,9 @@ project "Game"
 		"VilagOS"
 	}
 
-	--postbuildcommands{
-	--	("{COPY} \"%{prj.name}/assets/shaders/Texture.glsl\" \"../bin/" .. outputdir .. "/Game/\"")
-	--	}
+	postbuildcommands{
+		("{COPY} \"assets\" \"../bin/" .. outputdir .. "/Game/assets\"")
+		}
 
 	filter "system:windows"
 		
@@ -177,9 +177,9 @@ project "Platformer"
 		"VilagOS"
 	}
 
-	--postbuildcommands{
-	--	("{COPY} \"%{prj.name}/assets/shaders/Texture.glsl\" \"../bin/" .. outputdir .. "/Game/\"")
-	--	}
+	postbuildcommands{
+		("{COPY} \"assets\" \"../bin/" .. outputdir .. "/%{prj.name}/assets\"")
+		}
 
 	filter "system:windows"
 		
