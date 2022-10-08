@@ -3,7 +3,7 @@
 //Header 
 
 #ifdef VOS_PLATFORM_WINDOWS
-//Radimo ovo dinamički pošto će ovo biti cijela aplikacija tako da mo�e biti jako veliko
+//Radimo ovo dinamički pošto će ovo biti cijela aplikacija tako da može biti jako veliko
 extern VilagOS::Application* VilagOS::CreateApplication(); //defined in "GameApp" returns application
 
 #ifdef VOS_RELEASE

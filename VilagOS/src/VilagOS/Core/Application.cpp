@@ -11,8 +11,6 @@
 #include <chrono>
 #include "VilagOS/Renderer/Renderer2D.h"
 
-
-
 namespace VilagOS{
 
 	Application* Application::s_Instance = nullptr;
@@ -47,12 +45,10 @@ namespace VilagOS{
 					layer->OnUpdate(DeltaTime);
 			}
 
-			
-
-			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
-				layer->OnImGuiRender();
-			m_ImGuiLayer->End();
+			//m_ImGuiLayer->Begin();
+			//for (Layer* layer : m_LayerStack)
+			//	layer->OnImGuiRender();
+			//m_ImGuiLayer->End();
 
 			m_Window->OnUpdate(); //I have to be pulling event from window even when it is minimized so that you know... i can expand it again? 
 			std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();

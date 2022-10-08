@@ -1,0 +1,654 @@
+\documentclass{mathos}
+
+\begin{document}
+\renewcommand\bibname{Literatura}
+\renewcommand\labelitemi{-}
+
+\begin{titlepage}
+    \begin{center}
+        %\vspace*{-10ex}
+        \includegraphics[keepaspectratio=true,scale=0.4]{MathosLogo.png} \\ \vspace{1mm}
+        \textsc{Sveučilište Josipa Jurja Strossmayera u Osijeku} \\
+        \vspace{2mm}
+        \textsc{Odjel za matematiku}
+    \end{center}
+
+    \begin{center}
+        \vspace{4mm}
+        {Sveučilišni preddiplomski studij Matematika i računarstvo}
+    \end{center}
+
+    \vspace{25mm}
+    \begin{center}
+        % naslov
+        {\LARGE{\bf  Izrada platforme za izradu video igara}}
+
+        \vspace{15mm}
+        %
+        {\large{\sc Završni rad}}
+
+
+    \end{center}
+
+    \vspace{50mm}
+
+    \begin{minipage}[t]{0.47\textwidth}
+        {Mentor:} \normalsize\vspace{3mm}
+        {\bf\\ \large{Domagoj Ševerdija}}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.47\textwidth}\raggedleft
+        {{Kandidat:}{\normalsize\vspace{3mm} \bf\\ \large{Leon Vilagoš}}}
+    \end{minipage}
+
+    \vspace*{\fill}
+    \centering{\normalsize{Osijek, 2022}}
+\end{titlepage}
+
+\tableofcontents
+
+\chapter{Uvod}\label{Uvod}
+\pagenumbering{arabic}
+\noindent
+Video igrice danas su jedan od najrasprostranjenijih načina zabave u svijetu. U suštini video igrice nisu ništa drugo osim interaktivne aplikacije. Za izradu takvih aplikacija
+koriste se specijalizirani skupovi alata. Takav skup alata koji je specijaliziran za izradu igrica građen je kao platforma za izradu video igrica. Kompleksnost i cijena
+izrađivanja video igrica raste svake godine. Stoga postoji konstanta potreba za sve moćnijim i kompleksnijim platformama za izradu video igrica. Danas je standard da igrice
+imaju brzo i efikasno prikazivanja i 2D i 3D grafike što uključuje teksture, simulaciju svijetlosti, kaustike, simulaciju različitih materijala i efekata itd. Također video
+igrice moraju imati: zvuk, simulaciju fizike, efikasnost pri procesiranju ogromnih količina podataka, stabilan rad na različitima platformama i još mnogo zahtjeva koji nisu
+trivijalni za implementirati. Kako kompleksnosti svih ovih zahtjeva raste tako naravno raste i kompleksnost platformu za izradu video igrica.
+\\ \\
+Jedno pitanje koje ima smisla postaviti jest ako su video igrice interaktivne aplikacije koja svaka ima svoje jedinstvene zahtjeve, zašto uopće praviti platformu za izradu
+igrica ako možemo jednostavno napraviti igricu i odmah ukomponirati sve te funkcionalnosti. Uzmimo za primjer da igrica treba imati sunce u sceni. Osoba koja pravi igricu u
+platformi za izradu igrice će uzeti sunce kakvo je implementirano u platformi, promijeniti par parametara preko korisničkog sučelja i to je sve. Dok je problem samog
+implementiranja izvora svijetla puno složeniji jer zahtjeva poznavanje matematike i općenito teorije o računalnoj grafici. Tj. osoba koja pravi funkcionalnosti potrebne za igricu
+i osoba koja pravi igricu imaju veoma drugačija područja stručnosti. Također iako svaka igrica ima svoje jedinstvene zahtjeve, mnogo tih zahtjeva se preklapaju, stoga ima smisla
+imati platformu koja može brzo i efikasno proizvoditi igrice. Jedna od glavnih uloga platforme za izradu igrica je prevođenje podataka u oblik koji je čovjeku razumljiv. Na
+primjer kako bi ljudi koji prave igrice mogli bez problema raditi sa 3D objektima, platforma za izradu igara mora: znati prikazati taj 3D objekt na ekranu, znati nacrtati ga u
+određenoj poziciji u svijetu, moći dodijeliti mu odgovarajući materijal i obojati ga odgovarajućom teksturom. Sve su to problemi koje osoba koja pravi platformu za izradu igrice
+mora riješiti.
+\\ \\
+U ovom radu pokazat ćemo izradu jednostavne platforme za izradu 2D video igrica.
+
+\chapter{Struktura projekta}\label{s_strukturaProjekta}
+Kako bi se nešto moglo zvati platformom za izradu video igrica, to nešto mora omogućavati korištenje svih osnovnih funkcionalnosti bez kojih igrica jednostavno nije igrica.
+Te funkcionalnosti su:  prepoznavanje unosa s miša i tipkovnice, sustav događaja, bilježenje unosa, sustav slojeva, crtač, kamera, sjenčari i transformacija objekata na sceni.
+Također trebao bi imati funkcionalnosti koji nisu i vezanu uz samu igrice, poput vođenja dnevnika ili radnjama nad prozorom aplikacije (pomicanje, približavanje, smanjivanje
+i slično.) Već ovo nije lagan posao, ima dobar broj funkcionalnosti koje sadržavaju svoj niz zahtjeva, problema i funkcionalnosti koje treba riješiti. Stoga prođimo kroz svaku
+funkcionalnost jedna po jednu.
+
+\section{Prozor}\label{ss_prozor}
+Prva i najosnovnija stvar koju bi imalo smisla implementirati jest prozor. Kod igrica je Najčešće slučaj da dok živi prozor živi i sama igrica, tj. kada se prozor zatvara, zatvara se i igrica.
+Kakav će biti taj prozor ovisiti će o platformu za koju će igrica namijenjena.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Slike/Prozor.png}
+    \caption{Prozor aplikacije}
+    \label{im_prozor}
+\end{figure}
+
+\section{Dnevnik}\label{ss_dnevnik}
+Funkcionalnost koja je jako korisna i za izradu platforme i za izradu samih igrica jest dnevnik. Prilikom izrade same platforme on će služiti kao pomoć pri otklanjanju pogreška i
+testiranju, a pri izradi igrice korisnik ga može koristiti kako god želi, bitno je samo da dnevnik postoji. Stoga bi bilo bi dobro da se ispisi u dnevnik pri izradi platforme i
+ispisi u dnevnik koje će korisnik koristiti pri izradi igre razlikuju.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Slike/Dnevnik.png}
+    \caption{U dnevniku ispisane poruke sa strane aplikacije i platforme}
+    \label{im_Dnevnik}
+\end{figure}
+
+\section{Sustav događaja}\label{ss_događaji}
+Kako je implementiran dnevnik ispisa implementacija sustava događaja bit će puno jednostavnije, jer je moguće jednostavno ispisati u konzolu na primjer je li se događaj dogodio
+ili ne. Ideja sustava događaja je da aplikacija ima tzv. dispečer događaja. Dispečer će biti zadužen za to da za svaki događaj koji dobije pozove odgovarajuću funkciju za taj
+događaj. Dok će sami događaji biti vezani za dio aplikacije na koji se događaj odnosi, funkcije koje dispečer poziva za neki događaj bit će vezane za aplikaciju. U prozor klasi
+definiramo događaj, a u klasi aplikacije definiramo funkciju za taj događaj i povežemo tu funkciju i događaj pomoću dispečera.
+\\ \\
+Na primjer treba razvući prozor. U klasi prozora definiramo događaj, a u klasi aplikacije definiramo funkciju koja će zapravo promijeniti veličinu prozora. Ovo je lako jer
+će prozor biti vezan za aplikaciju. Analogno definiramo događaje za pritisak na tipkovnici i/ili mišu i sve ostalo što bi nam trebalo.
+
+\section{Ispit unosa}\label{ss_unos}
+Sustav događaja nam omogućava da znamo kada se neki događaj dogodio i onda pozovemo odgovarajuću funkciju za taj događaj. Iako ono što je poželjno imati je sustav koji će u
+svakom trenutku izvršavanja aplikacije provjeravati je li dan neki unos. To omogućava da se na primjer drži pritisnuta tipka ALT i na pokretanje miša se upravlja okretanje
+kamere, dok inače okretanje miša okreće igrača na primjer.
+\\ \\
+Za ljude koji rade igrice vrlo efikasan način za implementirati bilo kakve kontrole jest preko ispita unosa. Na primjer u svakom trenutku provjeravaju
+je li gumb za kretanje stisnut, ako jest onda pomakni igrača, puno jednostavnije nego da se korisnik mora patiti sa sustavom događaja za nešto ovako jednostavno.
+
+\section{Slojevi}\label{ss_slojevi}
+Strukturu slojeva treba zamisliti kao slojeve iz PhotoShopa. Ova struktura jako je korisna za dvije stvari. Prva je redoslijed iscrtavanja. Ono što je na najgornjem
+sloju će se iscrtavati iznad svega što je na slojevima ispod. Druga vrlo bitna stvar jest to što isto kao i kod prozora, svaki sloj može imati svoje događaje.
+Što znači da svaki sloj ima zasebnu događaj za pritisak miša ili tipkovnice i slično.
+\\ \\
+Primjer koji jako dobro demonstrira ove dvije ključne značajke jest korisničko sučelje u igrici. Korisničko sučelje bi se uvijek trebalo crtati zadnje jer mora
+biti preko svega ostaloga, stoga će svijet igrice biti na sloju ispod sloja korisničkog sučelja. Također ako i korisničko sučelje i igrica imaju događaj klika miša
+svaki sloj može imati svoju funkciju za taj događaj. Vrlo lako se napravi da ako je sloj korisničkog sučelja odradio događaj da tada sloj igrice ignorira taj događaj.
+\section{Prikazivač}\label{ss_prikazivač}
+Trenutno aplikacije kakve bi stvorila ovakva platforma ne mogu zapravo imati išta nacrtano na njima, što je očito veliki problem. Za prikazivanje grafike može se koristiti
+proizvoljno sučelje za programiranje aplikacija koje služi za prikazivanje grafike. Prikazivač će zapravo biti apstrakcija naredbi korištenog sučelja za programiranje aplikacija
+koju su potrebne za crtanje objekata na ekran.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{Slike/Rectangles.png}
+    \caption{Prikazani objekti na prozoru}
+    \label{im_objekti}
+\end{figure}
+
+\section{Kamera}\label{ss_kamera}
+Ovakva platforma sad već ima niz osnovnih funkcionalnosti, sada kada može zapravo nešto i prikazati ima smisla razmišljati o kameri. Kamera je pogled u svijet igrice i bitno je
+da ima mnogo opcija poput omjera stranica, zum, rotacije i pozicije i slično.
+\\ \\
+Pri implementiranju kamere treba je zamisliti više kao ideju ili konstrukciju nego objekt na sceni. Ideja je kamere da je vidljiv samo određeni dio svijeta. Dakle htjet ćemo
+iscrtavati objekte samo one na koje kamera gleda, ali pošto kamera ne postoji kao sami objekt, kretanje kamere će morati biti simulirano. TO će raditi tako da ako se kamera
+pomjeri gore za 2 jedinice prostora, zapravo će se cijeli svijet pomaknuti dolje za dvije jedinice prostora kako bi taj dio koji kamera vidi došao na prozor.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.3]{Slike/Rectangles.png}
+    \includegraphics[scale=0.3]{Slike/RectanglesMoved.png}
+    \caption{Prozor prije i poslije pomicanje kamere udesno}
+    \label{im_sijenčar}
+\end{figure}
+
+\section{Transformacija}\label{ss_transformacija}
+Trenutno kada treba nacrtati objekt potrebno mu je dati točke koje čine taj objekt i prikazivač ga nacrta. Ono što je poželjno da se taj objekt može nacrtati bilo gdje u
+prostoru, bilo koje veličine i s bilo kakvom rotacijom.
+\\ \\
+To se postiže matricom transformacije. Objekt se i dalje crta preko točaka koje čine taj objekt, ali onda na svaku se točku primjeni matrica transformacije koja će skalirati,
+rotirati i pomaknuti tu točku u prostoru.
+
+\section{Sijenčar}\label{ss_sijenčar}
+Sijenčar će u suštini biti apstrakcija naredbi sučelja za prikazivanje grafike koje služe za bojanje objekata. Omogućava bojanje objekata teksturama i bojama što uključuje i
+interpolaciju boja.
+\\ \\
+S ovime platforma ima dovoljno funkcionalnosti da se naprave neke jednostavne igrice. Pokazat ćemo na kraju dva primjera koja su u potpunosti napravljena koristeći ovakvu
+platformu.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{Slike/textures.png}
+    \caption{Objekti s teksturama}
+    \label{im_tekstura}
+\end{figure}
+
+\chapter{Implementacija funkcionalnosti}
+Prije bilo čega drugoga treba smisliti kako će ovaj projekt izgledati. Iako platforme za izradu igrica imaju grafičko sučelje, ono služi za lakše korištenje funkcionalnosti koje
+sadrži platforma pa se neće pričati o tome već o samim funkcionalnostima. Stoga platforma za izradu igrica se može implementirati kao statična biblioteka koju će koristiti
+aplikacija (tj. igrica). Radi jednostavnosti pričat ćemo o platformi za izradu igrica samo za platformu Windows.
+To znači da će igrice koju stvara platforma biti Windows aplikacija.
+\section{Aplikacija}
+Aplikacija je sama igrica kakvu stvara platforma. Glavna stvar za imati na umu pri implementaciji jest da aplikacija mora moći koristiti sve funkcionalnosti koje pruža platforma.
+Stoga ima smisla da će aplikacija kao objekt enkapsulirati te funkcionalnosti u sebi.
+\\ \\
+Aplikacija treba enkapsulirati instance prozora, prikazivača i vektora slojeva, pošto će sve to biti jedinstveno vezano za aplikaciju.
+\\ \\
+\textbf{Implementacija klase za aplikaciju:}
+\lstinputlisting[language=C++]{Kodovi/Core/Application.cpp}
+\textbf{Funkcije: }
+\begin{itemize}
+    \item \textbf{Application - konstruktor: }stvara instancu prozora aplikacije i početni sloj pošto igrica mora imati barem jedan sloj da bi radila te inicijalizira prikazivač.
+    \item \textbf{Run: }tu se nalazi glavna while petlja za izvođenje aplikacije. Za svaki prolazak petlje prolazi kroz sve slojeve i prozor da ih ažurira. Također mjeri
+          koliko vremena je potrebno za jedan prolazak petlje što daje podatak o tome koliko je vremena trebalo da se izvršni jedan prolazak petlje tj. koliko milisekundi je trajala
+          jedna sličica aplikacije.
+    \item \textbf{PushLayer: }stvara novi sloj i dodaje ga u vektora slojeva kao najniži sloj tj. onaj koji će iscrtavati prvi
+    \item \textbf{PushOverlay: }dodaje sloj u vektor slojeva koji će biti na samom vrhu.
+    \item \textbf{OnEvent:} prima neki događaj i pomoću dispečera događaja svakom događaju dodjeljuje odgovarajuću funkciju odaziva.
+    \item \textbf{OnWindowClose:} funkcija odaziva za događaj zatvaranja prozora.
+    \item \textbf{OnWindowResize:} funkcija odaziva za događaj promjene veličine prozora.
+\end{itemize}
+
+\section{Prozor}
+Windows prozor može se jednostavno stvoriti s proizvoljnim sučeljem za programiranje aplikacija, kako god dobro je imati zaseban objekt tipa prozora koji će enkapsulirati i
+razne potrebne podatke i funkcije za taj prozor. Većina tih funkcija bit će apstrakcija funkcija sučelja za programiranje aplikacija, ali poanta je da korisnik koji pravi
+igricu ne mora znati ništa o sučelju koje se koristi već koristi funkcije same platforme.
+\\ \\
+\textbf{Implementacija klase za prozor:}
+\lstinputlisting[language=C++]{Kodovi/Window/Window.cpp}
+\textbf{Funkcije: }
+\begin{itemize}
+    \item \textbf{Window - konstruktor:} poziva Init funkciju prozora.
+    \item \textbf{OnUpdate:} koristi funkcije sučelja za prozor koje se trebaju izvršavati svaki prolazak while petlje aplikacije (tj. svaku sličicu).
+    \item \textbf{GetWidth i GetHeight:} vraćaju širinu i visinu prozora.
+    \item \textbf{SetVSync i IsVSync:} postavlja i provjerava je li uključena vertikalna sinkronizacija.
+    \item \textbf{GetNativeWindow:} vraća instancu ovog prozora.
+    \item \textbf{Init:} postavi sve potrebne podatke na početne vrijednosti (koje bira osoba koja implementira platformu) i definira odaziv funkcije za događaje.
+    \item \textbf{ShutDown:} zatvara aplikaciju i briše iz memorije sve što treba.
+\end{itemize}
+
+\section{Dnevnik}
+Za dnevnik najlakše je koristiti bilo koje sučelje za programiranje aplikacije za dnevnik. Jedini problemi koje ovdje treba riješiti su apstrakcija naredbi sučelja koje se koristi
+i napraviti posebne instance dnevnika. Jedna koja će služiti kao dnevnik za izradu same platforme i druga koju će koristit korisnik pri izradi igrice.
+\\ \\
+\textbf{Implementacija klase za dnevnik:}
+\lstinputlisting[language=C++]{Kodovi/Core/Log.cpp}
+\textbf{Funkcije: }
+\begin{itemize}
+    \item \textbf{GetCoreLogger: } vraća dnevnik namijenjenu za onoga tko razvija platformu.
+    \item \textbf{GetClientLogger: } vraća dnevnik namijenjenu za onoga tko razvija igricu.
+\end{itemize}
+
+\section{Događaji}
+Ideja je stvoriti tip objekta događaj koji će imati svoj tip, ime i kategorije. Slojevi, prozori i sama aplikacija će definirati instance svojih događaja. Zatim potreban je tip
+objekta dispečer događaja koji će biti zadužen da za svaki događaj pridruži odgovarajuću funkciju odaziva. Razlikovanje događaja po tipu i kategoriji je korisno zato što
+različiti tipovi događaja (zatvaranje prozora, pritisak tipke miša, pritisak tipkovnice itd.) i različite kategorije događaja (aplikacija, miš, tipkovnica itd.) trebaju
+enkapsulirati različite podatke.
+\\ \\
+\textbf{Implementacija klase za događaje:}
+\lstinputlisting[language=C++]{Kodovi/Events/Event.cpp}
+\textbf{Funkcije: }
+\begin{itemize}
+    \item \textbf{GetEventType:} vraća tip događaja.
+    \item \textbf{GetName:} vraća ime događaja.
+    \item \textbf{GetCategoryFlags:} vraća kategorije događaja.
+    \item \textbf{ToPrint:} ispisuje ime događaja u konzolu.
+    \item \textbf{IsInCategory:} za proslijeđenu kategoriju provjerava je li događaj u toj kategoriji.
+\end{itemize}
+\textbf{Implementacija klase za dispečer događaja:}
+\lstinputlisting[language=C++]{Kodovi/Events/EventDispatcher.cpp}
+\textbf{Funkcije: }
+\begin{itemize}
+    \item \textbf{Dispatch:} prima bool funkciju. Ako primljena funkcija true tada ne radi ništa zato što to znači da je ovaj događaj već odrađen na nekom sloju koji je iznad
+          trenutnog. Ako je primljena funkcija false onda se poziva funkcija odaziva za taj događaj na trenutnom sloju. Više o slojevima na  \ref{s_slojevi}
+\end{itemize}
+
+\section{Ispit unosa}
+Za ispit unosa najlakše je koristiti bilo koje sučelje za programiranje aplikacije za ispit unosa. Najčešće sučelja za prozore već imaju svoje funkcionalnosti za ispit unosa.
+Stoga implementacija ispita unosa se svodi na apstrakciju funkcija ispita unosa sučelja koje se koristi. Ovo je bitno zato što korisnik koji pravi igricu ne mora znati ništa o
+sučelju koje se koristi već koristi funkcije same platforme.
+\\ \\
+\textbf{Implementacija klase za ispit unosa:}
+\lstinputlisting[language=C++]{Kodovi/Core/Input.cpp}
+\textbf{Funkcije: }
+\begin{itemize}
+    \item \textbf{IsKeyPressed:} vraća je li tipka tipkovnice pritisnuta.
+    \item \textbf{IsMouseButtonPressed:} vraća je li tipka miša pritisnuta.
+    \item \textbf{GetMousePosition:} vraća poziciju miša kao uređeni par x i y koordinate prozora.
+\end{itemize}
+
+\section{Slojevi}\label{s_slojevi}
+Sloj će biti glavni gradivni dio aplikacije. Što se tiče implementacije treba zamisliti kao da se cijela aplikacija dijeli na dijelove. Svaki dio aplikacije ima dio koji se
+izvodi svaku sličicu (tj. svaki prolazak while petlje aplikacije)
+\\ \\
+\textbf{Implementacija klase za sloj:}
+\lstinputlisting[language=C++]{Kodovi/Core/Layer.cpp}
+\textbf{Funkcije: }
+\begin{itemize}
+    \item \textbf{Layer - konstruktor:} konstruktor koji samo postavlja ime sloja.
+    \item \textbf{OnAttach:} poziva se kada se sloj stavi u vektor slojeva.
+    \item \textbf{OnDetach:} poziva se kada se sloj skine s vektora slojeva.
+    \item \textbf{OnUpdate:} poziva se na svakom na svakom prolasku while petlje aplikacije.
+    \item \textbf{OnUIRender:} funkcija za crtanje korisničkog sučelja ovog sloja.
+    \item \textbf{OnEvent:} koristi dispečer događaja da pozove odgovarajuće funkcije odaziva za proslijeđeni događaj.
+\end{itemize}
+
+\section{Prikazivač}
+U suštini implementacija prikazivača se svodi na apstrakciju funkcija sučelja za programiranje aplikacija koje služi za prikazivanje grafike. Potrebno je pomoću funkcija sučelja
+napisati funkcije koje će biti od platforme i pomoću kojih se može lako obavljati operacije za prikaz grafike na prozoru.
+\\ \\
+\textbf{Implementacija klase za prikazivač:}
+\lstinputlisting[language=C++]{Kodovi/Renderer/Renderer.cpp}
+\textbf{Funkcije: }
+\begin{itemize}
+    \item \textbf{OnWindowResize:} funkcija odaziva za događaj promjene veličine prozora. Koristi funkcije sučelja za prozor.
+    \item \textbf{BeginScene:} inicijalizira kameru i postavlja sve potrebne parametre kamere.
+    \item \textbf{EndScene:} sadrži funkcije sučelja za prikazivanje grafike.
+    \item \textbf{SubmitData:} prima podatke o točkama objekata i indeksima točaka i pomoći funkcija sučelja za prikazivanje grafike prikazuje sve objekte na prozor.
+\end{itemize}
+\textbf{Implementacija klase za crtanje objekata:}
+\lstinputlisting[language=C++]{Kodovi/Renderer/Renderer2D.cpp}
+Ova klasa sadrži funkcije koje su apstrakcija procesa crtanja objekata pomoću korištenog sučelja za prikazivanje grafike. Što znači da korisnik koji pravi igricu mora samo
+pozvati jednu od ovih funkcija da nešto nacrta, što je inače dosta kompliciraniji proces.
+
+\section{Kamera}
+Implementacija kamere svodi se na implementiranje matematičkih funkcija za transformaciju objekata u prostoru. Za to se koriste matrice te je najjednostavnije koristiti
+sučelja za programiranje aplikacija koje ima već definiran rad s matricama. Potrebno je definirati matrice pomaka, skaliranja i rotacije te neke dodatne vrijednosti koje su bitne
+za rad s kamerom pri pravljenju igrice.
+\\ \\
+\textbf{Implementacija klase za kameru:}
+\lstinputlisting[language=C++]{Kodovi/Renderer/OrthographicCamera.cpp}
+\textbf{Funkcije: }
+\begin{itemize}
+    \item \textbf{OrthographicCamera:} računa matricu pogledprojekcije.
+    \item \textbf{RecalcalculateViewMatrix:} računa matricu pogledprojekcije.
+    \item \textbf{SetProjectionMatrix:}
+    \item \textbf{SetPosition:} mijenja poziciju kamere na proslijeđenu i ponovno računa matricu pogledprojekcije.
+    \item \textbf{GetPosition:} vraća poziciju kamere.
+    \item \textbf{GetRotation:} vraća rotaciju kamere.
+    \item \textbf{GetProjectionMatrix:} vraća matricu projekcije.
+    \item \textbf{GetViewMatrix:} vraća matricu pogleda.
+    \item \textbf{GetViewProjectionMatrix:} vraća matricu pogledprojekcije.
+\end{itemize}
+
+\section{Sijenčar}
+Sijenčar se uobičajeno piše u zasebnoj datoteci čiji nastavak i sintaksa ovise i sučelju prikazivača koji se koristi. Sijenčar kao funkcionalnost platforme treba enkapsulirati
+kod koji se nalazi u datoteci sijenčara i funkcije potrebne za prenošenje podataka u kod sijenčara.
+\\ \\
+\textbf{Implementacija klase za sijenčar:}
+\lstinputlisting[language=C++]{Kodovi/Renderer/Shader.cpp}
+\textbf{Funkcije: }
+\begin{itemize}
+    \item \textbf{Shader - konstruktor:} prima put do datoteke sijenčara i uzima sve potrebne podatke i obrađuje ih pomoću funkcija sučelja za prikaz grafike.
+    \item \textbf{Bind:} koristeći funkcije sučelja za prikaz grafike započinje korištenje ovog sijenčara.
+    \item \textbf{Unbind:} koristeći funkcije sučelja za prikaz grafike prekida korištenje ovog sijenčara.
+    \item \textbf{UploadUniform:} prenosi proslijeđene podatke na sijenčar.
+    \item \textbf{GetRendererId:} vraća jedinstvenu oznaku sijenčara što je prirodni broj.
+    \item \textbf{GetName:} vraća ime sijenčara.
+\end{itemize}
+
+\noindent
+U nastavku ćemo pokazati kako se samo uz ove opisane funkcionalnosti mogu napraviti jednostavne igrice.
+Igrica se stvara tako što se napravi instanca aplikacije i za svaki sloj \ref{s_slojevi} te aplikacije
+se definira što se logički događa na tom sloju, koje događaje \ref{ss_događaji} on uzima i što se treba prikazivati na tom sloju.
+
+\chapter{Primjer igrice - Asteroidi}
+Ideja ove igrice je vrlo jednostavna. Mali svemirski brod koji mora izbjegavati asteroide. Svakih 15 sekundi započinje nova runda i svaku novu rundu broj
+Ova igrica može bez problema raditi na jednom sloju. Pošto nema interaktivno korisničko sučelje, ono se može nalaziti na istom sloju kao i ostatak igrice. Jedina kompliciranija
+stvar što je potrebno implementirati jest detekcija sudara dva objekta. Osim toga sve ostalo je jednostavno: treba napraviti klasu za igrača koja će enkapsulirati podatke poput
+teksture, pozicije, veličine i brzine kretanja, dalje treba napraviti kontrole za igrača, logiku stvaranja i putovanja asteroida te napraviti neke objekte koji će služiti samo
+estetici.
+
+\section{Značajke}
+\subsection{Igrač}
+Igrač će u suštini biti samo pravokutnik s teksturom kojeg se može pomjerati. Sve što je potrebno za njega jest klasa koja enkapsulira teksturu, varijablu koja predstavlja
+brzinu kretanja i varijablu koja predstavlja veličinu igrača. Igračeva brzina namijenjena je da se povećava do maksimalne brzine što se više kreće, tj. dok
+se igrač ne kreće brzina kretanja se stalno smanjuje do nule.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{Slike/ship.png}
+    \caption{Tekstura igrača}
+    \label{im_ship}
+\end{figure}
+
+\subsection{Asteroidi}
+Asteroidi su prepreke koje igrač mora izbjegavati. Stvaraju se nasumično na rubu vidnog polja igrača i nasumičnom brzinom se kreću prema dnu vidnog polja igrača gdje se briše iz
+memorije i stvara se novi asteroid na njegovo mjesto. Brzina i broj asteroida koji lete su nasumični ali unutar nekih granica.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Slike/GreyAsteroid.png}
+    \caption{Tekstura asteroida}
+    \label{im_asteroid}
+\end{figure}
+
+\subsection{Planeti}
+Planeti su pravokutnici koji se ne mogu sudariti s igračem. Kada se oni pojave na ekranu znači da je započela nova runda i da se broj i brzina asteroida povećavaju.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Slike/earth.png}
+    \includegraphics[scale=0.5]{Slike/red.png}
+    \includegraphics[scale=0.5]{Slike/planet.png}
+    \includegraphics[scale=0.5]{Slike/smth.png}
+    \includegraphics[scale=0.5]{Slike/cyborg.png}
+    \caption{Teksture planeta}
+    \label{im_planeti}
+\end{figure}
+
+\subsection{Zvijezde}
+Zvijezde su samo mali bijeli pravokutnici koji lete prema dolje kako bi dali efekta prolaska svemirskog broda kroz svemir. Ne mogu se sudariti s igračem i postaju sve brže svaku rundu.
+
+\subsection{Korisničko sučelje}
+Korisničko sučelje je ovom smislu je samo tekst koji prikazuje podatke o rundama i vremenu koje je prošlo od početka igranja.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Slike/UIGame.png}
+    \caption{Korisničko sučelje}
+    \label{im_suceljeGame}
+\end{figure}
+
+\section{Implementacija značajki}
+\subsection{Igrač}
+Igrača nije teško implementirati. Kontrole će se lako implementirati pomoću ispita unosa \ref{ss_unos}. Pomoću funkcija prikazivača \ref{ss_prikazivač} i sijenčara \ref{ss_sijenčar}
+se jednostavno može nacrtati igrač s njegovom teksturom.
+\lstinputlisting[language=C++]{Kodovi/Game/Player.cpp}
+\textbf{Funkcije:}
+\begin{itemize}
+    \item \textbf{OnUpdate: } funkcija će se pozivati svaki prolazak glavne while petlje aplikaciju (tj. svaku sličicu). U njoj je pomoću ispita unosa definirano koliko se
+          jedinica prozora igrač kreće za trenutnu brzinu i prikazuje se igrač na njegovoj trenutnoj poziciji.
+\end{itemize}
+
+\subsection{Asteroidi}
+Pomoću  funkcija prikazivača \ref{ss_prikazivač} i sijenčara \ref{ss_sijenčar} se jednostavno može nacrtati asteroid s njegovom teksturom.
+\\ \\
+\textbf{MoveAsteroid: }
+\lstinputlisting[language=C++]{Kodovi/Game/Asteroids.cpp}
+Svaki prolazak glavne while petlje asteroidi se pomiču prema dnu prozora za njihovu brzinu koja se određuje nasumično pri njihovom stvaranju. Kada je jedan asteroid došao do dna
+prozora, on se briše i stvara se jedan novi asteroid na vrhu prozora pomoću funkcije CreateAsteroid.
+\\ \\
+\textbf{CreateAsteroid: }
+\lstinputlisting[language=C++]{Kodovi/Game/CreateAsteroid.cpp}
+Funkcija stvara novi asteroid u vektoru asteroida i nasumično mu dodjeljuje brzinu i poziciju unutar zadanih granica.
+
+\subsection{Planeti}
+Pomoću funkcija prikazivača \ref{ss_prikazivač} i sijenčara \ref{ss_sijenčar} se jednostavno može nacrtati planet s njegovom teksturom.
+\\ \\
+\textbf{MovePlanet: }
+\lstinputlisting[language=C++]{Kodovi/Game/planet.cpp}
+Svaki prolazak glavne while petlje, ako je prošlo 15 sekundi od zadnje pojave planeta, planet se pomiče prema dnu prozora za njegovu brzinu koja se dodjeljuje pri
+njegovom stvaranju. Kada je jedan planet došao do dna prozora, i za 15 sekundi stvara se jedan novi planet na vrhu prozora pomoću funkcije CreatePlanet.
+\\ \\
+\textbf{CreatePlanet: }
+\lstinputlisting[language=C++]{Kodovi/Game/CreatePlanet.cpp}
+Funkcija stvara novi planet u vektoru planeta i nasumično mu dodjeljuje poziciju unutar zadanih granica.
+
+\subsection{Zvijezde}
+Pomoću funkcija prikazivača \ref{ss_prikazivač} i sijenčara \ref{ss_sijenčar} se jednostavno može nacrtati zvijezda s njezinom teksturom.
+\\ \\
+\textbf{MoveStar: }
+\lstinputlisting[language=C++]{Kodovi/Game/Asteroids.cpp}
+Svaki prolazak glavne while petlje zvijezde se pomiču prema dnu prozora za njihovu brzinu koja se određuje nasumično pri njihovom stvaranju. Kada je jedna zvijezda došla do dna
+prozora, ona se briše i stvara se jedna nova zvijezda na vrhu prozora pomoću funkcije CreateStar.
+\\ \\
+\textbf{CreateStar: }
+\lstinputlisting[language=C++]{Kodovi/Game/CreateAsteroid.cpp}
+Funkcija stvara novu zvijezdu u vektoru zvijezda i nasumično joj dodjeljuje brzinu i poziciju unutar zadanih granica.
+
+\subsection{Detekcija sudara}
+Koristeći transformaciju  \ref{ss_transformacija} lako se može provjeriti jesu li se dva objekta na prozoru \ref{ss_prozor} sudarila. Postoji vrlo jednostavan matematički postupak
+koji provjerava nalazi li se neka točke prvog pravokutnika unutar stranica drugog pravokutnika. Ovo je najjednostavniji način za detektirati jesu li se dva objekta sudarila pošto
+su objekti za koje se provjerava sudar uvijek pravokutnici. U ovom slučaju provjerava se je li se igrač sudario s bilo kojim od asteroida.
+\\ \\
+\textbf{OnCollision: }
+\lstinputlisting[language=C++]{Kodovi/Game/OnCollision.cpp}
+Na točke koje čine vrhove igrača se primjeni transformacija  \ref{ss_transformacija}. Zatim se prolazi kroz sve asteroide kako bi se i na njihove početne točke primijenila transformacija.
+S takvim transformiranim točkama asteroida se za svaku transformiranu točku igrača provjerava je li došlo do sudara pomoću funkcije Collided.
+\\ \\
+\textbf{Collided: }
+\lstinputlisting[language=C++]{Kodovi/Game/Collided.cpp}
+Funkcija prima jednu točku igrača i sve točke asteroida pa provjerava nalazi li se točka igrača unutar svih stranica asteroida.
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.4]{Slike/Game.png}
+        \caption{Gotova igrica}
+        \label{im_Game}
+    \end{center}
+\end{figure}
+
+\chapter{Primjer igrice - Platformer}
+Ideja igre je simulacija života studenta na fakultetu. Igrač treba skupljati skripte za ispit i izbjegavati društvene mreže koje uzrokuju prokrastinaciju. Treba skupiti svih sedam
+skripti koje su u nivou, a ako se igrač sudari s društvenom mrežom izgubi jedan od tri života. Kada izgubi sve živote igrač neslavno diplomira i igra prestaje.
+Upravljanje igračem je takvo da može skakati po platformama i da ga kamera prati kako bi se mogao kretati u većem prostoru. Jedini veći problemi koji treba riješiti jesu skakanje
+igrača i detekcija sudara igrača i prepreke.
+\section{Značajke}
+\subsection{Igrač}
+Igrač će u suštini biti samo pravokutnik s teksturom kojeg se može pomjerati. Njegova klasa enkapsulira teksturu, varijablu koja predstavlja brzinu kretanja, varijablu
+koja predstavlja veličinu igrača i varijablu brzine kretanja igrača prema dolje. Problem skakanja može se riješiti primitivnom simulacijom gravitacije. Igračeva brzina namijenjena
+je da se povećava do maksimalne brzine što se više kreće, tj. dok se igrač ne kreće brzina kretanja se stalno smanjuje do nule. Gravitacija će biti brzina kojom igrač ide prema
+dolje, kada se igrač odmakne od zemlje ta brzina počinje raste dok ne prestigne brzinu kojom se igrač kreće prema gore i igrač se počne spuštati prema dolje dok ne udari u neku
+podlogu. Kada igrač dotakne podlogu brzina kojom igrač ide prema dolje se vraća na početnu.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.2]{Slike/unknown.png}
+    \caption{Tekstura igrača}
+    \label{im_igrac}
+\end{figure}
+
+\subsection{Skripte}
+Skripte su pravokutnici s teksturom koji se, radi komunikacije važnosti objekta igraču, vrte oko y osi. Kada se pokupi neka skripta bodovi igrača se povećavaju za 1, a cilj igre
+je skupiti sedam bodova.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{Slike/script.png}
+    \caption{Tekstura skripte}
+    \label{im_skripta}
+\end{figure}
+
+\subsection{Prepreke}
+Prepreke su pravokutnici s teksturama koje imaju definirane obrasce kretanja. Kada se igrač sudari s njima gubi jedan od tri života, ako igraču životi dođu na nulu, igra prestaje.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.2]{Slike/fb.png}
+    \includegraphics[scale=0.2]{Slike/insta.png}
+    \includegraphics[scale=0.2]{Slike/whap.png}
+    \caption{Teksture prepreka}
+    \label{im_prepreke}
+\end{figure}
+
+\subsection{Korisničko sučelje}
+Korisničko sučelje je ovom smislu je samo tekst koji prikazuje podatke o bodovima, životima i vremenu koje je prošlo od početka igranja.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.0]{Slike/UIPlatformer.png}
+    \caption{Korisničko sučelje}
+    \label{im_sučeljePlatformer}
+\end{figure}
+
+\section{Implementacija značajki}
+\subsection{Igrač}
+Igrača nije teško implementirati. Kontrole će se lako implementirati pomoću ispita unosa \ref{ss_unos}. Pomoću funkcija prikazivača \ref{ss_prikazivač} i sijenčara \ref{ss_sijenčar}
+se jednostavno može nacrtati igrač s njegovom teksturom.
+\lstinputlisting[language=C++]{Kodovi/Platformer/Player.cpp}
+\textbf{Funkcije:}
+\begin{itemize}
+    \item \textbf{OnUpdate: } funkcija će se pozivati svaki prolazak glavne while petlje aplikaciju (tj. svaku sličicu). U njoj je pomoću ispita unosa definirano koliko se
+          jedinica prozora igrač kreće za trenutnu brzinu i prikazuje se igrač na njegovoj trenutnoj poziciji. Također upravlja logikom skakanja tj. postavlja brzinu padanja i
+          regulira brzinu kretanja u zraku.
+\end{itemize}
+
+\subsection{Skripte}
+Skripte su samo pravokutnici s teksturom koji se vrti oko svoje osi. Potrebno ih je samo nacrtati i prepoznati kada se igrač sudari s njima kako bi se obrisali i povećao broj
+bodova igraču.
+\\ \\
+\textbf{OnUpdate: }
+\lstinputlisting[language=C++]{Kodovi/Platformer/ScriptRotation.cpp}
+Skripte se za svaku prolazak glavne while petlje (tj. svaku sličicu) okreću oko svoje y osi za zadanu vrijednost. To signalizira igraču da su ovi objekti bitniji od ostalih.
+\\ \\
+\textbf{CreateScript: }
+\lstinputlisting[language=C++]{Kodovi/Platformer/CreateScripts.cpp}
+Skripte se ne kreću, ali potrebno im je zadati podatke o teksturi, poziciji i brzini rotacije. Sve skripte su spremljene u vektor skripti. Jednom kada su skripte stvorene
+potrebno ih je samo obrisati kada se pokupe.
+
+\subsection{Prepreke}
+Prepreke su pravokutnici s teksturom koji imaju zadani smjer kretanja. Kada se sudare s igračem, igrač gubi jedan život.
+\textbf{OnUpdate: }
+\lstinputlisting[language=C++]{Kodovi/Platformer/MoveObstacles.cpp}
+Prepreke se za svaku prolazak glavne while petlje (tj. svaku sličicu) okreću oko svoje z osi za zadanu vrijednost i pomiču u određenom smjeru za svoju brzinu.
+Njihovo brzo okretanje signalizira igraču opasnost.
+\\ \\
+\textbf{CreateObstacle: }
+\lstinputlisting[language=C++]{Kodovi/Platformer/CreateObstacle.cpp}
+Preprekama je potrebno zadati podatke o početnoj i završnoj točki kretanja, brzini rotacije, brzini kretanje i teksturi. Prepreke se stvore na početku i one
+ostaju tamo do kraja igre, nema potrebe za brisanjem ili stvaranjem novih.
+
+\subsection{Detekcija sudara}
+Koristeći transformaciju  \ref{ss_transformacija} lako se može provjeriti jesu li se dva objekta na prozoru \ref{ss_prozor} sudarila. Postoji vrlo jednostavan matematički postupak
+koji provjerava nalazi li se neka točke prvog pravokutnika unutar stranica drugog pravokutnika. Ovo je najjednostavniji način za detektirati jesu li se dva objekta sudarila pošto
+su objekti za koje se provjerava sudar uvijek pravokutnici.
+\\ \\
+U ovom slučaju provjerava se je li igrač sudario s bilo kojom od prepreka da bi se znalo da treba izgubiti život i
+treba provjeriti je li se igrač sudario sa skriptom kako bi se znalo da treba skriptu maknuti i povećati igračev broj bodova. Također treba provjeriti je li igrač sudario s
+nekom podlogom (tj. podom ili platformom) kako bi se prestao kretati prema dolje.
+\\ \\
+\textbf{Collided with Script: }
+\lstinputlisting[language=C++]{Kodovi/Platformer/ScriptCollision.cpp}
+Na točke koje čine vrhove igrača se primjeni transformacija  \ref{ss_transformacija}. Zatim se prolazi kroz sve skripte kako bi se i na njihove početne točke primijenila transformacija.
+S takvim transformiranim točkama skripti se za svaku transformiranu točku igrača provjerava je li došlo do sudara pomoću funkcije Collided.
+\\ \\
+\textbf{Collided with Obstacle: }
+\lstinputlisting[language=C++]{Kodovi/Platformer/ObstacleCollsion.cpp}
+Na točke koje čine vrhove igrača se primjeni transformacija  \ref{ss_transformacija}. Zatim se prolazi kroz sve skripte kako bi se i na njihove početne točke primijenila transformacija.
+S takvim transformiranim točkama skripti se za svaku transformiranu točku igrača provjerava je li došlo do sudara pomoću funkcije Collided.
+\\ \\
+\textbf{Collided with floor: }
+\lstinputlisting[language=C++]{Kodovi/Platformer/FloorCollision.cpp}
+Na točke koje čine vrhove igrača se primjeni transformacija  \ref{ss_transformacija}. Zatim se prolazi kroz sve skripte kako bi se i na njihove početne točke primijenila transformacija.
+S takvim transformiranim točkama skripti se za svaku transformiranu točku igrača provjerava je li došlo do sudara pomoću funkcije Collided.
+\\ \\
+\textbf{Collided: }
+\lstinputlisting[language=C++]{Kodovi/Game/Collided.cpp}
+Funkcija prima jednu točku igrača i sve točke drugog objekta pa provjerava nalazi li se točka igrača unutar svih stranica drugog objekta.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{Slike/Platformer.png}
+    \caption{Gotova igrica}
+    \label{im_Platformer}
+\end{figure}
+
+%% Literatura
+\begin{thebibliography}{30}
+    \addcontentsline{toc}{chapter}{Literatura}
+
+    \bibitem{Bakić}
+    {\sc D. Bakić}, {\em Linearna algebra}, Školska knjiga Zagreb, 2008.
+
+    \bibitem{McGraw}
+    {\sc E. Balagurusamy}, {\em Object Oriented Programming with C++ (6th Ed.)}, McGraw Hill Education, 2013.
+
+    \bibitem{buss}
+    {\sc S. Buss}, {\em 3D Computer Graphics: A mathematical approach with OpenGL}, Cambridge University Press, 2003.
+
+    \bibitem{CoderSpaceChannel} Web izvor dostupan na
+        {\verb"https://www.youtube.com/c/CoderSpaceChannel"}, CoderSpaceChannel.
+
+    \bibitem{javidx9} Web izvor dostupan na
+        {\verb"https://www.youtube.com/c/javidx9"}, javidx9.
+
+    \bibitem{opg}
+    {\sc G. Sellers, R.S.Wright, N. Haemel}, {\em OpenGL Superbible: Comprehensive Tutorial and Reference}, Addison-Wesley Professional; 7 edition, 2015.
+
+    \bibitem{TheChernoProject} Web izvor dostupan na
+        {\verb"https://www.youtube.com/c/TheChernoProject"}, TheChernoProject.
+\end{thebibliography}
+
+
+\chapter*{Sažetak}
+\markboth{}{SAŽETAK}
+\addcontentsline{toc}{chapter}{Sažetak}
+
+Kako video igrice postaju sve kompliciranije tehnologija za njihovu izradu također postaje sve moćnija i kompliciranija. Kako bi se olakšala proizvodnja igrica prave se platforme koje
+koriste nove tehnologije da implementiraju specijalne funkcionalnosti. Te funkcionalnosti se koriste za izradu igrica. Uz samo par tih jednostavnih funkcionalnosti može se napraviti platforma
+pomoću koje se može lako i efikasno praviti jednostavne 2D igrice. Te funkcionalnosti su: prozor, dnevnik, sustav događaja, ispit unosa, slojevi, prikazivač, transformacije i
+sijenčar. Za implementaciju gotovo svih tih funkcionalnosti koriste se sučelja za programiranje aplikacija koje uvelike olakšavaju pravljenje platforme za stvaranje igrica. Neki
+primjeri tih igrica bile bi igrice u stilu broda koji izbjegava asteroide ili igrica u stilu platformera.
+
+\section*{Ključne riječi}
+
+platforma, igrica, implementacija, događaji, slojevi, prikazivač, igrač, platformer, 2D
+
+\chapter*{How to build a game engine}
+\markboth{}{SUMMARY}
+
+\section*{Summary}
+\addcontentsline{toc}{chapter}{Summary}
+
+Video games are becoming more complex by the day and so the technology for their development is becoming more powerful and complex. To make creating games easier, engines are
+being developed that are using the new technology to implement special functions. These functions are used in creation of video games. With just a few of these simple functions,
+game engine that has the ability to create simple 2D games can be made. Those functionalities are; window, log, event system, input polling, renderer, transforms and shader. To
+implement almost all of those functionalities application programming interfaces are used to greatly simplify the creation of a game engine. Some examples of such games would be
+games made in style of an ship avoiding asteroids or a game in a style of an platformer.
+
+\section*{Keywords}
+
+engine, game, implementation, events, layers, renderer, player, platformer, 2D
+
+\end{document}

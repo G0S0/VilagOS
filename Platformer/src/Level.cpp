@@ -74,20 +74,26 @@ void Level::OnUpdate(DeltaTime dt) {
 }
 
 void Level::OnRender() {
-	for (auto& el : m_Floors) {
-		VilagOS::Renderer2D::DrawQuad(el.position, el.size, el.grassTexture);
-	}
-	for (auto& el : m_FlyingStuff) {
-		VilagOS::Renderer2D::DrawQuad(el.position, el.size, el.grassTexture);
-	}
-	for (auto& el : m_Scripts) {
-		VilagOS::Renderer2D::DrawRotatedQuadZ(el.position, el.size, (float)el.rotation, el.scriptTexture);
-	}
-	for (auto& el : m_Obstacles) {
-		VilagOS::Renderer2D::DrawRotatedQuad(el.position, el.size, (float)el.rotation, el.obstacleTexture);
-	}
-	
-	m_Player.OnRender();
+	//for (auto& el : m_Floors) {
+	//	VilagOS::Renderer2D::DrawQuad(el.position, el.size, el.grassTexture);
+	//}
+	//for (auto& el : m_FlyingStuff) {
+	//	VilagOS::Renderer2D::DrawQuad(el.position, el.size, el.grassTexture);
+	//}
+	//for (auto& el : m_Scripts) {
+	//	VilagOS::Renderer2D::DrawRotatedQuadZ(el.position, el.size, (float)el.rotation, el.scriptTexture);
+	//}
+	//for (auto& el : m_Obstacles) {
+	//	VilagOS::Renderer2D::DrawRotatedQuad(el.position, el.size, (float)el.rotation, el.obstacleTexture);
+	//}
+	std::shared_ptr<Texture2D> tekstura;
+	tekstura.reset( new VilagOS::Texture2D("assets/textures/grass.png"));
+	std::shared_ptr<Texture2D> teksturadva;
+	teksturadva.reset(new VilagOS::Texture2D("assets/textures/wall.png"));
+	VilagOS::Renderer2D::DrawQuad(glm::vec3{ 1.0f, 1.0f, 1.0f }, glm::vec3{ 1.0f, 2.0f, 0.0f }, tekstura);
+	VilagOS::Renderer2D::DrawQuad(glm::vec3{ -5.0f, 0.0f, 1.0f }, glm::vec3{ 3.0f, 2.0f, 0.0f }, teksturadva);
+
+	//m_Player.OnRender();
 }
 
 void Level::Reset() {

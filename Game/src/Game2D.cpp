@@ -50,7 +50,7 @@ void Game2D::OnUpdate(VilagOS::DeltaTime dt) {
 	//OnRender
 	VilagOS::RenderCommand::Clear(glm::vec4(0.0f, 0.0f, 0.0f, 1));
 	VilagOS::Renderer2D::BeginScene(*m_Camera);
-	m_Level.OnRender();
+	//m_Level.OnRender();
 	VilagOS::Renderer2D::EndScene();
 }
 
@@ -72,29 +72,29 @@ void Game2D::OnImGuiRender() {
 	auto height = Application::GetApp().GetWindow().GetHeight();
 	std::stringstream toPrint;
 
-	auto pos = ImGui::GetWindowPos();
-	pos.x -= 40.0f;
-	pos.y -= 20.0f;
-	toPrint.precision(2);
-	toPrint << "Time: " << std::fixed << m_Level.GetTime() << "s\n" <<
-		"Round: " << m_Level.GetRounds();
-	ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, toPrint.str().c_str());
-
-	switch (m_GameState)
-	{
-	case Game2D::GameState::GameOver: {
-		pos = ImGui::GetWindowPos();
-		pos.x += width * 0.5f - 275.0f;
-		ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, "Click left mouse button to restart.");
-		break;
-	}
-	case Game2D::GameState::MainMenu: {
-		pos = ImGui::GetWindowPos();
-		pos.x += width * 0.5f - 275.0f;
-		ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, "Click left mouse button to continue.");
-		break;
-	}
-	}
+	//auto pos = ImGui::GetWindowPos();
+	//pos.x -= 40.0f;
+	//pos.y -= 20.0f;
+	//toPrint.precision(2);
+	//toPrint << "Time: " << std::fixed << m_Level.GetTime() << "s\n" <<
+	//	"Round: " << m_Level.GetRounds();
+	//ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, toPrint.str().c_str());
+	//
+	//switch (m_GameState)
+	//{
+	//case Game2D::GameState::GameOver: {
+	//	pos = ImGui::GetWindowPos();
+	//	pos.x += width * 0.5f - 275.0f;
+	//	ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, "Click left mouse button to restart.");
+	//	break;
+	//}
+	//case Game2D::GameState::MainMenu: {
+	//	pos = ImGui::GetWindowPos();
+	//	pos.x += width * 0.5f - 275.0f;
+	//	ImGui::GetForegroundDrawList()->AddText(m_Font, 30.0f, pos, 0Xffffffff, "Click left mouse button to continue.");
+	//	break;
+	//}
+	//}
 	ImGui::End();
 	
 }
